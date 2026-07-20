@@ -77,7 +77,7 @@ export function Contact() {
         }}
       />
 
-      <Container className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+      <Container className="grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr]">
         <ScrollReveal>
           <div className="flex items-center gap-4">
             <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-accent-electric/40 shadow-[0_0_20px_rgba(94,234,255,0.25)]">

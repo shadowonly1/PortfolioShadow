@@ -67,7 +67,7 @@ export function Hero() {
     >
       <HeroBackground />
 
-      <Container className="grid items-center gap-16 lg:grid-cols-[0.85fr_1.15fr]">
+      <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="order-2 lg:order-1">
           <motion.div
             initial={prefersReducedMotion ? undefined : item.hidden}

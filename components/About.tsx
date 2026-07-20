@@ -24,7 +24,7 @@ export function About() {
       <SectionGlow color="rgba(94, 234, 255, 0.14)" position="left" />
       <SectionNumberBg number="01" />
 
-      <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <Container className="grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <ScrollReveal>
           <SectionHeading eyebrow="01 — À propos" title="Code et design, même métier" />
 
