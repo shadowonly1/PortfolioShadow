@@ -68,7 +68,7 @@ export function Hero() {
       <HeroBackground />
 
       <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="order-2 lg:order-1">
+        <div className="order-1 lg:order-1">
           <motion.div
             initial={prefersReducedMotion ? undefined : item.hidden}
             animate={prefersReducedMotion ? undefined : item.show}
@@ -237,7 +237,7 @@ export function Hero() {
               ? undefined
               : { y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.9 } }
           }
-          className="order-1 relative mx-auto w-full max-w-md lg:order-2 lg:max-w-lg"
+          className="order-2 relative mx-auto w-full max-w-md lg:order-2 lg:max-w-lg"
           style={{ perspective: 1200 }}
         >
           <motion.div

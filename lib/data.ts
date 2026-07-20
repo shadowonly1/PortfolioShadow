@@ -1,5 +1,5 @@
 export const profile = {
-  name: "Elimane Ba",
+  name: "Elimane BA",
   alias: "ShadowOnly — THE DSGN GEEK",
   role: "Développeur Web, Mobile & Backend",
   location: "Dakar, Sénégal",
@@ -101,7 +101,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "orbitsx",
-    name: "OrbitsX",
+    name: "Orbits",
     deviceType: "phone",
     role: "Lead Software Engineer & Full-Stack Mobile Developer",
     summary:
@@ -126,7 +126,7 @@ export const projects: Project[] = [
       "Suivi temps réel et paiements sécurisés en production",
     ],
     image: "/images/projects/orbitsx.jpg",
-    imageAlt: "Visuels marketing et interface de l'application OrbitsX",
+    imageAlt: "Visuels marketing et interface de l'application Orbits",
     images: [
       "/images/orbits (2).jpeg",
       "/images/orbits (3).jpeg",
@@ -317,7 +317,7 @@ export const certifications = [
 
 export const heroCodeLines = [
   "const developer = {",
-  "  name: 'Elimane Ba',",
+  "  name: 'Elimane BA',",
   "  role: 'Web · Mobile · Backend',",
   "  based_in: 'Dakar, SN',",
   "  also: 'designer graphique certifié',",
