@@ -3,6 +3,7 @@ import {
   CheckCircle2,
   ExternalLink,
   Lightbulb,
+  ShieldAlert,
   Sparkles,
   Target,
   TrendingUp,
@@ -126,6 +127,30 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                 </div>
                 <p className="mt-4 text-base leading-relaxed text-muted">{project.architecture}</p>
               </div>
+            </Container>
+          </section>
+        )}
+
+        {project.challenges && project.challenges.length > 0 && (
+          <section className="border-t border-border/60 py-16 sm:py-20">
+            <Container>
+              <div className="flex items-center gap-2.5 text-accent-electric">
+                <ShieldAlert size={18} aria-hidden />
+                <h2 className="font-display text-2xl font-semibold text-foreground">
+                  Défis techniques relevés
+                </h2>
+              </div>
+              <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+                {project.challenges.map((c) => (
+                  <li
+                    key={c}
+                    className="glass-panel flex items-start gap-3 rounded-xl p-4 text-sm leading-relaxed text-muted"
+                  >
+                    <ShieldAlert size={18} className="mt-0.5 shrink-0 text-accent-electric" aria-hidden />
+                    {c}
+                  </li>
+                ))}
+              </ul>
             </Container>
           </section>
         )}

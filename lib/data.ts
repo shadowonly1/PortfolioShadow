@@ -86,6 +86,7 @@ export type Project = {
   problem: string;
   solution: string;
   architecture?: string;
+  challenges?: string[];
   results?: string[];
   lessons?: string;
   deviceType?: "browser" | "phone";
@@ -146,6 +147,53 @@ export const projects: Project[] = [
       },
     ],
     featured: true,
+  },
+  {
+    slug: "scan-tickets",
+    name: "Scan Tickets",
+    role: "Lead Full-Stack Developer",
+    summary:
+      "SaaS de gestion et validation de tickets de restauration par QR Code, pensé pour éliminer la fraude et le suivi papier.",
+    problem:
+      "Les systèmes papier traditionnels rendent le suivi des tickets de restauration difficile et favorisent les erreurs et les fraudes : pas de traçabilité, pas de détection de double utilisation, aucune visibilité en temps réel sur la consommation.",
+    solution:
+      "Une plateforme digitale permettant la génération, la gestion et la validation instantanée des tickets grâce à un QR Code unique par ticket. Un scanner dédié valide chaque ticket en temps réel (disponible / déjà utilisé / expiré), avec un dashboard administrateur complet pour piloter tickets, utilisateurs et statistiques.",
+    architecture:
+      "Frontend Next.js (TypeScript, Tailwind CSS, Framer Motion) consommant une API REST Laravel/PHP avec authentification JWT, base de données MySQL. Génération de QR Codes uniques à la création de chaque ticket, scanner dédié pour la validation instantanée, gestion des rôles (Administrateur, Agent de contrôle, Utilisateur) avec traçabilité complète des actions.",
+    challenges: [
+      "Gestion temps réel des validations pour éviter tout conflit lors de scans simultanés",
+      "Sécurisation des QR Codes contre la duplication et la falsification",
+      "Optimisation des performances du scanner pour une validation quasi instantanée",
+      "Conception d'une gestion des rôles claire entre administrateurs, agents de contrôle et utilisateurs",
+    ],
+    results: [
+      "Réduction des fraudes grâce à la détection automatique des doubles utilisations",
+      "Validation des tickets nettement plus rapide qu'un contrôle manuel",
+      "Traçabilité complète : chaque scan, chaque action est historisée",
+      "Dashboard administrateur donnant une visibilité en temps réel sur la consommation",
+    ],
+    lessons:
+      "Sur un système de validation en temps réel, la fiabilité prime sur tout le reste — le vrai défi n'était pas de scanner un QR Code, mais de garantir qu'un même ticket ne puisse jamais être validé deux fois, même en cas de scans quasi simultanés.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "React",
+      "Framer Motion",
+      "Laravel",
+      "PHP",
+      "MySQL",
+      "REST API",
+      "JWT",
+    ],
+    highlights: [
+      "QR Code unique généré automatiquement pour chaque ticket",
+      "Scanner avec retour visuel animé (valide / déjà utilisé / expiré)",
+      "Dashboard administrateur avec statistiques et graphiques d'activité",
+      "Gestion fine des rôles : Administrateur, Agent de contrôle, Utilisateur",
+    ],
+    image: "/images/projects/scan-tickets.jpg",
+    imageAlt: "Dashboard et scanner QR Code de Scan Tickets — à remplacer par Elimane",
   },
   {
     slug: "aprosi-materiaux",

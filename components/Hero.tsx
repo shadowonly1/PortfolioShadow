@@ -240,19 +240,35 @@ export function Hero() {
           className="order-2 relative mx-auto w-full max-w-md lg:order-2 lg:max-w-lg"
           style={{ perspective: 1200 }}
         >
+          {/* Deep, layered backdrop — two soft-focus color pools instead of one flat blob */}
           <motion.div
             aria-hidden
-            className="absolute left-1/2 top-1/2 -z-10 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-accent/50 via-accent-electric/30 to-transparent blur-3xl sm:h-[560px] sm:w-[560px]"
+            className="absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/40 blur-[100px] sm:h-[500px] sm:w-[500px]"
             style={prefersReducedMotion ? undefined : { x: glowX, y: glowY }}
-            animate={prefersReducedMotion ? undefined : { scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
-            transition={prefersReducedMotion ? undefined : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+            animate={prefersReducedMotion ? undefined : { scale: [1, 1.12, 1], opacity: [0.5, 0.75, 0.5] }}
+            transition={prefersReducedMotion ? undefined : { duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
             aria-hidden
-            className="absolute -inset-3 -z-10 rounded-[2.5rem] border border-accent-electric/30"
-            animate={prefersReducedMotion ? undefined : { rotate: [0, 3, 0, -3, 0] }}
-            transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-10 -right-6 -z-10 h-64 w-64 rounded-full bg-accent-electric/25 blur-[90px]"
+            animate={prefersReducedMotion ? undefined : { scale: [1, 1.2, 1], opacity: [0.4, 0.65, 0.4] }}
+            transition={prefersReducedMotion ? undefined : { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
           />
+
+          {/* Corner brackets — an editorial "focus frame" instead of a spinning border */}
+          {[
+            "-left-2.5 -top-2.5 border-l-2 border-t-2 rounded-tl-xl",
+            "-right-2.5 -top-2.5 border-r-2 border-t-2 rounded-tr-xl",
+            "-left-2.5 -bottom-2.5 border-l-2 border-b-2 rounded-bl-xl",
+            "-right-2.5 -bottom-2.5 border-r-2 border-b-2 rounded-br-xl",
+          ].map((cls) => (
+            <span
+              key={cls}
+              aria-hidden
+              className={`absolute z-10 h-8 w-8 border-accent-electric/60 ${cls}`}
+            />
+          ))}
+
           <div aria-hidden className="absolute -right-2 -top-6 hidden grid-cols-4 gap-1.5 sm:grid">
             {Array.from({ length: 16 }).map((_, i) => (
               <span key={i} className="h-1 w-1 rounded-full bg-accent-electric/40" />
@@ -268,22 +284,33 @@ export function Hero() {
               rotateY: prefersReducedMotion ? 0 : springRotateY,
               transformStyle: "preserve-3d",
             }}
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-border bg-surface shadow-2xl shadow-black/50"
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] ring-1 ring-inset ring-white/5"
           >
             <Image
-              src="/images/shad.png"
-              alt={`${profile.name} au travail, entouré de fenêtres de code`}
+              src="/images/Profil.png"
+              alt={`Portrait de ${profile.name}`}
               fill
               sizes="(min-width: 1024px) 576px, 90vw"
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-electric/10 via-transparent to-transparent opacity-60 mix-blend-overlay" />
+            {/* Screen-blend the accent colors onto the photo — pure black areas of the
+                portrait pick up this color exactly, blending into the Hero's blue glow
+                instead of sitting as a flat black rectangle. */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 90% 70% at 50% 100%, rgba(79,93,255,0.85), transparent 65%), radial-gradient(ellipse 70% 50% at 100% 0%, rgba(94,234,255,0.5), transparent 60%)",
+                mixBlendMode: "screen",
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
 
             <motion.div
               aria-hidden
-              className="absolute left-0 right-0 top-0 h-24 bg-gradient-to-b from-accent-electric/25 via-accent-electric/5 to-transparent blur-md will-change-transform"
+              className="absolute left-0 right-0 top-0 h-24 bg-gradient-to-b from-accent-electric/20 via-accent-electric/5 to-transparent blur-md will-change-transform"
               animate={prefersReducedMotion ? undefined : { y: [-100, 700] }}
               transition={prefersReducedMotion ? undefined : { duration: 3.4, repeat: Infinity, ease: "linear", repeatDelay: 1.6 }}
             />
