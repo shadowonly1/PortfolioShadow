@@ -192,8 +192,10 @@ export const projects: Project[] = [
       "Dashboard administrateur avec statistiques et graphiques d'activité",
       "Gestion fine des rôles : Administrateur, Agent de contrôle, Utilisateur",
     ],
-    image: "/images/projects/scan-tickets.jpg",
-    imageAlt: "Dashboard et scanner QR Code de Scan Tickets — à remplacer par Elimane",
+    image: "/images/scanT (1).png",
+    imageAlt: "Application mobile et back-office de Scan Tickets",
+    images: ["/images/scanT (1).png", "/images/scanT (2).png"],
+    deviceType: "browser",
   },
   {
     slug: "aprosi-materiaux",
