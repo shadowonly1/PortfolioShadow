@@ -196,6 +196,7 @@ export const projects: Project[] = [
     imageAlt: "Application mobile et back-office de Scan Tickets",
     images: ["/images/scanT (1).png", "/images/scanT (2).png"],
     deviceType: "browser",
+    featured: true,
   },
   {
     slug: "aprosi-materiaux",
