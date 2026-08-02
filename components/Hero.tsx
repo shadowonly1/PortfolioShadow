@@ -67,7 +67,7 @@ export function Hero() {
     >
       <HeroBackground />
 
-      <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[0.85fr_1.15fr]">
+      <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="order-2 lg:order-2">
           <motion.div
             initial={prefersReducedMotion ? undefined : item.hidden}
@@ -237,7 +237,7 @@ export function Hero() {
               ? undefined
               : { y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.9 } }
           }
-          className="order-1 relative mx-auto w-full max-w-md lg:order-1 lg:max-w-lg"
+          className="order-1 relative mx-auto w-full max-w-lg lg:order-1 lg:max-w-2xl"
           style={{ perspective: 1200 }}
         >
           {/* Deep, layered backdrop — two soft-focus color pools instead of one flat blob */}
