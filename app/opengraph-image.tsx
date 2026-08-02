@@ -8,9 +8,9 @@ export const contentType = "image/png";
 
 export default async function Image() {
   const photoData = await fetch(
-    new URL("../public/images/shad.png", import.meta.url)
+    new URL("../public/images/shad-og.jpg", import.meta.url)
   ).then((res) => res.arrayBuffer());
-  const photoSrc = `data:image/png;base64,${Buffer.from(photoData).toString("base64")}`;
+  const photoSrc = `data:image/jpeg;base64,${Buffer.from(photoData).toString("base64")}`;
 
   return new ImageResponse(
     (
