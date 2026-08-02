@@ -66,6 +66,16 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden border-t border-border/60 py-24 sm:py-32">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-20">
+        <Image
+          src="/images/shad.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-top opacity-[0.14]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
+      </div>
       <SectionGlow color="rgba(123, 133, 255, 0.2)" position="center" />
       <SectionNumberBg number="08" />
       <div

@@ -6,7 +6,12 @@ export const alt = "Elimane Ba — Développeur Web, Mobile & Backend";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
+  const photoData = await fetch(
+    new URL("../public/images/shad.png", import.meta.url)
+  ).then((res) => res.arrayBuffer());
+  const photoSrc = `data:image/png;base64,${Buffer.from(photoData).toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -14,16 +19,43 @@ export default function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
           backgroundColor: "#08090D",
-          backgroundImage:
-            "radial-gradient(circle at 15% 15%, rgba(79,93,255,0.55), transparent 55%), radial-gradient(circle at 85% 85%, rgba(94,234,255,0.35), transparent 50%)",
           fontFamily: "sans-serif",
         }}
       >
+        <img
+          src={photoSrc}
+          width={620}
+          height={630}
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: 620,
+            height: 630,
+            objectFit: "cover",
+            objectPosition: "top",
+          }}
+        />
         <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            backgroundImage:
+              "linear-gradient(90deg, #08090D 40%, rgba(8,9,13,0.55) 62%, transparent 78%), radial-gradient(circle at 10% 10%, rgba(79,93,255,0.4), transparent 55%)",
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "80px",
+            maxWidth: 760,
+          }}
+        >
+          <div
           style={{
             display: "flex",
             alignItems: "center",
@@ -80,6 +112,7 @@ export default function Image() {
           }}
         >
           {profile.tagline}
+          </div>
         </div>
       </div>
     ),
