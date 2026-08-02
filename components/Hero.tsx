@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   ChevronDown,
@@ -12,7 +12,7 @@ import {
   Star,
   Twitter,
 } from "lucide-react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { profile } from "@/lib/data";
 import { useReducedMotion } from "@/lib/useReducedMotion";
@@ -35,9 +35,20 @@ const item = {
   },
 };
 
+const heroPhotos = ["/images/Profil.png", "/images/Profil%202.png"];
+
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const frameRef = useRef<HTMLDivElement>(null);
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const id = setInterval(() => {
+      setPhotoIndex((i) => (i + 1) % heroPhotos.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [prefersReducedMotion]);
 
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -286,14 +297,25 @@ export function Hero() {
             }}
             className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] ring-1 ring-inset ring-white/5"
           >
-            <Image
-              src="/images/Profil.png"
-              alt={`Portrait de ${profile.name}`}
-              fill
-              sizes="(min-width: 1024px) 576px, 90vw"
-              className="object-cover"
-              priority
-            />
+            <AnimatePresence mode="sync">
+              <motion.div
+                key={photoIndex}
+                initial={prefersReducedMotion ? undefined : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={prefersReducedMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: 1 }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={heroPhotos[photoIndex]}
+                  alt={`Portrait de ${profile.name}`}
+                  fill
+                  sizes="(min-width: 1024px) 576px, 90vw"
+                  className="object-cover"
+                  priority={photoIndex === 0}
+                />
+              </motion.div>
+            </AnimatePresence>
             {/* Screen-blend the accent colors onto the photo — pure black areas of the
                 portrait pick up this color exactly, blending into the Hero's blue glow
                 instead of sitting as a flat black rectangle. */}
