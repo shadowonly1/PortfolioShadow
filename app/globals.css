@@ -83,10 +83,6 @@
     color: transparent;
   }
 
-  .noise-overlay {
-    position: relative;
-  }
-
   .noise-overlay::after {
     content: "";
     position: absolute;
