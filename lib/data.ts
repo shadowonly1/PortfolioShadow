@@ -56,7 +56,7 @@ export type Experience = {
 export const experiences: Experience[] = [
   {
     company: "APROSI",
-    role: "Développeur Web & Mobile, Designer Graphique & Administrateur Réseaux",
+    role: "Développeur Full-Stack & Designer Graphique",
     period: "Novembre 2022 — Aujourd'hui",
     description:
       "Pilote la communication visuelle et le branding de l'agence. Conçoit et déploie des plateformes web métier (gestion des matériaux : Next.js, Express, PostgreSQL, Redis, JWT/RBAC). Développe le site institutionnel et une plateforme ERP WordPress. Administre réseau, serveurs et sécurité.",
@@ -97,6 +97,8 @@ export type Project = {
   images?: string[];
   links?: { label: string; href: string }[];
   featured?: boolean;
+  /** Projet resté au stade de conception : exclu du compteur « projets livrés ». */
+  conceptual?: boolean;
 };
 
 export const projects: Project[] = [
@@ -283,8 +285,10 @@ export const projects: Project[] = [
       "Stratégie de rebranding complète, du nom à l'interface",
       "Adaptation fonctionnelle ciblée marché sénégalais et ouest-africain",
     ],
-    image: "/images/projects/sunurh-pro.jpg",
-    imageAlt: "Capture d'écran de SunuRH Pro — à remplacer par Elimane",
+    image: "/images/SunuRH.jpg",
+    imageAlt: "Interface de SunuRH Pro",
+    images: ["/images/SunuRH.jpg"],
+    deviceType: "browser",
   },
   {
     slug: "helping-yourself",
@@ -309,7 +313,8 @@ export const projects: Project[] = [
       "Exercice de conception à grande échelle, en amont du développement",
     ],
     image: "/images/projects/helping-yourself.jpg",
-    imageAlt: "Schéma d'architecture de Helping Yourself (HYS) — à remplacer par Elimane",
+    imageAlt: "Visuel de présentation du projet Helping Yourself (HYS)",
+    conceptual: true,
   },
 ];
 
@@ -323,7 +328,7 @@ export const designWorks: DesignWork[] = [
   { src: "/images/logo/madya-removebg-preview.png", alt: "Logo Madya — variante" },
   { src: "/images/logo/logo-shadow.png", alt: "Logo personnel — ShadowOnly" },
   { src: "/images/logo/DESIGN SHADOWONLY.jpg", alt: "Identité visuelle ShadowOnly" },
-  { src: "/images/logo/roll up aprosi2-Récupéré.jpg", alt: "Roll-up institutionnel APROSI" },
+  { src: "/images/logo/roll-up-aprosi.jpg", alt: "Roll-up institutionnel APROSI" },
   { src: "/images/logo/ramadan design.jpg", alt: "Visuel de communication — Ramadan" },
   { src: "/images/logo/bonne Annee 2026.jpg", alt: "Visuel de vœux — Nouvel An 2026" },
   { src: "/images/logo/ACHOURA.jpg", alt: "Visuel de communication — Achoura" },
@@ -336,16 +341,11 @@ export const designWorks: DesignWork[] = [
   { src: "/images/logo/Panneau 1 pizza (3).jpg", alt: "Panneau publicitaire — Pizza, variante 3" },
   { src: "/images/logo/aprosi Pancarte 1.jpg", alt: "Pancarte institutionnelle APROSI" },
   { src: "/images/logo/20260102_001348_0000.png", alt: "Création graphique" },
-  { src: "/images/logo/Gemini_Generated_Image_20anlo20anlo20an.png", alt: "Illustration graphique générée" },
   { src: "/images/logo/391b2e91f6d224fce04482ef2b3b3ac4.jpg", alt: "Création graphique" },
   { src: "/images/logo/3f1cd391042f41bb0f95600a57bcd616.jpg", alt: "Création graphique" },
   { src: "/images/logo/8d23ee4d579700e9194cd437005043ed.jpg", alt: "Création graphique" },
   { src: "/images/logo/b26007d05dbadb4ef69c1d8a1e10ec7f.jpg", alt: "Création graphique" },
   { src: "/images/logo/d002469b093c36baae1db36c29de46fd.jpg", alt: "Création graphique" },
-  {
-    src: "/images/logo/Gemini_Generated_Image_q98pqnq98pqnq98p-removebg-preview.png",
-    alt: "Illustration graphique générée",
-  },
   { src: "/images/logo/d406ec1b0024dc3ed473af235a9143dd.jpg", alt: "Création graphique" },
   { src: "/images/logo/Fichier 1.png", alt: "Création graphique" },
 ];
@@ -358,19 +358,12 @@ export const education = [
   },
 ];
 
+export const deliveredProjects = projects.filter((p) => !p.conceptual);
+
 export const certifications = [
   {
     name: "Graphic Design — Adobe Certified",
     issuer: "GoMyCode",
     date: "Mars 2026",
   },
-];
-
-export const heroCodeLines = [
-  "const developer = {",
-  "  name: 'Elimane BA',",
-  "  role: 'Web · Mobile · Backend',",
-  "  based_in: 'Dakar, SN',",
-  "  also: 'designer graphique certifié',",
-  "};",
 ];

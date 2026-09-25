@@ -11,3 +11,6 @@ yarn-error.log*
 next-env.d.ts.bak
 tsconfig.tsbuildinfo
 
+
+# Sauvegardes locales des médias (hors site)
+/_archive/

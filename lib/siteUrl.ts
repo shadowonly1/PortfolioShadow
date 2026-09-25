@@ -1,7 +1,10 @@
-// TODO(Elimane): remplace par ton vrai domaine une fois acheté/configuré sur Vercel
-// (ou définis NEXT_PUBLIC_SITE_URL dans les variables d'environnement Vercel).
+// Priorité : NEXT_PUBLIC_SITE_URL (ton domaine, à définir sur Vercel) → domaine de
+// production Vercel → URL du déploiement courant → localhost.
+// VERCEL_URL seul change à chaque déploiement : ne jamais s'en servir comme canonique.
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? process.env.NEXT_PUBLIC_SITE_URL
-  : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";

@@ -1,74 +1,84 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
+/**
+ * Curseur discret, desktop uniquement. Le curseur natif reste visible partout,
+ * sauf au-dessus des éléments [data-cursor] où une pastille « VIEW + » le remplace.
+ */
 export function CustomCursor() {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReduced = useReducedMotion();
   const [enabled, setEnabled] = useState(false);
-  const [hovering, setHovering] = useState(false);
+  const [label, setLabel] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
 
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const ringX = useSpring(x, { stiffness: 300, damping: 30, mass: 0.4 });
-  const ringY = useSpring(y, { stiffness: 300, damping: 30, mass: 0.4 });
+  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.3 });
+  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.3 });
 
   useEffect(() => {
-    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
-    if (!isFinePointer || prefersReducedMotion) return;
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!fine || prefersReduced) return;
     setEnabled(true);
-    document.documentElement.classList.add("custom-cursor-active");
 
-    const handleMove = (event: PointerEvent) => {
-      x.set(event.clientX);
-      y.set(event.clientY);
-      if (!visible) setVisible(true);
+    const onMove = (e: PointerEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+      setVisible(true);
     };
-
-    const handleOver = (event: PointerEvent) => {
-      const target = event.target as HTMLElement | null;
-      setHovering(Boolean(target?.closest("a, button, [role='button'], input, textarea")));
+    const onOver = (e: PointerEvent) => {
+      const el = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-cursor]");
+      setLabel(el?.dataset.cursor ?? null);
     };
+    const onLeave = () => setVisible(false);
 
-    const handleLeave = () => setVisible(false);
-
-    window.addEventListener("pointermove", handleMove);
-    window.addEventListener("pointerover", handleOver);
-    document.documentElement.addEventListener("pointerleave", handleLeave);
-
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerover", onOver, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onLeave);
     return () => {
-      document.documentElement.classList.remove("custom-cursor-active");
-      window.removeEventListener("pointermove", handleMove);
-      window.removeEventListener("pointerover", handleOver);
-      document.documentElement.removeEventListener("pointerleave", handleLeave);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerover", onOver);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersReducedMotion]);
+  }, [prefersReduced, x, y]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("cursor-label", Boolean(label));
+  }, [label]);
 
   if (!enabled) return null;
 
   return (
-    <div
+    <motion.div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[100]"
-      style={{ opacity: visible ? 1 : 0, transition: "opacity 0.2s" }}
+      className="pointer-events-none fixed left-0 top-0 z-[100]"
+      style={{ x: sx, y: sy, opacity: visible ? 1 : 0 }}
     >
-      <motion.div
-        className="fixed left-0 top-0 h-1.5 w-1.5 rounded-full bg-accent-electric"
-        style={{ x, y, translateX: "-50%", translateY: "-50%" }}
-      />
-      <motion.div
-        className="fixed left-0 top-0 rounded-full border border-accent-electric/60"
-        animate={{
-          width: hovering ? 48 : 28,
-          height: hovering ? 48 : 28,
-          opacity: hovering ? 0.9 : 0.5,
-        }}
-        transition={{ duration: 0.2 }}
-        style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
-      />
-    </div>
+      <AnimatePresence mode="wait">
+        {label ? (
+          <motion.span
+            key="label"
+            initial={{ scale: 0.4, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.4, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="-ml-12 -mt-12 flex h-24 w-24 items-center justify-center gap-1 rounded-full bg-foreground font-mono text-[11px] uppercase tracking-[0.14em] text-background"
+          >
+            {label} <span className="text-accent">+</span>
+          </motion.span>
+        ) : (
+          <motion.span
+            key="dot"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            className="-ml-[3px] -mt-[3px] block h-1.5 w-1.5 rounded-full bg-accent"
+          />
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }

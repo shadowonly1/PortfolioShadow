@@ -6,7 +6,7 @@ import { profile } from "@/lib/data";
 export function ConsoleEasterEgg() {
   useEffect(() => {
     const styles = [
-      "color: #5EEAFF",
+      "color: #6875FF",
       "font-size: 14px",
       "font-family: monospace",
       "font-weight: bold",
@@ -18,7 +18,7 @@ export function ConsoleEasterEgg() {
     );
     console.log(
       `%cSalut, curieux du DevTools 👋\n${profile.name} — ${profile.role}\nSi tu regardes le code ici, tu regarderais peut-être aussi une opportunité ensemble ?\n→ ${profile.email}`,
-      "color: #8B8FA3; font-family: monospace; font-size: 12px; line-height: 1.6"
+      "color: #9A9CA6; font-family: monospace; font-size: 12px; line-height: 1.6"
     );
   }, []);
 

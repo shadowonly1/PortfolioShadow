@@ -34,6 +34,30 @@ export function ChatBot() {
   const [isTyping, setIsTyping] = useState(false);
   const [askedIds, setAskedIds] = useState<string[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const [pastHero, setPastHero] = useState(false);
+
+  // Le bouton n'apparaît qu'après le hero pour ne pas couvrir sa composition.
+  useEffect(() => {
+    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.7);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    inputRef.current?.focus();
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open]);
 
   useEffect(() => {
     if (open && messages.length === 0) {
@@ -83,19 +107,17 @@ export function ChatBot() {
   return (
     <>
       <motion.button
+        ref={toggleRef}
         type="button"
+        tabIndex={pastHero || open ? 0 : -1}
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant"}
         aria-expanded={open}
-        className="fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent-electric text-white shadow-[0_0_30px_rgba(79,93,255,0.55)] transition-transform hover:scale-105 sm:bottom-7 sm:right-7"
+        className={`fixed bottom-5 right-5 z-[60] flex h-12 items-center gap-2 rounded-full border border-line/15 bg-background/80 px-4 font-mono text-label uppercase text-foreground backdrop-blur-md transition-[opacity,transform,border-color] duration-500 hover:border-line/40 sm:bottom-7 sm:right-7 ${
+          pastHero || open ? "opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+        }`}
         whileTap={{ scale: 0.92 }}
       >
-        {!open && (
-          <span
-            aria-hidden
-            className="absolute inset-0 animate-ping rounded-full bg-accent-electric/40"
-          />
-        )}
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
             <motion.span
@@ -106,7 +128,7 @@ export function ChatBot() {
               transition={{ duration: 0.2 }}
               className="relative"
             >
-              <X size={22} aria-hidden />
+              <X size={16} aria-hidden />
             </motion.span>
           ) : (
             <motion.span
@@ -117,7 +139,10 @@ export function ChatBot() {
               transition={{ duration: 0.2 }}
               className="relative"
             >
-              <MessageCircle size={22} aria-hidden />
+              <span className="flex items-center gap-2">
+                <MessageCircle size={15} aria-hidden />
+                Ask
+              </span>
             </motion.span>
           )}
         </AnimatePresence>
@@ -142,10 +167,7 @@ export function ChatBot() {
                 <p className="truncate text-sm font-semibold text-foreground">
                   Assistant de {profile.name}
                 </p>
-                <p className="flex items-center gap-1.5 text-xs text-emerald-400">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
-                  En ligne
-                </p>
+                <p className="text-xs text-muted">Réponses automatiques · FAQ</p>
               </div>
             </div>
 
@@ -200,7 +222,9 @@ export function ChatBot() {
 
             <form onSubmit={handleSubmit} className="flex items-center gap-2 border-t border-border/60 p-3">
               <input
+                ref={inputRef}
                 type="text"
+                aria-label="Ta question"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Écris ta question…"

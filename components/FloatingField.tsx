@@ -1,10 +1,11 @@
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 
+// Champ éditorial : simple filet bas, label flottant en monospace.
 const baseField =
-  "peer w-full rounded-lg border border-border bg-background/60 px-4 pb-2 pt-5 text-sm text-foreground outline-none transition-all duration-300 focus:border-accent-electric focus:shadow-[0_0_0_3px_rgba(94,234,255,0.15)]";
+  "peer w-full border-0 border-b border-line/20 bg-transparent px-0 pb-3 pt-7 text-base text-foreground outline-none transition-colors duration-500 focus:border-accent focus:shadow-[0_1px_0_0_rgb(var(--accent))] focus-visible:outline-none";
 
 const baseLabel =
-  "pointer-events-none absolute left-4 top-3.5 text-sm text-muted transition-all duration-200 peer-focus:top-2 peer-focus:text-[11px] peer-focus:text-accent-electric peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-[11px]";
+  "pointer-events-none absolute left-0 top-7 font-mono text-label uppercase text-muted transition-all duration-300 ease-editorial peer-focus:top-1 peer-focus:text-accent-soft peer-[:not(:placeholder-shown)]:top-1";
 
 export function FloatingInput({
   id,

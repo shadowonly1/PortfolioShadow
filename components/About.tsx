@@ -1,129 +1,98 @@
-import { Award, Calendar, Code2, Download, Layers } from "lucide-react";
 import Image from "next/image";
-import { about, certifications, profile, projects, skillGroups } from "@/lib/data";
-import SectionGlow from "./backgrounds/SectionGlow";
+import { about, certifications, deliveredProjects, profile, skillGroups } from "@/lib/data";
+import { whatIDo } from "@/lib/editorial";
 import { Container } from "./Container";
-import { ScrollReveal } from "./ScrollReveal";
-import { SectionHeading } from "./SectionHeading";
-import { SectionNumberBg } from "./SectionNumberBg";
+import { ClipReveal, Hairline, Plus, Reveal, RevealText } from "./Reveal";
+
+const techCount = skillGroups.reduce((total, group) => total + group.items.length, 0);
 
 const stats = [
-  { icon: Calendar, value: "6+", label: "Ans d'expérience" },
-  { icon: Code2, value: `${projects.length}`, label: "Projets livrés" },
-  {
-    icon: Layers,
-    value: `${skillGroups.reduce((total, group) => total + group.items.length, 0)}+`,
-    label: "Technologies maîtrisées",
-  },
-  { icon: Award, value: `${certifications.length}`, label: "Certification(s)" },
+  { value: "6+", label: "Ans d'expérience" },
+  { value: String(deliveredProjects.length).padStart(2, "0"), label: "Projets livrés" },
+  { value: `${techCount}+`, label: "Technologies" },
+  { value: String(certifications.length).padStart(2, "0"), label: "Certification Adobe" },
 ];
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden py-24 sm:py-32">
-      <SectionGlow color="rgba(94, 234, 255, 0.14)" position="left" />
-      <SectionNumberBg number="01" />
+    <section id="about" className="section">
+      <Container>
+        <div className="flex items-center gap-4">
+          <span className="label whitespace-nowrap">
+            <span className="text-foreground">01</span> / About — {profile.name}
+          </span>
+          <Hairline className="flex-1" />
+          <Plus />
+        </div>
 
-      <Container className="grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <ScrollReveal>
-          <SectionHeading eyebrow="01 — À propos" title="Code et design, même métier" />
+        <RevealText
+          lines={["I build digital products", <span key="l2" className="text-muted">from idea to production.</span>]}
+          className="display mt-12 max-w-6xl text-display-md sm:mt-16"
+        />
 
-          <ScrollReveal delay={0.1} className="mt-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-emerald-400">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              </span>
-              Disponible pour missions
-            </div>
-          </ScrollReveal>
+        <div className="mt-16 grid gap-12 sm:mt-24 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-4">
+            <ClipReveal className="group relative aspect-[4/5] w-full max-w-sm overflow-hidden bg-surface">
+              <Image
+                src="/images/shadow.jpeg"
+                alt={`Portrait de ${profile.name}`}
+                fill
+                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 24rem, 100vw"
+                className="object-cover object-top grayscale transition-[filter,transform] duration-1000 ease-editorial group-hover:scale-[1.03] group-hover:grayscale-0"
+              />
+            </ClipReveal>
+            <p className="label mt-4 flex justify-between">
+              <span>{profile.alias}</span>
+              <span>Fig. 01</span>
+            </p>
+          </div>
 
-          <ScrollReveal delay={0.15} className="mt-8 hidden lg:block">
-            <div className="glass-panel group relative w-fit overflow-hidden rounded-2xl p-2">
-              <div className="relative h-72 w-72 overflow-hidden rounded-xl xl:h-80 xl:w-80">
-                <Image
-                  src="/images/shadow.jpeg"
-                  alt={`Photo de profil de ${profile.name}`}
-                  fill
-                  sizes="320px"
-                  className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-              </div>
-              <p className="px-3 py-4 text-sm leading-snug text-muted">
-                {profile.alias}
-                <span className="mt-1 block text-base font-medium text-foreground/80">
-                  {profile.role}
-                </span>
-              </p>
-            </div>
-          </ScrollReveal>
-        </ScrollReveal>
-
-        <div className="flex flex-col gap-6">
-          {about.paragraphs.map((p, i) => (
-            <ScrollReveal key={i} delay={i * 0.08}>
-              <p className="text-lg leading-relaxed text-muted">{p}</p>
-            </ScrollReveal>
-          ))}
-
-          <ScrollReveal delay={0.2} className="lg:hidden">
-            <div className="mt-4 flex items-center gap-4 rounded-xl border border-border bg-surface p-5">
-              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-accent/40">
-                <Image
-                  src="/images/shadow.jpeg"
-                  alt={`Photo de profil de ${profile.name}`}
-                  fill
-                  sizes="64px"
-                  className="object-cover object-top"
-                />
-              </div>
-              <p className="text-sm text-muted">
-                {profile.alias} — {profile.role}.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.28}>
-            <div className="mt-2 grid grid-cols-2 gap-4">
-              {stats.map(({ icon: Icon, value, label }) => (
-                <div
-                  key={label}
-                  className="glass-panel group flex items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent-electric/40"
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/15 text-accent-bright transition-all duration-300 group-hover:bg-accent-electric/20 group-hover:text-accent-electric group-hover:shadow-[0_0_20px_rgba(94,234,255,0.35)]">
-                    <Icon size={18} aria-hidden />
-                  </div>
-                  <div>
-                    <p className="font-display text-xl font-bold text-foreground">{value}</p>
-                    <p className="text-xs leading-snug text-muted">{label}</p>
-                  </div>
-                </div>
+          <div className="lg:col-span-4 lg:col-start-6">
+            <p className="label mb-6 text-foreground">About</p>
+            <div className="flex flex-col gap-6">
+              {about.paragraphs.map((p, i) => (
+                <Reveal key={i} delay={i * 0.08} as="p" className="text-lg leading-relaxed text-muted">
+                  {p}
+                </Reveal>
               ))}
             </div>
-          </ScrollReveal>
+            <Reveal delay={0.2} className="mt-10 flex flex-wrap gap-x-8 gap-y-4">
+              <a href="/cv/CV_Elimane_BA_FR.pdf" download className="link-underline pb-1 font-mono text-label uppercase text-foreground">
+                CV — Français ↓
+              </a>
+              <a href="/cv/CV_Elimane_BA_EN.pdf" download className="link-underline pb-1 font-mono text-label uppercase text-foreground">
+                CV — English ↓
+              </a>
+            </Reveal>
+          </div>
 
-          <ScrollReveal delay={0.34}>
-            <div className="mt-2 flex flex-wrap items-center gap-3">
-              <a
-                href="/cv/CV_Elimane_BA_FR.pdf"
-                download
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-[0_0_20px_rgba(79,93,255,0.35)] transition-colors hover:bg-accent-bright"
-              >
-                <Download size={15} aria-hidden />
-                Télécharger CV (FR)
-              </a>
-              <a
-                href="/cv/CV_Elimane_BA_EN.pdf"
-                download
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-accent-electric hover:text-accent-electric"
-              >
-                <Download size={15} aria-hidden />
-                CV (EN)
-              </a>
-            </div>
-          </ScrollReveal>
+          <div className="lg:col-span-2 lg:col-start-11">
+            <p className="label mb-6 text-foreground">What I do</p>
+            <ol className="border-t">
+              {whatIDo.map((item, i) => (
+                <Reveal as="li" key={item} delay={i * 0.05} y={10} className="flex items-baseline gap-3 border-b py-3">
+                  <span className="label">0{i + 1}</span>
+                  <span className="font-display text-2xl uppercase leading-none">{item}</span>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
         </div>
+
+        <dl className="mt-20 grid grid-cols-2 border-t sm:mt-28 lg:grid-cols-4">
+          {stats.map((stat, i) => (
+            <Reveal
+              key={stat.label}
+              delay={i * 0.08}
+              className="flex flex-col gap-2 border-b py-8 pr-4 odd:border-r odd:pl-0 even:pl-6 lg:border-b-0 lg:border-r lg:pl-6 lg:first:pl-0 lg:last:border-r-0"
+            >
+              <dt className="label order-2">{stat.label}</dt>
+              <dd className="order-1 font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85] text-foreground">
+                {stat.value}
+              </dd>
+            </Reveal>
+          ))}
+        </dl>
       </Container>
     </section>
   );

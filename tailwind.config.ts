@@ -1,89 +1,67 @@
 import type { Config } from "tailwindcss";
 
+// Tous les tons viennent des variables CSS définies dans app/globals.css (:root).
+const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
   darkMode: "class",
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        background: "#08090D",
-        surface: "#0F1117",
-        surfaceHover: "#141724",
-        surfaceAlt: "#11131A",
-        surfaceRaised: "#141823",
-        border: "#1E2230",
-        foreground: "#F2F3F7",
-        muted: "#8B8FA3",
+        background: token("background"),
+        surface: token("surface"),
+        surfaceRaised: token("surface-raised"),
+        foreground: token("foreground"),
+        muted: token("muted"),
+        line: token("line"),
         accent: {
-          DEFAULT: "#4F5DFF",
-          dim: "#3B46C9",
-          bright: "#7B85FF",
-          electric: "#5EEAFF",
+          DEFAULT: token("accent"),
+          soft: token("accent-soft"),
+          // Alias historiques (chatbot, 404…) : ramenés sur l'indigo.
+          bright: token("accent-soft"),
+          electric: token("accent-soft"),
+          dim: token("accent"),
         },
         destructive: "#EF4444",
+        border: "rgb(255 255 255 / 0.10)",
+      },
+      borderColor: {
+        DEFAULT: "rgb(255 255 255 / 0.10)",
       },
       fontFamily: {
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Impact", "sans-serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         serif: ["var(--font-serif)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
+      fontSize: {
+        // Échelle display : fluide entre mobile et 1920px.
+        "display-xl": ["clamp(4.5rem, 17vw, 17rem)", { lineHeight: "0.82", letterSpacing: "-0.01em" }],
+        "display-lg": ["clamp(3.5rem, 11vw, 11rem)", { lineHeight: "0.85", letterSpacing: "-0.01em" }],
+        "display-md": ["clamp(2.75rem, 7vw, 6.5rem)", { lineHeight: "0.88", letterSpacing: "-0.005em" }],
+        "display-sm": ["clamp(2rem, 4vw, 3.5rem)", { lineHeight: "0.92" }],
+        label: ["0.6875rem", { lineHeight: "1rem", letterSpacing: "0.14em" }],
+      },
       maxWidth: {
-        content: "72rem",
+        content: "90rem",
+        prose: "38rem",
+      },
+      transitionTimingFunction: {
+        editorial: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       animation: {
         blink: "blink 1s step-end infinite",
-        float: "float 6s ease-in-out infinite",
-        "float-slow": "float 9s ease-in-out infinite",
-        aurora: "aurora 10s ease-in-out infinite",
-        "grid-pan": "grid-pan 18s linear infinite",
-        shimmer: "shimmer 2s linear infinite",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        drift: "drift 6s ease-in-out infinite",
-        "tile-in": "tile-in 0.5s cubic-bezier(0.16,1,0.3,1) forwards",
-        marquee: "marquee 42s linear infinite",
-        "marquee-reverse": "marquee-reverse 48s linear infinite",
       },
       keyframes: {
-        "tile-in": {
-          "0%": { opacity: "0", transform: "translate3d(0,10px,0) scale(0.92)" },
-          "100%": { opacity: "1", transform: "translate3d(0,0,0) scale(1)" },
-        },
-        marquee: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        "marquee-reverse": {
-          "0%": { transform: "translateX(-50%)" },
-          "100%": { transform: "translateX(0)" },
-        },
-        drift: {
-          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
-          "50%": { transform: "translate3d(0, -5px, 0)" },
-        },
         blink: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
         },
-        float: {
-          "0%, 100%": { transform: "translate3d(0, 0, 0) scale(1)" },
-          "50%": { transform: "translate3d(0, -32px, 0) scale(1.08)" },
-        },
-        aurora: {
-          "0%, 100%": { transform: "translate3d(-8%, -8%, 0) rotate(0deg) scale(1)", opacity: "0.75" },
-          "50%": { transform: "translate3d(8%, 8%, 0) rotate(10deg) scale(1.15)", opacity: "1" },
-        },
-        "grid-pan": {
-          "0%": { backgroundPosition: "0 0" },
-          "100%": { backgroundPosition: "64px 64px" },
-        },
-        shimmer: {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
         "pulse-glow": {
-          "0%, 100%": { opacity: "0.6", transform: "scale(1)" },
-          "50%": { opacity: "1", transform: "scale(1.05)" },
+          "0%, 100%": { opacity: "0.6" },
+          "50%": { opacity: "1" },
         },
       },
     },

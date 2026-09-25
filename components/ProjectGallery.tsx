@@ -1,92 +1,40 @@
 import Image from "next/image";
 import type { Project } from "@/lib/data";
+import { cn } from "@/lib/utils";
+import { ClipReveal } from "./Reveal";
 
-function DeviceChrome({ type }: { type: "browser" | "phone" }) {
-  if (type === "phone") {
-    return (
-      <div
-        aria-hidden
-        className="flex h-6 shrink-0 items-center justify-center rounded-t-[inherit] bg-surfaceRaised"
-      >
-        <span className="h-1.5 w-10 rounded-full bg-border" />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      aria-hidden
-      className="flex h-7 shrink-0 items-center gap-1.5 rounded-t-[inherit] bg-surfaceRaised px-3"
-    >
-      <span className="h-2 w-2 rounded-full bg-destructive/60" />
-      <span className="h-2 w-2 rounded-full bg-yellow-500/60" />
-      <span className="h-2 w-2 rounded-full bg-emerald-500/60" />
-    </div>
-  );
-}
-
+/** Galerie éditoriale : premier visuel pleine largeur, les suivants sur deux colonnes. */
 export function ProjectGallery({ project }: { project: Project }) {
   const images = project.images ?? [];
-  const deviceType = project.deviceType ?? "browser";
-
-  if (images.length === 1) {
-    return (
-      <div className="relative flex flex-col overflow-hidden rounded-xl border border-border bg-background">
-        <DeviceChrome type={deviceType} />
-        <Image
-          src={images[0]}
-          alt={project.imageAlt}
-          width={1600}
-          height={1000}
-          sizes="(min-width: 1024px) 640px, 100vw"
-          className="h-auto w-full object-contain"
-        />
-      </div>
-    );
-  }
-
-  if (images.length === 2) {
-    return (
-      <div className="flex flex-col gap-2 sm:gap-3">
-        {images.map((src, i) => (
-          <div
-            key={src}
-            className="relative flex flex-col overflow-hidden rounded-xl border border-border bg-background"
-          >
-            <DeviceChrome type={deviceType} />
-            <Image
-              src={src}
-              alt={`${project.name} — visuel ${i + 1}`}
-              width={1600}
-              height={1000}
-              sizes="(min-width: 1024px) 640px, 100vw"
-              className="h-auto w-full object-contain"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
+  const phone = project.deviceType === "phone";
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:gap-4">
-      {images.map((src, i) => (
-        <div
-          key={src}
-          className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-background transition-all duration-500 hover:z-10 hover:scale-105 hover:border-accent/50"
-        >
-          <DeviceChrome type={deviceType} />
-          <div className="relative flex aspect-video items-center justify-center p-2">
-            <Image
-              src={src}
-              alt={`${project.name} — visuel ${i + 1}`}
-              fill
-              sizes="(min-width: 1024px) 420px, 50vw"
-              className="object-contain"
-            />
-          </div>
-        </div>
-      ))}
+    <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+      {images.map((src, i) => {
+        const wide = i === 0 || (images.length % 2 === 0 && i === images.length - 1 && images.length > 2);
+        return (
+          <figure key={src} className={cn(wide && "sm:col-span-2")}>
+            <ClipReveal
+              className={cn(
+                "relative w-full overflow-hidden bg-surface",
+                wide ? (phone ? "aspect-[4/3]" : "aspect-[16/9]") : phone ? "aspect-[4/5]" : "aspect-[4/3]"
+              )}
+            >
+              <Image
+                src={src}
+                alt={i === 0 ? project.imageAlt : `${project.name} — visuel ${i + 1}`}
+                fill
+                sizes={wide ? "(min-width: 1440px) 1344px, 100vw" : "(min-width: 640px) 50vw, 100vw"}
+                className="object-contain p-4 sm:p-8"
+              />
+            </ClipReveal>
+            <figcaption className="label mt-3 flex justify-between">
+              <span>{project.name}</span>
+              <span>Fig. {String(i + 1).padStart(2, "0")}</span>
+            </figcaption>
+          </figure>
+        );
+      })}
     </div>
   );
 }

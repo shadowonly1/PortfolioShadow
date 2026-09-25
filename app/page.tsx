@@ -1,36 +1,38 @@
 import { About } from "@/components/About";
-import { Certifications } from "@/components/Certifications";
 import { ChatBot } from "@/components/ChatBot";
 import { Contact } from "@/components/Contact";
 import { DesignShowcase } from "@/components/DesignShowcase";
+import { Education } from "@/components/Education";
 import { Experience } from "@/components/Experience";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { Preloader } from "@/components/Preloader";
 import { Process } from "@/components/Process";
-import { Projects } from "@/components/Projects";
-import { Sidebar } from "@/components/Sidebar";
+import { SelectedWork } from "@/components/SelectedWork";
+import { Services } from "@/components/Services";
 import { Skills } from "@/components/Skills";
+import { Statement } from "@/components/Statement";
 
+// Récit : identité → produits → savoir-faire → parcours → méthode → design → contact.
 export default function Home() {
   return (
-    <Sidebar>
-      <Preloader />
+    <>
       <Header />
       <main id="main-content">
         <Hero />
         <About />
+        <SelectedWork />
+        <Services />
         <Skills />
         <Experience />
         <Process />
-        <Projects />
         <DesignShowcase />
-        <Certifications />
+        <Statement />
+        <Education />
         <Contact />
       </main>
       <Footer />
       <ChatBot />
-    </Sidebar>
+    </>
   );
 }

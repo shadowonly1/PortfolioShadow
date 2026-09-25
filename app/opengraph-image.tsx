@@ -23,7 +23,10 @@ export default async function Image() {
           fontFamily: "sans-serif",
         }}
       >
+        {/* ImageResponse (Satori) n'accepte que <img>, pas next/image */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          alt=""
           src={photoSrc}
           width={620}
           height={630}
@@ -43,7 +46,7 @@ export default async function Image() {
             inset: 0,
             display: "flex",
             backgroundImage:
-              "linear-gradient(90deg, #08090D 40%, rgba(8,9,13,0.55) 62%, transparent 78%), radial-gradient(circle at 10% 10%, rgba(79,93,255,0.4), transparent 55%)",
+              "linear-gradient(90deg, #08090D 40%, rgba(8,9,13,0.55) 62%, transparent 78%), radial-gradient(circle at 10% 10%, rgba(79,93,255,0.25), transparent 55%)",
           }}
         />
         <div
@@ -61,7 +64,7 @@ export default async function Image() {
             alignItems: "center",
             gap: 12,
             fontSize: 22,
-            color: "#5EEAFF",
+            color: "#6875FF",
             letterSpacing: 4,
             textTransform: "uppercase",
           }}
@@ -71,7 +74,7 @@ export default async function Image() {
               width: 10,
               height: 10,
               borderRadius: 999,
-              backgroundColor: "#5EEAFF",
+              backgroundColor: "#6875FF",
             }}
           />
           {profile.location}
@@ -95,7 +98,7 @@ export default async function Image() {
             marginTop: 10,
             fontSize: 42,
             fontWeight: 600,
-            backgroundImage: "linear-gradient(90deg, #7B85FF, #4F5DFF)",
+            backgroundImage: "linear-gradient(90deg, #F2F3F7, #9A9CA6)",
             backgroundClip: "text",
             color: "transparent",
           }}
@@ -107,7 +110,7 @@ export default async function Image() {
             display: "flex",
             marginTop: 36,
             fontSize: 26,
-            color: "#8B8FA3",
+            color: "#9A9CA6",
             maxWidth: 900,
           }}
         >

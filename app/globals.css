@@ -4,23 +4,16 @@
 
 @layer base {
   :root {
-    --glow-accent: rgba(79, 93, 255, 0.55);
-    --glow-electric: rgba(94, 234, 255, 0.4);
-    --mesh-gradient: radial-gradient(
-        circle at 15% 15%,
-        rgba(79, 93, 255, 0.6),
-        transparent 55%
-      ),
-      radial-gradient(circle at 85% 25%, rgba(94, 234, 255, 0.4), transparent 50%),
-      radial-gradient(circle at 50% 85%, rgba(123, 133, 255, 0.45), transparent 55%),
-      radial-gradient(circle at 90% 90%, rgba(79, 93, 255, 0.3), transparent 50%);
-    --border-glass: rgba(242, 243, 247, 0.12);
-    --noise-opacity: 0.06;
-  }
-
-  .custom-cursor-active,
-  .custom-cursor-active * {
-    cursor: none !important;
+    --background: 8 9 13; /* #08090D */
+    --surface: 15 17 23; /* #0F1117 */
+    --surface-raised: 20 22 30;
+    --foreground: 242 243 247; /* #F2F3F7 */
+    --muted: 154 156 166; /* #9A9CA6 */
+    --line: 255 255 255;
+    --accent: 79 93 255; /* #4F5DFF */
+    --accent-soft: 104 117 255; /* #6875FF */
+    --header-h: 4.5rem;
+    color-scheme: dark;
   }
 
   * {
@@ -29,29 +22,26 @@
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    scroll-padding-top: var(--header-h);
+  }
+
+  /* Lenis gère le défilement doux : on neutralise le smooth CSS pour éviter les conflits */
+  html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    overflow-x: hidden;
-    max-width: 100vw;
-    background-image: radial-gradient(
-      circle at 50% 0%,
-      rgba(79, 93, 255, 0.18),
-      transparent 50%
-    );
-    background-repeat: no-repeat;
+    @apply bg-background font-sans text-foreground antialiased;
+    overflow-x: clip;
   }
 
   ::selection {
-    background-color: rgba(79, 93, 255, 0.35);
+    background-color: rgb(var(--accent));
     color: #ffffff;
   }
 
-  /* Visible, high-contrast focus ring for keyboard navigation */
   :focus-visible {
-    outline: 2px solid #7b85ff;
+    outline: 2px solid rgb(var(--accent-soft));
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -71,61 +61,65 @@
   }
 }
 
+@layer components {
+  /* Label technique monospace : « 01 / SELECTED WORK » */
+  .label {
+    @apply font-mono text-label uppercase text-muted;
+  }
+
+  /* Titre display condensé */
+  .display {
+    @apply font-display uppercase text-foreground;
+  }
+
+  .section {
+    @apply relative border-t py-24 sm:py-32 lg:py-40;
+  }
+
+  /* Le curseur natif s'efface uniquement quand la pastille « VIEW + » le remplace */
+  .cursor-label [data-cursor],
+  .cursor-label [data-cursor] * {
+    cursor: none;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
 @layer utilities {
   .section-padding {
-    @apply px-6 sm:px-8 lg:px-12;
+    @apply px-4 sm:px-8 lg:px-12;
   }
 
-  .text-gradient-accent {
-    background: linear-gradient(90deg, #7b85ff 0%, #4f5dff 60%, #3b46c9 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
+  /* Texte en contour : utilisé pour la typographie géante d'arrière-plan */
+  .text-outline {
     color: transparent;
+    -webkit-text-stroke: 1px rgb(var(--line) / 0.14);
   }
 
-  .noise-overlay::after {
+  .noise::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: var(--noise-opacity);
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     mix-blend-mode: overlay;
   }
 
   .glass-panel {
-    background: rgba(15, 17, 23, 0.6);
-    border: 1px solid var(--border-glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-
-  .mesh-gradient {
-    background-image: var(--mesh-gradient);
-  }
-
-  .bg-grid {
-    background-image: linear-gradient(rgba(123, 133, 255, 0.16) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(123, 133, 255, 0.16) 1px, transparent 1px);
-    background-size: 64px 64px;
-  }
-
-  .text-glow {
-    text-shadow: 0 0 40px var(--glow-accent), 0 0 80px var(--glow-electric);
-  }
-
-  .text-shimmer {
-    background: linear-gradient(
-      90deg,
-      #f2f3f7 0%,
-      #7b85ff 25%,
-      #f2f3f7 50%,
-      #7b85ff 75%,
-      #f2f3f7 100%
-    );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    background: rgb(var(--surface) / 0.7);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 }

@@ -1,46 +1,41 @@
 import { processSteps } from "@/lib/process";
-import SectionGlow from "./backgrounds/SectionGlow";
 import { Container } from "./Container";
-import { ScrollReveal } from "./ScrollReveal";
-import { SectionHeading } from "./SectionHeading";
-import { SectionNumberBg } from "./SectionNumberBg";
+import { Reveal } from "./Reveal";
+import { SectionIntro } from "./SectionIntro";
 
 export function Process() {
   return (
-    <section id="process" className="relative overflow-hidden border-t border-border/60 py-24 sm:py-32">
-      <SectionGlow color="rgba(79, 93, 255, 0.16)" position="center" />
-      <SectionNumberBg number="04" />
-
+    <section id="process" className="section">
       <Container>
-        <ScrollReveal>
-          <SectionHeading
-            eyebrow="04 — Méthode"
-            title="Comment je travaille"
-            description="Un processus simple, répété sur chaque projet — de la petite plateforme interne à l'application multi-pays."
-          />
-        </ScrollReveal>
+        <SectionIntro
+          index="06"
+          label="Process"
+          title={["Work", "Process"]}
+          aside="Un processus simple, répété sur chaque projet — de la petite plateforme interne à l'application multi-plateforme."
+        />
 
-        <div className="relative mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          <div
-            aria-hidden
-            className="absolute left-0 right-0 top-8 hidden h-px bg-gradient-to-r from-transparent via-border to-transparent lg:block"
-          />
+        <ol className="mt-16 grid border-l border-t sm:mt-24 sm:grid-cols-2 lg:grid-cols-3">
           {processSteps.map((step, i) => (
-            <ScrollReveal key={step.step} delay={i * 0.08}>
-              <div className="group glass-panel relative flex h-full flex-col gap-3 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent-electric/40">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent-bright transition-all duration-300 group-hover:bg-accent-electric/20 group-hover:text-accent-electric group-hover:shadow-[0_0_16px_rgba(94,234,255,0.35)]">
-                    {step.step}
-                  </span>
-                  <h3 className="font-display text-base font-semibold text-foreground">
-                    {step.title}
-                  </h3>
-                </div>
-                <p className="text-sm leading-relaxed text-muted">{step.description}</p>
+            <Reveal
+              as="li"
+              key={step.step}
+              delay={(i % 3) * 0.08}
+              className="group relative flex flex-col justify-between gap-10 sm:min-h-[20rem] border-b border-r p-6 transition-colors duration-700 ease-editorial hover:bg-surface sm:p-8 lg:min-h-[24rem]"
+            >
+              <div className="flex items-start justify-between">
+                <span className="font-display text-[clamp(4.5rem,8vw,7rem)] leading-[0.8] text-outline transition-colors duration-700 group-hover:text-accent">
+                  {step.step}
+                </span>
+                <span aria-hidden className="font-mono text-accent">+</span>
               </div>
-            </ScrollReveal>
+              <div>
+                <h3 className="display text-display-sm">{step.title}</h3>
+                <p className="label mt-2 text-accent-soft">{step.subtitle}</p>
+                <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{step.description}</p>
+              </div>
+            </Reveal>
           ))}
-        </div>
+        </ol>
       </Container>
     </section>
   );

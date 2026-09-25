@@ -14,28 +14,25 @@ Ouvre [http://localhost:3000](http://localhost:3000).
 
 ## Direction artistique
 
-- **Fond** quasi-noir `#08090D`, surfaces `#0F1117`, texte `#F2F3F7`.
-- **Accent** bleu électrique/indigo `#4F5DFF`, utilisé avec parcimonie (liens, focus, un mot du hero).
-- **Typographies** : Inter (texte) + Bricolage Grotesque (titres, display) + JetBrains Mono (labels/code) — toutes chargées via `next/font/google`, aucune police à télécharger manuellement.
-- **Moment signature** : dans le Hero, un bloc terminal tape un extrait de code puis se transforme (morph Framer Motion via `layoutId`) en carte d'interface — symbolise le passage code → design. Composant : `components/TerminalMorph.tsx`.
-- Un seul thème sombre, volontairement pas de mode clair (cohérent avec la direction "dark premium").
+Portfolio éditorial « poster / magazine » : fond quasi-noir, typographie display condensée géante,
+filets fins, labels monospace numérotés, indigo utilisé avec parcimonie.
 
-## Structure du projet
+- **Tokens** : variables CSS dans `app/globals.css` (`--background`, `--surface`, `--foreground`, `--muted`, `--accent`, `--accent-soft`), exposées dans `tailwind.config.ts`. Échelle `text-display-{xl,lg,md,sm}` + `text-label`.
+- **Typographies** : Bebas Neue (display), Inter (texte), JetBrains Mono (labels), Instrument Serif italique (accents éditoriaux ponctuels).
+- **Hero** : vidéo portrait (`public/images/video.MP4`) fondue dans le fond par un masque radial, texte géant d'arrière-plan, léger parallaxe au scroll (`components/Hero.tsx`, `HeroVideo.tsx`).
+- **Motion** : primitives dans `components/Reveal.tsx` (`RevealText`, `Reveal`, `Hairline`, `ClipReveal`). Toutes respectent `prefers-reduced-motion`.
+- **Curseur** : pastille « VIEW + » sur les éléments `data-cursor="…"` (desktop uniquement).
+
+## Structure
 
 ```
-app/
-  layout.tsx        # polices, metadata SEO/Open Graph
-  page.tsx           # assemble les sections
-  globals.css        # tokens Tailwind, reduced-motion, focus visible
-components/
-  Header.tsx          Hero.tsx           TerminalMorph.tsx
-  About.tsx            Skills.tsx         Experience.tsx
-  Projects.tsx          ProjectCard.tsx    Certifications.tsx
-  Contact.tsx            Footer.tsx
-  ScrollReveal.tsx        SectionHeading.tsx  Badge.tsx  Container.tsx
-lib/
-  data.ts             # TOUT le contenu texte (profil, projets, expériences...)
-  utils.ts / useReducedMotion.ts
+app/page.tsx                 Hero → About → Selected work → Services → Tech stack →
+                             Experience → Process → Graphic design → Statement → Education → Contact
+app/projects/[slug]/page.tsx étude de cas éditoriale
+components/                  une section = un composant (SectionIntro, BackgroundType… réutilisables)
+lib/data.ts                  TOUT le contenu factuel (profil, projets, expériences…)
+lib/editorial.ts             libellés éditoriaux, services, couvertures des projets
+lib/process.ts               étapes de la méthode
 ```
 
 ## Personnaliser le contenu
@@ -43,46 +40,16 @@ lib/
 Tout le texte du site vit dans **`lib/data.ts`** — modifie ce fichier pour changer nom, accroche,
 compétences, expériences, projets, certifications, sans toucher aux composants.
 
-### Images à ajouter (placeholders actuels)
+### Médias
 
-Voir `public/images/README.md`. Tant qu'elles ne sont pas fournies, le site affiche des
-emplacements réservés stylisés (pas d'images cassées) :
+- Les visuels sont dans `public/images/` (projets) et `public/images/logo/` (design). Garde-les sous ~2000 px de large.
+- Vidéo du hero : `bash scripts/compress-video.sh` (nécessite `brew install ffmpeg`).
+- `_archive/` (ignoré par Git) contient les originaux haute définition et les fichiers retirés du site.
 
-- `public/images/profile.jpg` — photo de profil (référence à ajouter dans `components/About.tsx`)
-- `public/images/projects/*.jpg` — captures/mockups des 5 projets (chemins déjà déclarés dans `lib/data.ts`)
-- `public/og-image.png` (1200×630) — aperçu réseaux sociaux
+### Formulaire de contact
 
-Une fois les fichiers ajoutés, remplace le bloc placeholder dans `components/ProjectCard.tsx`
-par un `next/image` classique :
-
-```tsx
-import Image from "next/image";
-// ...
-<Image src={project.image} alt={project.imageAlt} fill className="object-cover rounded-xl" />
-```
-
-### Liens à compléter
-
-Dans `lib/data.ts` :
-- `profile.github` — lien GitHub
-- `profile.phone`, `profile.linkedin`, `profile.email` — coordonnées réelles
-- `projects[0].links` (OrbitsX) — lien démo / store
-
-### Brancher le formulaire de contact
-
-`components/Contact.tsx` simule l'envoi (pas de backend réel). Pour le connecter :
-
-**Option Resend (recommandée)**
-1. `npm install resend`
-2. Crée `app/api/contact/route.ts` avec un handler `POST` qui appelle l'API Resend
-3. Dans `Contact.tsx`, remplace le `setTimeout` de simulation par :
-   ```ts
-   await fetch("/api/contact", { method: "POST", body: data });
-   ```
-
-**Option Formspree**
-1. Crée un formulaire sur [formspree.io](https://formspree.io)
-2. Remplace l'`action` du `<form>` et le `onSubmit` par une soumission native vers ton endpoint Formspree
+`components/Contact.tsx` envoie via [FormSubmit](https://formsubmit.co) (AJAX) avec un champ honeypot anti-spam.
+Pour passer sur Resend : crée `app/api/contact/route.ts` et remplace l'appel `fetch` dans `Contact.tsx`.
 
 ## Accessibilité & performance
 
@@ -95,7 +62,7 @@ Dans `lib/data.ts` :
 
 1. Pousse ce projet sur GitHub.
 2. Sur [vercel.com](https://vercel.com), "New Project" → importe le repo.
-3. Aucune variable d'environnement requise par défaut (sauf si tu branches Resend : ajoute `RESEND_API_KEY`).
+3. Définis `NEXT_PUBLIC_SITE_URL` (ex. `https://elimaneba.dev`) : utilisé pour les URL canoniques, Open Graph et le sitemap.
 4. Déploie — build command `next build`, aucune config supplémentaire nécessaire.
 
 ## Marque personnelle

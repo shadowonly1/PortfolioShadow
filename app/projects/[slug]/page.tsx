@@ -1,24 +1,14 @@
-import {
-  ArrowRight,
-  CheckCircle2,
-  ExternalLink,
-  Lightbulb,
-  ShieldAlert,
-  Sparkles,
-  Target,
-  TrendingUp,
-} from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Badge } from "@/components/Badge";
 import { Container } from "@/components/Container";
-import AuroraMesh from "@/components/backgrounds/AuroraMesh";
 import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 import { ProjectGallery } from "@/components/ProjectGallery";
-import { ProjectVisual } from "@/components/ProjectVisual";
-import { SubpageHeader } from "@/components/SubpageHeader";
+import { ClipReveal, Hairline, Plus, Reveal, RevealText } from "@/components/Reveal";
 import { projects } from "@/lib/data";
+import { projectCategory, projectCovers, projectDisciplines } from "@/lib/editorial";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -31,8 +21,36 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return {
     title: project.name,
     description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
     openGraph: { title: project.name, description: project.summary },
   };
+}
+
+function NumberedList({ items }: { items: string[] }) {
+  return (
+    <ol className="border-t">
+      {items.map((item, i) => (
+        <Reveal as="li" key={item} delay={i * 0.05} className="grid grid-cols-12 gap-4 border-b py-5">
+          <span className="label col-span-2 sm:col-span-1">{String(i + 1).padStart(2, "0")}</span>
+          <span className="col-span-10 text-base leading-relaxed text-foreground/85 sm:col-span-11">{item}</span>
+        </Reveal>
+      ))}
+    </ol>
+  );
+}
+
+function Block({ index, title, children }: { index: string; title: string; children: React.ReactNode }) {
+  return (
+    <section className="grid gap-8 border-t py-16 sm:py-24 lg:grid-cols-12">
+      <div className="lg:col-span-4">
+        <p className="label">
+          <span className="text-foreground">{index}</span> / {title}
+        </p>
+        <h2 className="display mt-4 text-display-sm">{title}</h2>
+      </div>
+      <div className="lg:col-span-8">{children}</div>
+    </section>
+  );
 }
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
@@ -40,199 +58,186 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = projects[index];
   if (!project) notFound();
 
+  const number = String(index + 1).padStart(2, "0");
+  const next = projects[(index + 1) % projects.length];
+  const cover = projectCovers[project.slug];
+  const hasGallery = Boolean(project.images && project.images.length > 0);
+
+  let section = 0;
+  const nextIndex = () => String(++section).padStart(2, "0");
+
   return (
     <>
-      <SubpageHeader />
-      <main>
-        <section className="relative overflow-hidden py-20 sm:py-28">
-          <div aria-hidden className="noise-overlay absolute inset-0 -z-10">
-            <AuroraMesh />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+      <Header base="/" />
+      <main id="main-content" className="pt-[var(--header-h)]">
+        <Container className="pt-12 sm:pt-20">
+          <div className="flex items-center gap-4">
+            <Link href="/#work" className="label whitespace-nowrap transition-colors hover:text-foreground">
+              ← Selected work
+            </Link>
+            <Hairline immediate className="flex-1" />
+            <span className="label whitespace-nowrap">
+              Case study <span className="text-foreground">{number}</span> / {String(projects.length).padStart(2, "0")}
+            </span>
           </div>
 
-          <Container>
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-electric">
-              {project.role}
+          <div className="mt-12 grid gap-6 sm:mt-16 lg:grid-cols-12">
+            <RevealText
+              as="p"
+              immediate
+              lines={[number]}
+              className="font-display text-[clamp(4rem,10vw,9rem)] leading-[0.8] text-outline lg:col-span-2"
+            />
+            <div className="lg:col-span-10">
+              <RevealText
+                as="h1"
+                immediate
+                delay={0.1}
+                lines={[project.name]}
+                className="display text-[clamp(3rem,8vw,8.5rem)] leading-[0.86]"
+              />
+              <Reveal immediate delay={0.4} className="mt-6 max-w-2xl">
+                <p className="font-serif text-2xl italic text-foreground sm:text-3xl">{projectCategory[project.slug]}</p>
+                <p className="mt-4 text-lg leading-relaxed text-muted">{project.summary}</p>
+              </Reveal>
+            </div>
+          </div>
+
+          <Reveal immediate delay={0.5}>
+            <dl className="mt-16 grid gap-y-8 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <dt className="label">Role</dt>
+                <dd className="mt-3 pr-6 text-sm text-foreground">{project.role}</dd>
+              </div>
+              <div>
+                <dt className="label">Disciplines</dt>
+                <dd className="mt-3 text-sm text-foreground">{projectDisciplines(project).join(" / ") || "—"}</dd>
+              </div>
+              <div>
+                <dt className="label">Stack</dt>
+                <dd className="mt-3">
+                  <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-foreground">
+                    {project.stack.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt className="label">{project.links?.length ? "Links" : "Status"}</dt>
+                <dd className="mt-3 flex flex-col gap-2">
+                  {project.links?.length ? (
+                    project.links.map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-underline w-fit pb-0.5 font-mono text-label uppercase text-foreground"
+                      >
+                        {link.label} ↗
+                      </a>
+                    ))
+                  ) : (
+                    <span className="text-sm text-foreground">
+                      {project.conceptual ? "Concept / architecture" : "Livré"}
+                    </span>
+                  )}
+                </dd>
+              </div>
+            </dl>
+          </Reveal>
+        </Container>
+
+        <Container className="mt-16 sm:mt-24">
+          {hasGallery ? (
+            <ProjectGallery project={project} />
+          ) : (
+            <ClipReveal className="relative flex aspect-[16/9] items-center justify-center overflow-hidden bg-surface">
+              {cover?.src ? (
+                <Image src={cover.src} alt={project.imageAlt} fill sizes="100vw" className="object-contain p-8" />
+              ) : (
+                <p aria-hidden className="display px-6 text-center text-[clamp(3rem,12vw,12rem)] leading-[0.8] text-foreground/10">
+                  {project.stack.join(" · ")}
+                </p>
+              )}
+            </ClipReveal>
+          )}
+        </Container>
+
+        <Container className="mt-16 sm:mt-24">
+          <section className="grid gap-12 border-t py-16 sm:py-24 lg:grid-cols-2 lg:gap-8">
+            <Reveal>
+              <p className="label">
+                <span className="text-foreground">{nextIndex()}</span> / The problem
+              </p>
+              <p className="mt-6 text-xl leading-relaxed text-foreground/90 sm:text-2xl">{project.problem}</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="label">
+                <span className="text-foreground">{nextIndex()}</span> / The solution
+              </p>
+              <p className="mt-6 text-xl leading-relaxed text-foreground/90 sm:text-2xl">{project.solution}</p>
+            </Reveal>
+          </section>
+
+          {project.architecture && (
+            <Block index={nextIndex()} title="Architecture">
+              <Reveal as="p" className="text-lg leading-relaxed text-muted">
+                {project.architecture}
+              </Reveal>
+            </Block>
+          )}
+
+          {project.challenges && project.challenges.length > 0 && (
+            <Block index={nextIndex()} title="Défis techniques">
+              <NumberedList items={project.challenges} />
+            </Block>
+          )}
+
+          <Block index={nextIndex()} title="Points forts">
+            <NumberedList items={project.highlights} />
+          </Block>
+
+          {project.results && project.results.length > 0 && (
+            <Block index={nextIndex()} title="Résultats">
+              <NumberedList items={project.results} />
+            </Block>
+          )}
+
+          {project.lessons && (
+            <section className="border-t py-20 sm:py-32">
+              <p className="label flex items-center gap-2">
+                Leçon apprise <Plus />
+              </p>
+              <Reveal as="p" className="mt-8 max-w-5xl font-serif text-3xl italic leading-snug text-foreground sm:text-5xl">
+                « {project.lessons} »
+              </Reveal>
+            </section>
+          )}
+        </Container>
+
+        <Link href={`/projects/${next.slug}`} data-cursor="Next" className="group block border-t">
+          <Container className="py-16 sm:py-24">
+            <p className="label flex justify-between">
+              <span>Next project</span>
+              <span>{String(((index + 1) % projects.length) + 1).padStart(2, "0")}</span>
             </p>
-            <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              {project.name}
-            </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{project.summary}</p>
-
-            <div className="mt-7 flex flex-wrap gap-2">
-              {project.stack.map((s) => (
-                <Badge key={s}>{s}</Badge>
-              ))}
-            </div>
-
-            {project.links && project.links.length > 0 && (
-              <div className="mt-8 flex flex-wrap gap-4">
-                {project.links.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-accent px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(79,93,255,0.45)] transition-colors hover:bg-accent-bright"
-                  >
-                    {link.label}
-                    <ExternalLink size={15} aria-hidden />
-                  </a>
-                ))}
-              </div>
-            )}
+            <p className="display mt-6 text-display-lg transition-transform duration-700 ease-editorial group-hover:translate-x-4">
+              {next.name} <span className="text-accent">→</span>
+            </p>
           </Container>
-        </section>
+        </Link>
 
-        <section className="pb-16">
-          <Container>
-            {project.images && project.images.length > 0 ? (
-              <ProjectGallery project={project} />
-            ) : (
-              <div className="mx-auto max-w-3xl">
-                <ProjectVisual project={project} index={index} />
-              </div>
-            )}
-          </Container>
-        </section>
-
-        <section className="border-t border-border/60 py-16 sm:py-20">
-          <Container className="grid gap-10 lg:grid-cols-2">
-            <div className="glass-panel rounded-2xl p-6 sm:p-8">
-              <div className="flex items-center gap-2.5 text-accent-bright">
-                <Target size={18} aria-hidden />
-                <h2 className="font-display text-lg font-semibold text-foreground">Le problème</h2>
-              </div>
-              <p className="mt-4 text-base leading-relaxed text-muted">{project.problem}</p>
-            </div>
-            <div className="glass-panel rounded-2xl p-6 sm:p-8">
-              <div className="flex items-center gap-2.5 text-accent-electric">
-                <Lightbulb size={18} aria-hidden />
-                <h2 className="font-display text-lg font-semibold text-foreground">La solution</h2>
-              </div>
-              <p className="mt-4 text-base leading-relaxed text-muted">{project.solution}</p>
-            </div>
-          </Container>
-        </section>
-
-        {project.architecture && (
-          <section className="border-t border-border/60 py-16 sm:py-20">
-            <Container>
-              <div className="glass-panel rounded-2xl p-6 sm:p-8">
-                <div className="flex items-center gap-2.5 text-accent-bright">
-                  <Sparkles size={18} aria-hidden />
-                  <h2 className="font-display text-lg font-semibold text-foreground">
-                    Architecture
-                  </h2>
-                </div>
-                <p className="mt-4 text-base leading-relaxed text-muted">{project.architecture}</p>
-              </div>
-            </Container>
-          </section>
-        )}
-
-        {project.challenges && project.challenges.length > 0 && (
-          <section className="border-t border-border/60 py-16 sm:py-20">
-            <Container>
-              <div className="flex items-center gap-2.5 text-accent-electric">
-                <ShieldAlert size={18} aria-hidden />
-                <h2 className="font-display text-2xl font-semibold text-foreground">
-                  Défis techniques relevés
-                </h2>
-              </div>
-              <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-                {project.challenges.map((c) => (
-                  <li
-                    key={c}
-                    className="glass-panel flex items-start gap-3 rounded-xl p-4 text-sm leading-relaxed text-muted"
-                  >
-                    <ShieldAlert size={18} className="mt-0.5 shrink-0 text-accent-electric" aria-hidden />
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </Container>
-          </section>
-        )}
-
-        <section className="border-t border-border/60 py-16 sm:py-20">
-          <Container>
-            <h2 className="font-display text-2xl font-semibold text-foreground">
-              Points forts
-            </h2>
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-              {project.highlights.map((h) => (
-                <li
-                  key={h}
-                  className="glass-panel flex items-start gap-3 rounded-xl p-4 text-sm leading-relaxed text-muted"
-                >
-                  <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-accent-electric" aria-hidden />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
-
-        {project.results && project.results.length > 0 && (
-          <section className="border-t border-border/60 py-16 sm:py-20">
-            <Container>
-              <div className="flex items-center gap-2.5 text-accent-bright">
-                <TrendingUp size={18} aria-hidden />
-                <h2 className="font-display text-2xl font-semibold text-foreground">Résultats</h2>
-              </div>
-              <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-                {project.results.map((r) => (
-                  <li
-                    key={r}
-                    className="glass-panel flex items-start gap-3 rounded-xl p-4 text-sm leading-relaxed text-muted"
-                  >
-                    <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-accent-bright" aria-hidden />
-                    {r}
-                  </li>
-                ))}
-              </ul>
-            </Container>
-          </section>
-        )}
-
-        {project.lessons && (
-          <section className="border-t border-border/60 py-16 sm:py-20">
-            <Container>
-              <div className="glass-panel rounded-2xl border-accent-electric/20 p-6 sm:p-8">
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-electric">
-                  Leçon apprise
-                </p>
-                <p className="mt-4 font-serif text-xl italic leading-relaxed text-foreground/90 sm:text-2xl">
-                  "{project.lessons}"
-                </p>
-              </div>
-            </Container>
-          </section>
-        )}
-
-        <section className="border-t border-border/60 py-16 sm:py-24">
-          <Container className="flex flex-col items-center gap-6 text-center">
-            <h2 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
-              Un projet similaire en tête ?
-            </h2>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/#contact"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-accent px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(79,93,255,0.45)] transition-colors hover:bg-accent-bright"
-              >
-                En discuter
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" aria-hidden />
-              </Link>
-              <Link
-                href="/#projects"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-accent-electric hover:text-accent-electric"
-              >
-                Voir les autres projets
-              </Link>
-            </div>
-          </Container>
-        </section>
+        <Container className="flex flex-wrap items-center justify-between gap-6 border-t py-12">
+          <p className="display text-display-sm">Un projet similaire en tête ?</p>
+          <Link
+            href="/#contact"
+            className="inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
+          >
+            Get in touch →
+          </Link>
+        </Container>
       </main>
       <Footer />
     </>
