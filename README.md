@@ -67,6 +67,7 @@ Pour passer sur Resend : crée `app/api/contact/route.ts` et remplace l'appel `f
 
 ## Marque personnelle
 
-L'alias **ShadowOnly — THE DSGN GEEK** apparaît discrètement dans le footer (`components/Footer.tsx`)
-et dans le `alt` du favicon (`public/favicon.svg`) — signature sans détourner l'attention du profil
-professionnel.
+L'alias **ShadowOnly — THE DSGN GEEK** apparaît discrètement dans le footer (`components/Footer.tsx`).
+
+Favicon : `public/favicon.ico` (16 à 64 px), `public/icon-192.png` et `public/apple-touch-icon.png`,
+recadrés en carré depuis `public/images/favicon.png`.
