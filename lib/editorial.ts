@@ -42,6 +42,7 @@ export const projectCategory: Record<string, string> = {
   orbitsx: "Plateforme VTC",
   "scan-tickets": "SaaS de tickets QR Code",
   "aprosi-materiaux": "Plateforme métier interne",
+  "aprosi-site-institutionnel": "Site institutionnel",
   "nioro-du-rip": "Plateformes municipales",
   "sunurh-pro": "Solution RH",
   "helping-yourself": "Plateforme multi-services — concept",
@@ -51,7 +52,7 @@ export const projectCategory: Record<string, string> = {
 export function projectDisciplines(project: Project): string[] {
   const has = (...names: string[]) => project.stack.some((s) => names.includes(s));
   const out: string[] = [];
-  if (has("Next.js", "React", "Vue.js", "Tailwind CSS", "Chart.js")) out.push("Web");
+  if (has("Next.js", "React", "Vue.js", "Tailwind CSS", "Chart.js", "HTML", "Bootstrap")) out.push("Web");
   if (has("Flutter", "Dart")) out.push("Mobile");
   if (has("Laravel", "PHP", "Express.js", "PostgreSQL", "MySQL", "Prisma", "Redis", "REST API")) out.push("Backend");
   if (project.stack.includes("Architecture")) out.push("Architecture");
@@ -71,6 +72,7 @@ export const projectCovers: Record<string, ProjectCover> = {
   orbitsx: { frame: "portrait", kind: "phones", images: ["/images/orbits (4).jpeg", "/images/orbits (5).jpeg"] },
   "scan-tickets": { frame: "landscape", kind: "browser", images: ["/images/scanT (2).png"] },
   "aprosi-materiaux": { frame: "landscape", kind: "browser", images: ["/images/aprosi (1).png"] },
+  "aprosi-site-institutionnel": { frame: "landscape", kind: "browser", images: ["/images/aprosi-site-1.jpg"] },
   "nioro-du-rip": { frame: "portrait", kind: "browser", images: ["/images/nioro-1.png"] },
   "sunurh-pro": { frame: "portrait", kind: "logo", images: ["/images/SunuRH.jpg"] },
   "helping-yourself": { frame: "landscape", kind: "type", images: [] },

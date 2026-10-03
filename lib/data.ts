@@ -260,6 +260,35 @@ export const projects: Project[] = [
     images: ["/images/nioro-2.png", "/images/nioro-1.png"],
   },
   {
+    slug: "aprosi-site-institutionnel",
+    name: "Site institutionnel — APROSI",
+    role: "Développeur Web",
+    summary:
+      "Site institutionnel de l'Agence de Promotion des Sites Industriels du Sénégal, en ligne sur aprosi.sn.",
+    problem:
+      "Présenter aux investisseurs et aux entreprises, sur un site unique, les sites industriels de l'agence (DID, P2ID, Écoparc), les secteurs d'activité, les conditions d'attribution et les démarches à suivre.",
+    solution:
+      "Un site institutionnel d'une cinquantaine de pages : grands projets et sites industriels, secteurs d'activité, conditions d'attribution, formalités, appels d'offres, agenda, rapports et statistiques, annuaire des entreprises, avec un assistant conversationnel intégré.",
+    architecture:
+      "Site en HTML, CSS et JavaScript sur Bootstrap, pages dynamiques en PHP (annuaire des entreprises), animations AOS, carrousels Swiper, galerie GLightbox et assistant conversationnel Botpress, hébergé sur serveur Apache.",
+    results: [
+      "Site en production sur www.aprosi.sn",
+      "Une cinquantaine de pages couvrant l'offre, les démarches et l'actualité de l'agence",
+      "Assistant conversationnel accessible depuis toutes les pages",
+    ],
+    stack: ["HTML", "CSS", "JavaScript", "Bootstrap", "PHP", "Botpress"],
+    highlights: [
+      "Présentation des sites industriels DID, P2ID et Écoparc",
+      "Annuaire des entreprises et parcours de formalités",
+      "Version mobile complète et assistant conversationnel intégré",
+    ],
+    image: "/images/aprosi-site-1.jpg",
+    imageAlt: "Page d'accueil du site institutionnel de l'APROSI",
+    images: ["/images/aprosi-site-1.jpg", "/images/aprosi-site-2.jpg"],
+    deviceType: "browser",
+    links: [{ label: "Voir le site", href: "https://www.aprosi.sn" }],
+  },
+  {
     slug: "sunurh-pro",
     name: "SunuRH Pro",
     role: "Stratégie produit & adaptation fonctionnelle",

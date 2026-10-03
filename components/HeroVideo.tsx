@@ -5,11 +5,12 @@ import { motion, type MotionValue } from "framer-motion";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { EASE } from "./Reveal";
 
-// « #t=0.1 » : sans poster, le navigateur affiche la première image de la vidéo
-// (utile si la lecture automatique est bloquée ou les animations réduites).
-const VIDEO_SRC = "/images/hero.mp4#t=0.1";
+const VIDEO_SRC = "/images/hero.mp4";
 // Même résolution, compression plus forte (1,3 Mo au lieu de 2,4 Mo) pour la 4G.
-const VIDEO_MOBILE_SRC = "/images/hero-mobile.mp4#t=0.1";
+const VIDEO_MOBILE_SRC = "/images/hero-mobile.mp4";
+// Première image de la vidéo elle-même : affichée tant que la lecture n'a pas démarré
+// (Safari en économie d'énergie bloque la lecture automatique jusqu'au premier geste).
+const POSTER_SRC = "/images/hero-frame.jpg";
 
 /**
  * Vidéo portrait du hero, fondue dans le fond par un masque radial :
@@ -27,7 +28,6 @@ export function HeroVideo({
   const prefersReduced = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Lecture seulement quand la vidéo est visible (économie CPU / batterie).
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -35,15 +35,40 @@ export function HeroVideo({
       video.pause();
       return;
     }
+
+    // React n'écrit pas l'attribut `muted` dans le HTML serveur : on le force,
+    // sinon Safari refuse la lecture automatique.
+    video.muted = true;
+    video.defaultMuted = true;
+
+    let visible = true;
+    const gestures = ["pointerdown", "touchstart", "keydown", "scroll"] as const;
+    const retryOnGesture = () => {
+      if (visible) tryPlay();
+    };
+    const removeGestures = () => gestures.forEach((g) => window.removeEventListener(g, retryOnGesture));
+    const tryPlay = () =>
+      video
+        .play()
+        .then(removeGestures)
+        // Lecture bloquée (économie d'énergie, réglages du navigateur) : on réessaie
+        // au premier geste de l'utilisateur, ce que tous les navigateurs autorisent.
+        .catch(() => gestures.forEach((g) => window.addEventListener(g, retryOnGesture, { passive: true })));
+
+    // Lecture seulement quand la vidéo est visible (économie CPU / batterie).
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) video.play().catch(() => {});
+        visible = entry.isIntersecting;
+        if (visible) tryPlay();
         else video.pause();
       },
       { threshold: 0.05 }
     );
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      removeGestures();
+    };
   }, [prefersReduced]);
 
   return (
@@ -69,7 +94,8 @@ export function HeroVideo({
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
+          poster={POSTER_SRC}
           tabIndex={-1}
           disablePictureInPicture
         >
