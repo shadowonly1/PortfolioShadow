@@ -8,10 +8,10 @@ type Theme = "dark" | "light";
 
 /** Bascule mode sombre / clair. Le choix est mémorisé (localStorage). */
 export function ThemeToggle({ className }: { className?: string }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    setTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
+    setTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
   }, []);
 
   const toggle = () => {

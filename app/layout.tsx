@@ -113,7 +113,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      data-theme="dark"
+      data-theme="light"
       suppressHydrationWarning
       className={`${inter.variable} ${display.variable} ${serif.variable} ${mono.variable}`}
     >

@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  /* Le sélecteur [data-theme="dark"] permet aussi de garder une zone sombre
-     (le hero) quand le reste du site est en mode clair. */
+  /* Mode sombre (valeurs de base). Le site s'ouvre en mode clair (data-theme="light"
+     sur <html>) ; [data-theme="dark"] garde aussi le hero sombre dans les deux modes. */
   :root,
   [data-theme="dark"] {
     --background: 8 9 13; /* #08090D */
