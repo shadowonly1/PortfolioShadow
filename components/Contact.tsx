@@ -16,7 +16,7 @@ const channels = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}`, external: false },
   { label: "LinkedIn", value: "in/elimane-ba", href: profile.linkedin, external: true },
   { label: "GitHub", value: "shadowonly1", href: profile.github, external: true },
-  { label: "Phone", value: profile.phone, href: `tel:${profile.phone.replace(/\s+/g, "")}`, external: false },
+  { label: "Téléphone", value: profile.phone, href: `tel:${profile.phone.replace(/\s+/g, "")}`, external: false },
 ];
 
 export function Contact() {
@@ -88,7 +88,7 @@ export function Contact() {
         </div>
 
         <RevealText
-          lines={["Let's build", <span key="s">something<span className="text-accent">.</span></span>]}
+          lines={["Construisons", <span key="s">ensemble<span className="text-accent">.</span></span>]}
           className="display mt-12 text-display-xl sm:mt-16"
         />
 
@@ -98,14 +98,14 @@ export function Contact() {
               <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 motion-safe:animate-pulse-glow" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
-            Available for projects — {profile.location}
+            Disponible pour vos projets — {profile.location}
           </p>
           <a
             href={`mailto:${profile.email}`}
-            data-cursor="Mail"
+            data-cursor="Écrire"
             className="group inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
           >
-            Get in touch
+            Me contacter
             <span aria-hidden className="transition-transform duration-500 ease-editorial group-hover:translate-x-1">
               →
             </span>

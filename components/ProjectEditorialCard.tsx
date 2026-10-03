@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/data";
 import { projectCategory, projectCovers, projectDisciplines, type ProjectCover } from "@/lib/editorial";
 import { cn } from "@/lib/utils";
+import { ProjectCoverStage } from "./ProjectCoverStage";
 import { ClipReveal, Reveal } from "./Reveal";
 
 export function ProjectEditorialCard({
@@ -15,9 +15,9 @@ export function ProjectEditorialCard({
   className?: string;
 }) {
   const cover: ProjectCover = projectCovers[project.slug] ?? {
-    src: project.images?.[0] ?? null,
     frame: "landscape",
-    fit: "cover",
+    kind: project.images?.length ? "browser" : "type",
+    images: project.images ?? [],
   };
   const number = String(index + 1).padStart(2, "0");
   const disciplines = projectDisciplines(project);
@@ -26,9 +26,8 @@ export function ProjectEditorialCard({
     <article className={cn("group relative", className)}>
       <Link
         href={`/projects/${project.slug}`}
-        data-cursor="View"
+        data-cursor="Voir"
         className="block focus-visible:outline-offset-8"
-        aria-label={`${project.name} — voir l'étude de cas`}
       >
         <div className="mb-4 flex items-center justify-between gap-4 font-mono text-label uppercase">
           <span className="text-foreground transition-transform duration-700 ease-editorial group-hover:translate-x-2">
@@ -45,24 +44,10 @@ export function ProjectEditorialCard({
             cover.frame === "portrait" ? "aspect-[4/5]" : "aspect-[4/3]"
           )}
         >
-          {cover.src ? (
-            <Image
-              src={cover.src}
-              alt={project.imageAlt}
-              fill
-              sizes={cover.frame === "portrait" ? "(min-width: 1024px) 38vw, 100vw" : "(min-width: 1024px) 54vw, 100vw"}
-              className={cn(
-                "transition-transform duration-1000 ease-editorial group-hover:scale-[1.03]",
-                cover.fit === "cover" ? "object-cover" : "object-contain p-8 sm:p-12"
-              )}
-              style={cover.position ? { objectPosition: cover.position } : undefined}
-            />
-          ) : (
-            <TypographicCover project={project} />
-          )}
+          <ProjectCoverStage project={project} cover={cover} />
           <div
             aria-hidden
-            className="absolute inset-0 bg-background/0 transition-colors duration-700 ease-editorial group-hover:bg-background/25"
+            className="absolute inset-0 bg-background/0 transition-colors duration-700 ease-editorial group-hover:bg-background/15"
           />
           <span
             aria-hidden
@@ -80,7 +65,7 @@ export function ProjectEditorialCard({
           <div className="mt-5 flex items-center justify-between gap-4 border-t pt-4 font-mono text-label uppercase">
             <span className="text-muted">{disciplines.join(" / ")}</span>
             <span className="flex items-center gap-2 text-foreground">
-              Case study
+              Étude de cas
               <span aria-hidden className="transition-transform duration-700 ease-editorial group-hover:translate-x-1.5">
                 →
               </span>
@@ -89,27 +74,5 @@ export function ProjectEditorialCard({
         </Reveal>
       </Link>
     </article>
-  );
-}
-
-/** Couverture sans visuel : composition purement typographique. */
-function TypographicCover({ project }: { project: Project }) {
-  return (
-    <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-10">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-60"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-      <span className="label relative">{project.role}</span>
-      <p aria-hidden className="display relative text-[clamp(3rem,9vw,9rem)] leading-[0.82] text-foreground/90">
-        {project.name.split(" (")[0]}
-      </p>
-      <span className="label relative text-accent-soft">{project.stack.join(" · ")}</span>
-    </div>
   );
 }

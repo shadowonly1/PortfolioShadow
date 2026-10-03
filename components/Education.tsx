@@ -12,7 +12,7 @@ export function Education() {
   return (
     <section id="certifications" className="section">
       <Container>
-        <SectionIntro index="08" label="Education" title={["Education", "& Certifications"]} />
+        <SectionIntro index="08" label="Formation" title={["Formation", "& Certifications"]} />
 
         <ol className="mt-16 border-t sm:mt-24">
           {entries.map((entry, i) => (

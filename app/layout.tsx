@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Bebas_Neue, Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { ConsoleEasterEgg } from "@/components/ConsoleEasterEgg";
 import { CustomCursor } from "@/components/CustomCursor";
@@ -68,11 +69,13 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "Elimane Ba — Portfolio",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: title }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: ["/og.jpg"],
   },
   icons: {
     icon: "/favicon.svg",
@@ -118,6 +121,7 @@ export default function RootLayout({
         <ConsoleEasterEgg />
         <CustomCursor />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <Analytics />
       </body>
     </html>
   );

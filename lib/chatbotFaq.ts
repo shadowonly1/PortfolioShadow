@@ -38,7 +38,7 @@ export const faq: FaqEntry[] = [
       experiences
         .map((e) => `• ${e.role} — ${e.company} (${e.period})`)
         .join("\n") +
-      `\n\nExpériences antérieures : ${earlierExperiences.map((e) => e.company).join(", ")}.`,
+      `\n\nExpériences antérieures : ${earlierExperiences.map((e) => (e.period ? `${e.company} (${e.period})` : e.company)).join(", ")}.`,
   },
   {
     id: "projects",

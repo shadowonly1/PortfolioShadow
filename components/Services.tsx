@@ -10,7 +10,7 @@ export function Services() {
         <SectionIntro
           index="03"
           label="Services"
-          title={["What", "I build"]}
+          title={["Ce que", "je construis"]}
           aside="Du serveur à l'app, du logo à l'interface : ce qui me permet de livrer un produit complet."
         />
 

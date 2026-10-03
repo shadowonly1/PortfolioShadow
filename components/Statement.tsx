@@ -21,10 +21,10 @@ export function Statement() {
   const full = `${statement.first.join(" ")} ${statement.second.join(" ")}`;
 
   return (
-    <section aria-label="Statement" className="section overflow-hidden">
+    <section aria-label="Manifeste" className="section overflow-hidden">
       <Container>
         <div className="flex items-center justify-between font-mono text-label uppercase text-muted">
-          <span>Statement</span>
+          <span>Manifeste</span>
           <Plus />
         </div>
         <div ref={ref} className="mt-12 sm:mt-16">
@@ -72,7 +72,7 @@ function Word({
   accent: boolean;
   still: boolean;
 }) {
-  const opacity = useTransform(progress, range, [0.12, 1]);
+  const opacity = useTransform(progress, range, [0.35, 1]);
   return (
     <motion.span
       style={still ? undefined : { opacity }}

@@ -16,9 +16,9 @@ export default function NotFound() {
         <Container className="relative">
           <p className="label">Erreur 404 / Page introuvable</p>
           <h1 className="display mt-6 text-display-lg">
-            Lost in
+            Perdu dans
             <br />
-            the grid<span className="text-accent">.</span>
+            la grille<span className="text-accent">.</span>
           </h1>
           <p className="mt-6 max-w-md text-base text-muted">
             La page que tu cherches a été déplacée, supprimée, ou n&apos;a jamais existé.

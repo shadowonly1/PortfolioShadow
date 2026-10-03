@@ -141,7 +141,7 @@ export function ChatBot() {
             >
               <span className="flex items-center gap-2">
                 <MessageCircle size={15} aria-hidden />
-                Ask
+                Question
               </span>
             </motion.span>
           )}

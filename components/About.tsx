@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { about, certifications, deliveredProjects, profile, skillGroups } from "@/lib/data";
-import { whatIDo } from "@/lib/editorial";
 import { Container } from "./Container";
 import { ClipReveal, Hairline, Plus, Reveal, RevealText } from "./Reveal";
 
@@ -19,14 +18,14 @@ export function About() {
       <Container>
         <div className="flex items-center gap-4">
           <span className="label whitespace-nowrap">
-            <span className="text-foreground">01</span> / About — {profile.name}
+            <span className="text-foreground">01</span> / À propos
           </span>
           <Hairline className="flex-1" />
           <Plus />
         </div>
 
         <RevealText
-          lines={["I build digital products", <span key="l2" className="text-muted">from idea to production.</span>]}
+          lines={["Je construis des produits numériques,", <span key="l2" className="text-muted">de l&apos;idée à la production.</span>]}
           className="display mt-12 max-w-6xl text-display-md sm:mt-16"
         />
 
@@ -47,8 +46,8 @@ export function About() {
             </p>
           </div>
 
-          <div className="lg:col-span-4 lg:col-start-6">
-            <p className="label mb-6 text-foreground">About</p>
+          <div className="max-w-2xl lg:col-span-6 lg:col-start-6">
+            <p className="label mb-6 text-foreground">Profil</p>
             <div className="flex flex-col gap-6">
               {about.paragraphs.map((p, i) => (
                 <Reveal key={i} delay={i * 0.08} as="p" className="text-lg leading-relaxed text-muted">
@@ -66,17 +65,6 @@ export function About() {
             </Reveal>
           </div>
 
-          <div className="lg:col-span-2 lg:col-start-11">
-            <p className="label mb-6 text-foreground">What I do</p>
-            <ol className="border-t">
-              {whatIDo.map((item, i) => (
-                <Reveal as="li" key={item} delay={i * 0.05} y={10} className="flex items-baseline gap-3 border-b py-3">
-                  <span className="label">0{i + 1}</span>
-                  <span className="font-display text-2xl uppercase leading-none">{item}</span>
-                </Reveal>
-              ))}
-            </ol>
-          </div>
         </div>
 
         <dl className="mt-20 grid grid-cols-2 border-t sm:mt-28 lg:grid-cols-4">

@@ -5,8 +5,11 @@ import { motion, type MotionValue } from "framer-motion";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { EASE } from "./Reveal";
 
-const VIDEO_SRC = "/images/hero.mp4";
-const POSTER_SRC = "/images/hero-poster.jpg";
+// « #t=0.1 » : sans poster, le navigateur affiche la première image de la vidéo
+// (utile si la lecture automatique est bloquée ou les animations réduites).
+const VIDEO_SRC = "/images/hero.mp4#t=0.1";
+// Même résolution, compression plus forte (1,3 Mo au lieu de 2,4 Mo) pour la 4G.
+const VIDEO_MOBILE_SRC = "/images/hero-mobile.mp4#t=0.1";
 
 /**
  * Vidéo portrait du hero, fondue dans le fond par un masque radial :
@@ -67,10 +70,10 @@ export function HeroVideo({
           loop
           playsInline
           preload="metadata"
-          poster={POSTER_SRC}
           tabIndex={-1}
           disablePictureInPicture
         >
+          <source src={VIDEO_MOBILE_SRC} type="video/mp4" media="(max-width: 767px)" />
           <source src={VIDEO_SRC} type="video/mp4" />
         </video>
       </motion.div>

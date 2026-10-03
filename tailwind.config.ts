@@ -41,7 +41,7 @@ const config: Config = {
         "display-lg": ["clamp(3.5rem, 11vw, 11rem)", { lineHeight: "0.85", letterSpacing: "-0.01em" }],
         "display-md": ["clamp(2.75rem, 7vw, 6.5rem)", { lineHeight: "0.88", letterSpacing: "-0.005em" }],
         "display-sm": ["clamp(2rem, 4vw, 3.5rem)", { lineHeight: "0.92" }],
-        label: ["0.6875rem", { lineHeight: "1rem", letterSpacing: "0.14em" }],
+        label: ["0.75rem", { lineHeight: "1.1rem", letterSpacing: "0.12em" }],
       },
       maxWidth: {
         content: "90rem",

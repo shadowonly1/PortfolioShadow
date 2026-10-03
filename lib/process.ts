@@ -1,42 +1,42 @@
 export const processSteps = [
   {
     step: "01",
-    title: "Discover",
-    subtitle: "Research & Requirements",
+    title: "Découvrir",
+    subtitle: "Recherche & besoins",
     description:
       "Comprendre le besoin réel, pas juste le brief — objectifs, contraintes techniques, utilisateurs finaux.",
   },
   {
     step: "02",
-    title: "Plan",
+    title: "Concevoir",
     subtitle: "Architecture & UX",
     description:
       "Choix techniques posés avant la première ligne de code : stack, structure de données, sécurité, parcours utilisateur.",
   },
   {
     step: "03",
-    title: "Build",
-    subtitle: "Development",
+    title: "Construire",
+    subtitle: "Développement",
     description:
       "Développement itératif, identité visuelle en parallèle — le code et le pixel avancent ensemble.",
   },
   {
     step: "04",
-    title: "Test",
-    subtitle: "Quality & Optimization",
+    title: "Tester",
+    subtitle: "Qualité & optimisation",
     description:
       "Vérification fonctionnelle, contrôle d'accès, performance — avant que ça touche la production.",
   },
   {
     step: "05",
-    title: "Deploy",
-    subtitle: "Production",
+    title: "Déployer",
+    subtitle: "Mise en production",
     description: "Déploiement, documentation et passation.",
   },
   {
     step: "06",
-    title: "Iterate",
-    subtitle: "Continuous Improvement",
+    title: "Itérer",
+    subtitle: "Amélioration continue",
     description: "Un suivi après livraison, pas un simple \"au revoir\" — corrections, évolutions, mesures.",
   },
 ];

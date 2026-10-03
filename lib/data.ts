@@ -71,11 +71,11 @@ export const experiences: Experience[] = [
   },
 ];
 
-export const earlierExperiences = [
+export const earlierExperiences: { company: string; role: string; period?: string }[] = [
+  { company: "Wave Sénégal", role: "Développeur", period: "2020" },
+  { company: "Electro Info", role: "Développeur" },
   { company: "Touba Faadel Service", role: "Développeur" },
   { company: "K.A Trans", role: "Développeur" },
-  { company: "Electro Info", role: "Développeur" },
-  { company: "Wave Sénégal", role: "Développeur" },
 ];
 
 export type Project = {
@@ -139,14 +139,10 @@ export const projects: Project[] = [
       "/images/orbits (6).jpeg",
     ],
     links: [
-      {
-        label: "Play Store",
-        href: "https://play.google.com/store/apps/developer?id=Odace+Studio&hl=fr",
-      },
-      {
-        label: "App Store",
-        href: "https://apps.apple.com/sn/developer/orbits-networks/id1867233521?l=fr-FR",
-      },
+      { label: "App passager — App Store", href: "https://apps.apple.com/sn/app/orbits-request-rides/id6757489041" },
+      { label: "App passager — Google Play", href: "https://play.google.com/store/apps/details?id=com.orbisx.app" },
+      { label: "App chauffeur — App Store", href: "https://apps.apple.com/sn/app/orbits-pro-drive-deliver/id6758401206" },
+      { label: "App chauffeur — Google Play", href: "https://play.google.com/store/apps/details?id=com.orbitsx.driver" },
     ],
     featured: true,
   },
@@ -321,33 +317,34 @@ export const projects: Project[] = [
 export type DesignWork = { src: string; alt: string };
 
 export const designWorks: DesignWork[] = [
+  // Les 9 premières sont affichées d'emblée : visuels pleine image, cohérents entre eux.
+  { src: "/images/logo/DESIGN SHADOWONLY.jpg", alt: "Identité visuelle ShadowOnly" },
+  { src: "/images/logo/3f1cd391042f41bb0f95600a57bcd616.jpg", alt: "Identité visuelle — papeterie et packaging" },
+  { src: "/images/logo/ramadan design.jpg", alt: "Visuel de communication — Ramadan" },
+  { src: "/images/logo/d002469b093c36baae1db36c29de46fd.jpg", alt: "Identité visuelle — déclinaisons de marque" },
+  { src: "/images/logo/JUMMAH.jpg", alt: "Visuel de communication — Jummah" },
+  { src: "/images/logo/391b2e91f6d224fce04482ef2b3b3ac4.jpg", alt: "Identité visuelle — déclinaisons sac, mug, casquette" },
   { src: "/images/logo/LOGO_EVA-01-removebg-preview.png", alt: "Logo Eva Fragrances" },
+  { src: "/images/logo/Panneau 1 pizza.jpg", alt: "Panneau publicitaire — Pizza" },
+  { src: "/images/logo/d406ec1b0024dc3ed473af235a9143dd.jpg", alt: "Mockup packaging — sacs AKG" },
+  { src: "/images/logo/bonne Annee 2026.jpg", alt: "Visuel de vœux — Nouvel An 2026" },
+  { src: "/images/logo/ACHOURA.jpg", alt: "Visuel de communication — Achoura" },
+  { src: "/images/logo/food.jpg", alt: "Visuel food & restauration" },
+  { src: "/images/logo/Panneau 1 Petit dej.jpg", alt: "Panneau publicitaire — Petit déjeuner" },
+  { src: "/images/logo/Panneau 1 pizza (2).jpg", alt: "Panneau publicitaire — Pizza, variante 2" },
+  { src: "/images/logo/Panneau 1 pizza (3).jpg", alt: "Panneau publicitaire — Pizza, variante 3" },
+  { src: "/images/logo/b26007d05dbadb4ef69c1d8a1e10ec7f.jpg", alt: "Affiche événementielle — Ziaar" },
+  { src: "/images/logo/aprosi Pancarte 1.jpg", alt: "Pancarte institutionnelle APROSI" },
+  { src: "/images/logo/roll-up-aprosi.jpg", alt: "Roll-up institutionnel APROSI" },
+  { src: "/images/logo/8d23ee4d579700e9194cd437005043ed.jpg", alt: "Mockup packaging — sac" },
+  { src: "/images/logo/bag.jpg", alt: "Mockup packaging / sac" },
+  { src: "/images/logo/madya-removebg-preview.png", alt: "Logo Madya — variante" },
+  { src: "/images/logo/logo-shadow.png", alt: "Logo personnel — ShadowOnly" },
+  { src: "/images/logo/20260102_001348_0000.png", alt: "Logo Khalil Style" },
   { src: "/images/logo/LOGO JAUNE-100.jpg", alt: "Logo Never Diambatt Club" },
   { src: "/images/logo/Logo MADYA@2x-100.jpg", alt: "Logo Madya" },
   { src: "/images/logo/LOGO KYANOS (1).png", alt: "Logo Kyanos" },
-  { src: "/images/logo/madya-removebg-preview.png", alt: "Logo Madya — variante" },
-  { src: "/images/logo/logo-shadow.png", alt: "Logo personnel — ShadowOnly" },
-  { src: "/images/logo/DESIGN SHADOWONLY.jpg", alt: "Identité visuelle ShadowOnly" },
-  { src: "/images/logo/roll-up-aprosi.jpg", alt: "Roll-up institutionnel APROSI" },
-  { src: "/images/logo/ramadan design.jpg", alt: "Visuel de communication — Ramadan" },
-  { src: "/images/logo/bonne Annee 2026.jpg", alt: "Visuel de vœux — Nouvel An 2026" },
-  { src: "/images/logo/ACHOURA.jpg", alt: "Visuel de communication — Achoura" },
-  { src: "/images/logo/JUMMAH.jpg", alt: "Visuel de communication — Jummah" },
-  { src: "/images/logo/food.jpg", alt: "Visuel food & restauration" },
-  { src: "/images/logo/bag.jpg", alt: "Mockup packaging / sac" },
-  { src: "/images/logo/Panneau 1 Petit dej.jpg", alt: "Panneau publicitaire — Petit déjeuner" },
-  { src: "/images/logo/Panneau 1 pizza.jpg", alt: "Panneau publicitaire — Pizza" },
-  { src: "/images/logo/Panneau 1 pizza (2).jpg", alt: "Panneau publicitaire — Pizza, variante 2" },
-  { src: "/images/logo/Panneau 1 pizza (3).jpg", alt: "Panneau publicitaire — Pizza, variante 3" },
-  { src: "/images/logo/aprosi Pancarte 1.jpg", alt: "Pancarte institutionnelle APROSI" },
-  { src: "/images/logo/20260102_001348_0000.png", alt: "Création graphique" },
-  { src: "/images/logo/391b2e91f6d224fce04482ef2b3b3ac4.jpg", alt: "Création graphique" },
-  { src: "/images/logo/3f1cd391042f41bb0f95600a57bcd616.jpg", alt: "Création graphique" },
-  { src: "/images/logo/8d23ee4d579700e9194cd437005043ed.jpg", alt: "Création graphique" },
-  { src: "/images/logo/b26007d05dbadb4ef69c1d8a1e10ec7f.jpg", alt: "Création graphique" },
-  { src: "/images/logo/d002469b093c36baae1db36c29de46fd.jpg", alt: "Création graphique" },
-  { src: "/images/logo/d406ec1b0024dc3ed473af235a9143dd.jpg", alt: "Création graphique" },
-  { src: "/images/logo/Fichier 1.png", alt: "Création graphique" },
+  { src: "/images/logo/Fichier 1.png", alt: "Logo Gayeta Expertise & Conseil" },
 ];
 
 export const education = [

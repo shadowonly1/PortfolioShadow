@@ -73,11 +73,11 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         <Container className="pt-12 sm:pt-20">
           <div className="flex items-center gap-4">
             <Link href="/#work" className="label whitespace-nowrap transition-colors hover:text-foreground">
-              ← Selected work
+              ← Projets
             </Link>
             <Hairline immediate className="flex-1" />
             <span className="label whitespace-nowrap">
-              Case study <span className="text-foreground">{number}</span> / {String(projects.length).padStart(2, "0")}
+              Étude de cas <span className="text-foreground">{number}</span> / {String(projects.length).padStart(2, "0")}
             </span>
           </div>
 
@@ -106,7 +106,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <Reveal immediate delay={0.5}>
             <dl className="mt-16 grid gap-y-8 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4">
               <div>
-                <dt className="label">Role</dt>
+                <dt className="label">Rôle</dt>
                 <dd className="mt-3 pr-6 text-sm text-foreground">{project.role}</dd>
               </div>
               <div>
@@ -124,7 +124,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                 </dd>
               </div>
               <div>
-                <dt className="label">{project.links?.length ? "Links" : "Status"}</dt>
+                <dt className="label">{project.links?.length ? "Liens" : "Statut"}</dt>
                 <dd className="mt-3 flex flex-col gap-2">
                   {project.links?.length ? (
                     project.links.map((link) => (
@@ -154,8 +154,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <ProjectGallery project={project} />
           ) : (
             <ClipReveal className="relative flex aspect-[16/9] items-center justify-center overflow-hidden bg-surface">
-              {cover?.src ? (
-                <Image src={cover.src} alt={project.imageAlt} fill sizes="100vw" className="object-contain p-8" />
+              {cover?.images[0] ? (
+                <Image src={cover.images[0]} alt={project.imageAlt} fill sizes="100vw" className="object-contain p-8" />
               ) : (
                 <p aria-hidden className="display px-6 text-center text-[clamp(3rem,12vw,12rem)] leading-[0.8] text-foreground/10">
                   {project.stack.join(" · ")}
@@ -169,13 +169,13 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <section className="grid gap-12 border-t py-16 sm:py-24 lg:grid-cols-2 lg:gap-8">
             <Reveal>
               <p className="label">
-                <span className="text-foreground">{nextIndex()}</span> / The problem
+                <span className="text-foreground">{nextIndex()}</span> / Le problème
               </p>
               <p className="mt-6 text-xl leading-relaxed text-foreground/90 sm:text-2xl">{project.problem}</p>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="label">
-                <span className="text-foreground">{nextIndex()}</span> / The solution
+                <span className="text-foreground">{nextIndex()}</span> / La solution
               </p>
               <p className="mt-6 text-xl leading-relaxed text-foreground/90 sm:text-2xl">{project.solution}</p>
             </Reveal>
@@ -217,10 +217,10 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           )}
         </Container>
 
-        <Link href={`/projects/${next.slug}`} data-cursor="Next" className="group block border-t">
+        <Link href={`/projects/${next.slug}`} data-cursor="Suivant" className="group block border-t">
           <Container className="py-16 sm:py-24">
             <p className="label flex justify-between">
-              <span>Next project</span>
+              <span>Projet suivant</span>
               <span>{String(((index + 1) % projects.length) + 1).padStart(2, "0")}</span>
             </p>
             <p className="display mt-6 text-display-lg transition-transform duration-700 ease-editorial group-hover:translate-x-4">
@@ -235,7 +235,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             href="/#contact"
             className="inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
           >
-            Get in touch →
+            Me contacter →
           </Link>
         </Container>
       </main>

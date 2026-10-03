@@ -9,8 +9,8 @@ export function Process() {
       <Container>
         <SectionIntro
           index="06"
-          label="Process"
-          title={["Work", "Process"]}
+          label="Méthode"
+          title={["Méthode", "de travail"]}
           aside="Un processus simple, répété sur chaque projet — de la petite plateforme interne à l'application multi-plateforme."
         />
 

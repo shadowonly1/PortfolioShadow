@@ -22,12 +22,12 @@ export function Hero() {
       ref={ref}
       id="top"
       aria-label="Présentation"
-      className="noise relative isolate overflow-hidden pt-[var(--header-h)] lg:flex lg:min-h-[100svh] lg:flex-col"
+      className="relative isolate overflow-hidden pt-[var(--header-h)] lg:flex lg:min-h-[100svh] lg:flex-col"
     >
       {/* Typographie géante d'arrière-plan */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-[18%] -z-20 select-none whitespace-nowrap text-center font-display text-[34vw] uppercase leading-[0.8] text-foreground/[0.045] lg:top-1/2 lg:-translate-y-1/2 lg:text-[26vw]"
+        className="pointer-events-none absolute inset-x-0 top-[18%] -z-20 select-none whitespace-nowrap text-center font-display text-[34vw] uppercase leading-[0.8] text-foreground/[0.08] lg:top-1/2 lg:-translate-y-1/2 lg:text-[26vw]"
         style={prefersReduced ? undefined : { x: bgX }}
         initial={prefersReduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -45,10 +45,10 @@ export function Hero() {
         {/* Colonne gauche : identité */}
         <div className="flex flex-col justify-end lg:col-span-5 lg:pb-6">
           <h1 className="sr-only">
-            {profile.name} — Full-Stack Developer, Web, Mobile &amp; Backend
+            {profile.name} — Développeur Full-Stack, Web, Mobile &amp; Backend
           </h1>
           <Reveal immediate delay={0.6} as="p" className="flex flex-col gap-2">
-            <span className="font-serif text-4xl italic text-foreground sm:text-5xl">Full-Stack Developer</span>
+            <span className="font-serif text-4xl italic text-foreground sm:text-5xl">Développeur Full-Stack</span>
             <span className="font-mono text-label uppercase text-muted">Web · Mobile · Backend</span>
           </Reveal>
         </div>
@@ -62,9 +62,9 @@ export function Hero() {
             <span className="text-foreground">{profile.location}</span>
             <span className="hidden sm:inline"> — 14.69° N / 17.44° W</span>
           </span>
-          <span className="hidden md:inline">Scroll to explore ↓</span>
+          <span className="hidden md:inline">Faire défiler ↓</span>
           <span className="flex items-center gap-2">
-            Available for selected projects <Plus />
+            Disponible pour de nouveaux projets <Plus />
           </span>
         </Reveal>
       </div>

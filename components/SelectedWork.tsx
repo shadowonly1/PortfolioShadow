@@ -9,12 +9,12 @@ import { SectionIntro } from "./SectionIntro";
 export function SelectedWork() {
   return (
     <section id="work" className="section overflow-hidden">
-      <BackgroundType word="Work" className="top-24 text-[40vw]" outline />
+      <BackgroundType word="Projets" className="top-24 text-[40vw]" outline />
       <Container>
         <SectionIntro
           index="02"
-          label="Selected work"
-          title={["Selected", "Work"]}
+          label="Projets"
+          title={["Projets", "Sélectionnés"]}
           aside={
             <>
               Une sélection de projets représentatifs — du produit VTC complet à la refonte

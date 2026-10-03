@@ -44,8 +44,8 @@ export function DesignShowcase() {
       <Container>
         <SectionIntro
           index="07"
-          label="Graphic design"
-          title={["Pixel", "& Identity"]}
+          label="Design graphique"
+          title={["Pixel", "& Identité"]}
           aside={
             <>
               Logos, affiches et supports de communication — l&apos;autre moitié du métier, celle qui
@@ -62,7 +62,7 @@ export function DesignShowcase() {
             <Reveal as="li" key={work.src} delay={(i % 3) * 0.06} className="mb-3 break-inside-avoid sm:mb-4 lg:mb-6">
               <button
                 type="button"
-                data-cursor="Open"
+                data-cursor="Ouvrir"
                 onClick={(e) => {
                   lastTrigger.current = e.currentTarget;
                   setActive(i);

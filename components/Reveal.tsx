@@ -51,7 +51,7 @@ export function RevealText({
       {...(immediate ? { animate: "show" } : { whileInView: "show", viewport: VIEWPORT })}
     >
       {lines.map((line, i) => (
-        <span key={i} className="block overflow-hidden pb-[0.04em]">
+        <span key={i} className="-mt-[0.18em] block overflow-hidden pb-[0.04em] pt-[0.18em]">
           <motion.span
             className={cn("block", lineClassName)}
             variants={{

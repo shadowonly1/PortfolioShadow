@@ -12,7 +12,7 @@ export function Experience() {
   return (
     <section id="experience" className="section">
       <Container>
-        <SectionIntro index="05" label="Experience" title={["Experience"]} />
+        <SectionIntro index="05" label="Parcours" title={["Parcours"]} />
 
         <ol className="mt-16 sm:mt-24">
           {experiences.map((exp, i) => (
@@ -56,7 +56,10 @@ export function Experience() {
             {earlierExperiences.map((e) => (
               <li key={e.company} className="flex items-baseline justify-between border-b py-4">
                 <span className="font-display text-3xl uppercase leading-none">{e.company}</span>
-                <span className="label">{e.role}</span>
+                <span className="label">
+                  {e.role}
+                  {e.period && <span className="text-foreground"> · {e.period}</span>}
+                </span>
               </li>
             ))}
           </ul>

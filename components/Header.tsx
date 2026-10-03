@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 import { EASE, Plus } from "./Reveal";
 
 const links = [
-  { id: "work", label: "Work" },
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
+  { id: "work", label: "Projets" },
+  { id: "about", label: "À propos" },
+  { id: "experience", label: "Parcours" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -70,12 +70,11 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
         <div className="section-padding mx-auto flex h-[var(--header-h)] max-w-content items-center justify-between gap-6">
           <Link
             href={base || "#top"}
-            aria-label={`${profile.name} — accueil`}
             className="group relative z-[70] flex flex-col leading-none"
             onClick={() => setOpen(false)}
           >
             <span className="font-display text-2xl tracking-wide text-foreground">{profile.name}</span>
-            <span className="label mt-1 text-[10px]">Developer</span>
+            <span className="label mt-1 text-[11px]">Développeur</span>
           </Link>
 
           <nav aria-label="Navigation principale" className="hidden md:block">
@@ -86,7 +85,7 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
                     href={href(link.id)}
                     className="group flex items-baseline gap-1.5 font-mono text-label uppercase text-muted transition-colors hover:text-foreground"
                   >
-                    <span className="text-[9px] text-accent-soft opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="text-[11px] text-accent-soft opacity-0 transition-opacity group-hover:opacity-100">
                       0{i + 1}
                     </span>
                     <span className="link-underline pb-0.5">{link.label}</span>
@@ -169,7 +168,7 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
                 </a>
               </div>
               <span className="label flex items-center gap-2 text-foreground">
-                Available <Plus />
+                Disponible <Plus />
               </span>
             </motion.div>
           </motion.div>

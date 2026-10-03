@@ -5,22 +5,22 @@ import type { Project } from "./data";
 /** Section « What I build ». */
 export const services = [
   {
-    title: "Web Applications",
+    title: "Applications web",
     description: "Plateformes métier, sites institutionnels et SaaS — Next.js, React, Laravel, API REST.",
     stack: ["Next.js", "React", "Laravel"],
   },
   {
-    title: "Mobile Applications",
+    title: "Applications mobiles",
     description: "Applications iOS & Android en Flutter, de la maquette à la publication sur les stores.",
     stack: ["Flutter", "Dart", "Firebase"],
   },
   {
-    title: "Backend Systems",
+    title: "Systèmes backend",
     description: "API, bases de données, authentification JWT/RBAC, cache Redis et déploiement VPS.",
     stack: ["Express.js", "PostgreSQL", "Redis"],
   },
   {
-    title: "Digital Products",
+    title: "Produits numériques",
     description: "Du cahier des charges à la mise en production, sans dépendre d'une équipe pour chaque étage.",
     stack: ["Architecture", "Conception produit"],
   },
@@ -31,13 +31,10 @@ export const services = [
   },
 ];
 
-/** Liste « What I do » de la section About. */
-export const whatIDo = ["Web", "Mobile", "Backend", "UI / UX", "Digital Products"];
-
 /** Statement typographique (formule artistique, pas une donnée factuelle). */
 export const statement = {
-  first: ["I don't just", "write code."],
-  second: ["I build", "digital products."],
+  first: ["Je n'écris pas", "que du code."],
+  second: ["Je construis", "des produits."],
 };
 
 /** Catégorie courte affichée sur les cartes projet, dérivée du résumé existant. */
@@ -62,19 +59,39 @@ export function projectDisciplines(project: Project): string[] {
 }
 
 export type ProjectCover = {
-  src: string | null;
   /** portrait → colonne étroite (5/12), landscape → colonne large (7/12) */
   frame: "portrait" | "landscape";
-  fit: "cover" | "contain";
-  position?: string;
+  /** Mise en scène : captures d'app en téléphones, captures web en navigateur. */
+  kind: "phones" | "browser" | "logo" | "type";
+  images: string[];
 };
 
-/** Visuel de couverture de chaque projet dans la grille « Selected work ». */
+/** Couvertures de la grille « Projets » : même scène pour tous, seuls les cadres changent. */
 export const projectCovers: Record<string, ProjectCover> = {
-  orbitsx: { src: "/images/orbits (2).jpeg", frame: "portrait", fit: "cover", position: "50% 20%" },
-  "scan-tickets": { src: "/images/scanT (2).png", frame: "landscape", fit: "cover", position: "50% 0%" },
-  "aprosi-materiaux": { src: "/images/aprosi (1).png", frame: "landscape", fit: "cover", position: "0% 0%" },
-  "nioro-du-rip": { src: "/images/nioro-2.png", frame: "portrait", fit: "contain" },
-  "sunurh-pro": { src: "/images/SunuRH.jpg", frame: "portrait", fit: "contain" },
-  "helping-yourself": { src: null, frame: "landscape", fit: "cover" },
+  orbitsx: { frame: "portrait", kind: "phones", images: ["/images/orbits (4).jpeg", "/images/orbits (5).jpeg"] },
+  "scan-tickets": { frame: "landscape", kind: "browser", images: ["/images/scanT (2).png"] },
+  "aprosi-materiaux": { frame: "landscape", kind: "browser", images: ["/images/aprosi (1).png"] },
+  "nioro-du-rip": { frame: "portrait", kind: "browser", images: ["/images/nioro-1.png"] },
+  "sunurh-pro": { frame: "portrait", kind: "logo", images: ["/images/SunuRH.jpg"] },
+  "helping-yourself": { frame: "landscape", kind: "type", images: [] },
 };
+
+/**
+ * Technologies mises en avant dans la section Stack (affichées en grand).
+ * Les autres compétences de data.ts restent listées, en plus petit.
+ */
+export const coreSkills = new Set([
+  "JavaScript",
+  "TypeScript",
+  "PHP",
+  "Dart",
+  "Laravel",
+  "Next.js",
+  "React",
+  "Flutter",
+  "Express.js",
+  "PostgreSQL",
+  "MySQL",
+  "Adobe Photoshop",
+  "Adobe Illustrator",
+]);
