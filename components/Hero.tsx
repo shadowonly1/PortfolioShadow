@@ -22,7 +22,9 @@ export function Hero() {
       ref={ref}
       id="top"
       aria-label="Présentation"
-      className="relative isolate overflow-hidden pt-[var(--header-h)] lg:flex lg:min-h-[100svh] lg:flex-col"
+      // Toujours sombre, même en mode clair : la vidéo est tournée sur fond noir.
+      data-theme="dark"
+      className="relative isolate bg-background text-foreground overflow-hidden pt-[var(--header-h)] lg:flex lg:min-h-[100svh] lg:flex-col"
     >
       {/* Typographie géante d'arrière-plan */}
       <motion.div

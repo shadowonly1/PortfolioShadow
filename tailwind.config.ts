@@ -24,10 +24,10 @@ const config: Config = {
           dim: token("accent"),
         },
         destructive: "#EF4444",
-        border: "rgb(255 255 255 / 0.10)",
+        border: "rgb(var(--line) / 0.10)",
       },
       borderColor: {
-        DEFAULT: "rgb(255 255 255 / 0.10)",
+        DEFAULT: "rgb(var(--line) / 0.10)",
       },
       fontFamily: {
         display: ["var(--font-display)", "Impact", "sans-serif"],

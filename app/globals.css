@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* Le sélecteur [data-theme="dark"] permet aussi de garder une zone sombre
+     (le hero) quand le reste du site est en mode clair. */
+  :root,
+  [data-theme="dark"] {
     --background: 8 9 13; /* #08090D */
     --surface: 15 17 23; /* #0F1117 */
     --surface-raised: 20 22 30;
@@ -12,8 +15,25 @@
     --line: 255 255 255;
     --accent: 79 93 255; /* #4F5DFF */
     --accent-soft: 104 117 255; /* #6875FF */
-    --header-h: 4.5rem;
     color-scheme: dark;
+  }
+
+  :root {
+    --header-h: 4.5rem;
+  }
+
+  /* Mode clair : mêmes rôles, valeurs inversées. L'indigo « soft » est assombri
+     pour garder un contraste AA sur fond clair. */
+  :root[data-theme="light"] {
+    --background: 244 243 239; /* #F4F3EF */
+    --surface: 233 232 227; /* #E9E8E3 */
+    --surface-raised: 255 255 255;
+    --foreground: 12 13 18; /* #0C0D12 */
+    --muted: 88 90 100; /* #585A64 */
+    --line: 0 0 0;
+    --accent: 79 93 255; /* #4F5DFF */
+    --accent-soft: 59 70 201; /* #3B46C9 */
+    color-scheme: light;
   }
 
   * {
@@ -33,6 +53,7 @@
   body {
     @apply bg-background font-sans text-foreground antialiased;
     overflow-x: clip;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   ::selection {
@@ -118,7 +139,7 @@
 
   .glass-panel {
     background: rgb(var(--surface) / 0.7);
-    border: 1px solid rgb(255 255 255 / 0.1);
+    border: 1px solid rgb(var(--line) / 0.1);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }

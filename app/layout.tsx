@@ -86,6 +86,8 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -111,8 +113,14 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
+      data-theme="dark"
+      suppressHydrationWarning
       className={`${inter.variable} ${display.variable} ${serif.variable} ${mono.variable}`}
     >
+      <head>
+        {/* Applique le thème mémorisé avant l'affichage (évite un flash de couleur). */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-screen">
         <script
           type="application/ld+json"

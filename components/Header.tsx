@@ -7,6 +7,7 @@ import { profile } from "@/lib/data";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { cn } from "@/lib/utils";
 import { EASE, Plus } from "./Reveal";
+import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { id: "work", label: "Projets" },
@@ -60,6 +61,8 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
       </a>
 
       <header
+        // Sur l'accueil, au-dessus du hero (toujours sombre), le menu reste en version sombre.
+        data-theme={base === "" && !scrolled && !open ? "dark" : undefined}
         className={cn(
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-editorial",
           scrolled || open
@@ -95,6 +98,8 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
             </ul>
           </nav>
 
+          <div className="flex items-center gap-4 md:gap-0">
+          <ThemeToggle className="md:ml-10" />
           <button
             ref={toggleRef}
             type="button"
@@ -119,6 +124,7 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
               />
             </span>
           </button>
+          </div>
         </div>
       </header>
 

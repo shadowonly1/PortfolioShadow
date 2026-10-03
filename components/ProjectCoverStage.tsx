@@ -14,7 +14,7 @@ export function ProjectCoverStage({ project, cover }: { project: Project; cover:
         className="absolute inset-0 opacity-70"
         style={{
           backgroundImage:
-            "linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px)",
+            "linear-gradient(rgb(var(--line) / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--line) / 0.05) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
