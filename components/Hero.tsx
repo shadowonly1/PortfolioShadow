@@ -39,7 +39,7 @@ export function Hero() {
       </motion.div>
 
       {/* Vidéo : bloc en haut sur mobile, colonne centrale pleine hauteur sur desktop */}
-      <div className="relative -z-10 mx-auto h-[62svh] w-full max-w-md sm:h-[70svh] lg:absolute lg:inset-y-0 lg:left-1/2 lg:h-auto lg:w-[min(36vw,560px)] lg:max-w-none lg:-translate-x-[42%]">
+      <div className="relative -z-10 mx-auto h-[62svh] w-full max-w-md sm:h-[70svh] lg:absolute lg:inset-y-0 lg:left-1/2 lg:h-auto lg:w-[min(42vw,680px)] lg:max-w-none lg:-translate-x-[42%]">
         <HeroVideo y={videoY} scale={videoScale} opacity={videoOpacity} />
       </div>
 
