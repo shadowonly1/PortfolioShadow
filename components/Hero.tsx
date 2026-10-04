@@ -24,7 +24,7 @@ export function Hero() {
       aria-label="Présentation"
       // Toujours sombre, même en mode clair : la vidéo est tournée sur fond noir.
       data-theme="dark"
-      className="relative isolate bg-background text-foreground overflow-hidden pt-[var(--header-h)] lg:flex lg:min-h-[100svh] lg:flex-col"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-background pt-[var(--header-h)] text-foreground"
     >
       {/* Typographie géante d'arrière-plan */}
       <motion.div
@@ -39,11 +39,11 @@ export function Hero() {
       </motion.div>
 
       {/* Vidéo : bloc en haut sur mobile, colonne centrale pleine hauteur sur desktop */}
-      <div className="relative -z-10 mx-auto h-[62svh] w-full max-w-md sm:h-[70svh] lg:absolute lg:inset-y-0 lg:left-1/2 lg:h-auto lg:w-[min(42vw,680px)] lg:max-w-none lg:-translate-x-[42%]">
+      <div className="relative -z-10 mx-auto min-h-[50svh] w-full max-w-md flex-1 lg:absolute lg:inset-y-0 lg:left-1/2 lg:h-auto lg:w-[min(42vw,680px)] lg:max-w-none lg:flex-none lg:-translate-x-[42%]">
         <HeroVideo y={videoY} scale={videoScale} opacity={videoOpacity} />
       </div>
 
-      <div className="section-padding relative mx-auto -mt-[22svh] grid w-full max-w-content flex-1 grid-cols-1 gap-10 sm:-mt-[18svh] lg:mt-0 lg:grid-cols-12 lg:gap-6 lg:pb-8 lg:pt-10">
+      <div className="section-padding relative mx-auto -mt-[22svh] grid w-full max-w-content grid-cols-1 lg:flex-1 gap-10 sm:-mt-[18svh] lg:mt-0 lg:grid-cols-12 lg:gap-6 lg:pb-8 lg:pt-10">
         {/* Colonne gauche : identité */}
         <div className="flex flex-col justify-end lg:col-span-5 lg:pb-6">
           <h1 className="sr-only">

@@ -74,7 +74,8 @@ export function HeroVideo({
   return (
     <motion.div
       aria-hidden
-      className="relative h-full w-full"
+      // Remplit son conteneur, quelle que soit sa hauteur (plein écran sur mobile).
+      className="absolute inset-0"
       style={prefersReduced ? undefined : { y, scale, opacity }}
     >
       <motion.div
