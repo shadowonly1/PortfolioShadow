@@ -16,7 +16,7 @@ export function Footer({ lang }: { lang: Lang }) {
   const t = getDictionary(lang).footer;
   const { location } = getContent(lang).profile;
   return (
-    <footer className="relative overflow-hidden border-t pt-12">
+    <footer data-theme="dark" className="relative overflow-hidden border-t bg-surface pt-12 text-foreground">
       <Container>
         <div className="grid gap-8 font-mono text-label uppercase text-muted sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-1">

@@ -81,12 +81,12 @@ export function Contact({ lang }: { lang: Lang }) {
   }
 
   return (
-    <section id="contact" className="section overflow-hidden pb-16 sm:pb-20">
+    <section id="contact" data-theme="dark" className="section overflow-hidden bg-surface pb-16 text-foreground sm:pb-20">
       <BackgroundType word="Contact" className="top-20 text-[36vw]" outline drift={100} />
       <Container>
         <div className="flex items-center gap-4">
           <span className="label whitespace-nowrap">
-            <span className="text-foreground">09</span> / {t.label}
+            <span className="text-foreground">08</span> / {t.label}
           </span>
           <Hairline className="flex-1" />
           <Plus />
@@ -108,7 +108,7 @@ export function Contact({ lang }: { lang: Lang }) {
           <a
             href={`mailto:${profile.email}`}
             data-cursor={t.write}
-            className="group inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
+            className="group inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-accent-ink"
           >
             {t.cta}
             <span aria-hidden className="transition-transform duration-500 ease-editorial group-hover:translate-x-1">

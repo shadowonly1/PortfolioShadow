@@ -13,12 +13,15 @@ export function SectionIntro({
   title,
   aside,
   className,
+  size = "lg",
 }: {
   index: string;
   label: string;
   title: string[];
   aside?: React.ReactNode;
   className?: string;
+  /** lg : titre géant (sections phares) ; md : titre moyen (sections secondaires). */
+  size?: "lg" | "md";
 }) {
   return (
     <div className={cn("relative", className)}>
@@ -33,7 +36,7 @@ export function SectionIntro({
       <div className="mt-10 grid gap-8 sm:mt-14 lg:grid-cols-12 lg:items-end">
         <RevealText
           lines={title}
-          className="display text-display-lg lg:col-span-8"
+          className={cn("display lg:col-span-8", size === "lg" ? "text-display-lg" : "text-display-md")}
         />
         {aside && (
           <Reveal delay={0.2} className="max-w-prose text-base leading-relaxed text-muted lg:col-span-4 lg:pb-3">

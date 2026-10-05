@@ -61,7 +61,7 @@ export function Hero({ lang }: { lang: Lang }) {
       </div>
 
       {/* Barre basse */}
-      <div className="section-padding relative mx-auto mt-14 w-full max-w-content pb-6 lg:mt-0">
+      <div className="section-padding relative mx-auto mt-14 w-full max-w-content pb-14 sm:pb-16 lg:mt-0">
         <Hairline immediate delay={1} />
         <Reveal immediate delay={1.3} y={8} className="flex flex-wrap items-center justify-between gap-3 pt-4 font-mono text-label uppercase text-muted">
           <span>

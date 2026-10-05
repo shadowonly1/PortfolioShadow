@@ -18,6 +18,7 @@ const config: Config = {
         accent: {
           DEFAULT: token("accent"),
           soft: token("accent-soft"),
+          ink: token("accent-ink"),
           // Alias historiques (chatbot, 404…) : ramenés sur l'indigo.
           bright: token("accent-soft"),
           electric: token("accent-soft"),

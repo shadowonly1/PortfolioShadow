@@ -247,7 +247,7 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
           <p className="display text-display-sm">{t.similar}</p>
           <Link
             href={localePath(lang, "/#contact")}
-            className="inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
+            className="inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-accent-ink"
           >
             {t.contact}
           </Link>

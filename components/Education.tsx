@@ -15,7 +15,7 @@ export function Education({ lang }: { lang: Lang }) {
   return (
     <section id="certifications" className="section">
       <Container>
-        <SectionIntro index="08" label={t.label} title={t.title} />
+        <SectionIntro size="md" index="07" label={t.label} title={t.title} />
 
         <ol className="mt-16 border-t sm:mt-24">
           {entries.map((entry, i) => (

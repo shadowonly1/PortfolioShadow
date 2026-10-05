@@ -59,7 +59,7 @@ export function DesignShowcase({ lang }: { lang: Lang }) {
     <section id="design" className="section">
       <Container>
         <SectionIntro
-          index="07"
+          index="06"
           label={t.label}
           title={t.title}
           aside={

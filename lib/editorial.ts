@@ -14,7 +14,7 @@ export const services = [
     title: "Applications mobiles",
     description: "Applications iOS & Android en Flutter, de la maquette aux stores.",
     stack: ["Flutter", "Dart", "Firebase"],
-    image: "/images/orbits (4).jpeg",
+    image: "/images/orbits-app-3.jpg",
   },
   {
     title: "Systèmes backend",
@@ -78,7 +78,7 @@ export type ProjectCover = {
 
 /** Couvertures de la grille « Projets » : même scène pour tous, seuls les cadres changent. */
 export const projectCovers: Record<string, ProjectCover> = {
-  orbitsx: { frame: "portrait", kind: "phones", images: ["/images/orbits (4).jpeg", "/images/orbits (5).jpeg"] },
+  orbitsx: { frame: "portrait", kind: "phones", images: ["/images/orbits-app-1.jpg", "/images/orbits-app-3.jpg"] },
   "scan-tickets": { frame: "landscape", kind: "browser", images: ["/images/scanT (2).png"] },
   "aprosi-materiaux": { frame: "landscape", kind: "browser", images: ["/images/aprosi (1).png"] },
   "aprosi-site-institutionnel": { frame: "landscape", kind: "browser", images: ["/images/aprosi-site-1.jpg"] },

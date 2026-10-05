@@ -24,7 +24,7 @@ export function About({ lang }: { lang: Lang }) {
   const cvs = [...cvLinks].sort((a) => (a.lang === lang ? -1 : 1));
 
   return (
-    <section id="about" className="section">
+    <section id="about" className="section border-t-0">
       <Container>
         <div className="flex items-center gap-4">
           <span className="label whitespace-nowrap">

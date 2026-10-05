@@ -20,7 +20,7 @@ const tiles: Tile[] = [
   { kind: "project", slug: "scan-tickets", src: "/images/scanT (2).png", shape: "wide" },
   { kind: "design", src: "/images/logo/3f1cd391042f41bb0f95600a57bcd616.jpg", shape: "tall" },
   { kind: "project", slug: "nioro-du-rip", src: "/images/nioro-1.png", shape: "wide" },
-  { kind: "project", slug: "orbitsx", src: "/images/orbits (4).jpeg", shape: "tall" },
+  { kind: "project", slug: "orbitsx", src: "/images/orbits-app-2.jpg", shape: "tall" },
   { kind: "design", src: "/images/logo/d002469b093c36baae1db36c29de46fd.jpg", shape: "wide" },
   { kind: "design", src: "/images/logo/JUMMAH.jpg", shape: "tall" },
   { kind: "project", slug: "aprosi-materiaux", src: "/images/aprosi (3).png", shape: "wide" },

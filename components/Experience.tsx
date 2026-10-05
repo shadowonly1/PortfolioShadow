@@ -16,7 +16,7 @@ export function Experience({ lang }: { lang: Lang }) {
   return (
     <section id="experience" className="section">
       <Container>
-        <SectionIntro index="05" label={t.label} title={t.title} />
+        <SectionIntro size="md" index="05" label={t.label} title={t.title} />
 
         <ol className="mt-16 sm:mt-24">
           {experiences.map((exp, i) => (

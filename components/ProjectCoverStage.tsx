@@ -24,7 +24,7 @@ export function ProjectCoverStage({ project, cover, lang }: { project: Project; 
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 60%, rgb(var(--accent) / 0.16), transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 60%, rgb(var(--accent-soft) / 0.14), transparent 70%)" }}
       />
 
       <div className="absolute inset-0 flex items-center justify-center p-6 transition-transform duration-1000 ease-editorial group-hover:scale-[1.03] sm:p-10">

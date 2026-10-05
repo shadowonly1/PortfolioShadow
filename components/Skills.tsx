@@ -15,6 +15,7 @@ export function Skills({ lang }: { lang: Lang }) {
       <BackgroundType word="Stack" className="bottom-10 text-[42vw]" outline drift={120} />
       <Container>
         <SectionIntro
+          size="md"
           index="04"
           label={t.label}
           title={t.title}

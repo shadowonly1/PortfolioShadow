@@ -95,6 +95,8 @@ export type Project = {
   image: string;
   imageAlt: string;
   images?: string[];
+  /** Captures d'écran d'application (format téléphone), présentées en rangée de téléphones. */
+  screens?: string[];
   links?: { label: string; href: string }[];
   featured?: boolean;
   /** Projet resté au stade de conception : exclu du compteur « projets livrés ». */
@@ -129,13 +131,17 @@ export const projects: Project[] = [
       "Suivi temps réel et paiements sécurisés en production",
     ],
     image: "/images/projects/orbitsx.jpg",
-    imageAlt: "Visuels marketing et interface de l'application Orbits",
+    imageAlt: "Écrans de l'application Orbits : choix du véhicule et suivi de la course",
+    screens: [
+      "/images/orbits-app-1.jpg",
+      "/images/orbits-app-2.jpg",
+      "/images/orbits-app-3.jpg",
+      "/images/orbits-app-4.jpg",
+    ],
     images: [
       "/images/orbits (2).jpeg",
       "/images/orbits (3).jpeg",
       "/images/orbits (1).jpeg",
-      "/images/orbits (4).jpeg",
-      "/images/orbits (5).jpeg",
       "/images/orbits (6).jpeg",
     ],
     links: [

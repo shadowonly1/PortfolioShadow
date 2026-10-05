@@ -25,15 +25,15 @@ export function Statement({ lang }: { lang: Lang }) {
   const full = `${statement.first.join(" ")} ${statement.second.join(" ")}`;
 
   return (
-    <section aria-label={t.label} className="section overflow-hidden">
+    <section aria-label={t.label} className="relative overflow-hidden border-t py-20 sm:py-28">
       <Container>
         <div className="flex items-center justify-between font-mono text-label uppercase text-muted">
           <span>{t.label}</span>
           <Plus />
         </div>
-        <div ref={ref} className="mt-12 sm:mt-16">
+        <div ref={ref} className="mt-8 sm:mt-10">
           <p className="sr-only">{full}</p>
-          <p aria-hidden className="display text-[clamp(3.25rem,10.5vw,11rem)] leading-[0.86]">
+          <p aria-hidden className="display text-[clamp(2.5rem,7vw,7.5rem)] leading-[0.88]">
             {lines.map((line, li) => (
               <span key={li} className={li === statement.first.length ? "mt-[0.35em] block" : "block"}>
                 {line.split(" ").map((word, wi) => {
@@ -53,7 +53,7 @@ export function Statement({ lang }: { lang: Lang }) {
             ))}
           </p>
         </div>
-        <p className="mt-12 font-mono text-label uppercase text-muted">— Elimane Ba, Dakar</p>
+        <p className="mt-8 font-mono text-label uppercase text-muted">— Elimane Ba, Dakar</p>
       </Container>
     </section>
   );

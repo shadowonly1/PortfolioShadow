@@ -178,7 +178,7 @@ export function ChatBot({ lang }: { lang: Lang }) {
                   <div
                     className={`max-w-[85%] whitespace-pre-line rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                       message.role === "user"
-                        ? "rounded-br-sm bg-accent text-white"
+                        ? "rounded-br-sm bg-accent text-accent-ink"
                         : "rounded-bl-sm border border-border/70 bg-surface text-foreground/90"
                     }`}
                   >
@@ -226,12 +226,12 @@ export function ChatBot({ lang }: { lang: Lang }) {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.placeholder}
-                className="min-w-0 flex-1 rounded-full border border-border bg-background/60 px-4 py-2 text-sm text-foreground outline-none transition-all focus:border-accent-electric focus:shadow-[0_0_0_3px_rgba(94,234,255,0.15)]"
+                className="min-w-0 flex-1 rounded-full border border-border bg-background/60 px-4 py-2 text-sm text-foreground outline-none transition-all focus:border-accent-electric focus:shadow-[0_0_0_3px_rgb(var(--accent)/0.25)]"
               />
               <button
                 type="submit"
                 aria-label={t.send}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent-bright"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-accent-ink transition-colors hover:opacity-90"
               >
                 <Send size={15} aria-hidden />
               </button>

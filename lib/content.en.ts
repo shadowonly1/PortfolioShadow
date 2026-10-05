@@ -84,7 +84,7 @@ export const projectsEn: Record<string, ProjectText> = {
       "Built-in digital wallet with fine-grained commission and payout management",
       "Real-time tracking and secure payments in production",
     ],
-    imageAlt: "Marketing visuals and interface of the Orbits app",
+    imageAlt: "Orbits app screens: vehicle selection and ride tracking",
     linkLabels: [
       "Rider app — App Store",
       "Rider app — Google Play",

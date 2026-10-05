@@ -52,7 +52,7 @@ const fr = {
     view: "Voir",
   },
   services: {
-    label: "Services",
+    label: "Expertise",
     title: ["Ce que", "je construis"],
     aside: "Du serveur à l'app, du logo à l'interface : ce qui me permet de livrer un produit complet.",
   },
@@ -70,8 +70,7 @@ const fr = {
   },
   process: {
     label: "Méthode",
-    title: ["Méthode", "de travail"],
-    aside: "Un processus simple, répété sur chaque projet — de la petite plateforme interne à l'application multi-plateforme.",
+    intro: "Six étapes, répétées sur chaque projet.",
   },
   design: {
     label: "Design graphique",
@@ -216,7 +215,7 @@ const en: Dictionary = {
     view: "View",
   },
   services: {
-    label: "Services",
+    label: "Expertise",
     title: ["What", "I build"],
     aside: "From server to app, from logo to interface: everything I need to ship a complete product.",
   },
@@ -234,8 +233,7 @@ const en: Dictionary = {
   },
   process: {
     label: "Process",
-    title: ["How", "I work"],
-    aside: "A simple process, repeated on every project — from a small internal platform to a cross-platform app.",
+    intro: "Six steps, repeated on every project.",
   },
   design: {
     label: "Graphic design",
