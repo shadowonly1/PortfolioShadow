@@ -2,12 +2,16 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { profile } from "@/lib/data";
+import { getContent } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { HeroVideo } from "./HeroVideo";
 import { EASE, Hairline, Plus, Reveal } from "./Reveal";
 
-export function Hero() {
+export function Hero({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).hero;
+  const { profile } = getContent(lang);
   const ref = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -21,7 +25,7 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      aria-label="Présentation"
+      aria-label={t.aria}
       // Toujours sombre, même en mode clair : la vidéo est tournée sur fond noir.
       data-theme="dark"
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-background pt-[var(--header-h)] text-foreground"
@@ -47,10 +51,10 @@ export function Hero() {
         {/* Colonne gauche : identité */}
         <div className="flex flex-col justify-end lg:col-span-5 lg:pb-6">
           <h1 className="sr-only">
-            {profile.name} — Développeur Full-Stack, Web, Mobile &amp; Backend
+            {profile.name} — {t.h1}
           </h1>
           <Reveal immediate delay={0.6} as="p" className="flex flex-col gap-2">
-            <span className="font-serif text-4xl italic text-foreground sm:text-5xl">Développeur Full-Stack</span>
+            <span className="font-serif text-4xl italic text-foreground sm:text-5xl">{t.role}</span>
             <span className="font-mono text-label uppercase text-muted">Web · Mobile · Backend</span>
           </Reveal>
         </div>
@@ -64,9 +68,9 @@ export function Hero() {
             <span className="text-foreground">{profile.location}</span>
             <span className="hidden sm:inline"> — 14.69° N / 17.44° W</span>
           </span>
-          <span className="hidden md:inline">Faire défiler ↓</span>
+          <span className="hidden md:inline">{t.scroll}</span>
           <span className="flex items-center gap-2">
-            Disponible pour de nouveaux projets <Plus />
+            {t.available} <Plus />
           </span>
         </Reveal>
       </div>

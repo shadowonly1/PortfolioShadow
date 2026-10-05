@@ -35,6 +35,14 @@ lib/editorial.ts             libellés éditoriaux, services, couvertures des pr
 lib/process.ts               étapes de la méthode
 ```
 
+## Français / anglais
+
+- Français à la racine (`/`, `/projects/x`), anglais sous `/en` : chaque page existe dans les deux langues, pré-générée, avec liens `hreflang`.
+- Les pages vivent dans `app/[lang]/` ; `middleware.ts` réécrit `/…` vers `/fr/…` et mémorise le choix du visiteur (cookie `lang`).
+- Libellés de l'interface : `lib/dictionary.ts`. Contenu anglais : `lib/content.en.ts`, appliqué sur le français par `lib/content.ts`.
+- Pour ajouter un projet : l'ajouter dans `lib/data.ts` **et** sa traduction dans `projectsEn` (`lib/content.en.ts`).
+- Pour ajouter une création graphique : l'ajouter dans `designWorks` (`lib/data.ts`), sa légende anglaise dans `designAltEn`, et ses dimensions dans `lib/designSizes.ts`.
+
 ## Personnaliser le contenu
 
 Tout le texte du site vit dans **`lib/data.ts`** — modifie ce fichier pour changer nom, accroche,

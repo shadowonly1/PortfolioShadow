@@ -7,22 +7,29 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import { ClipReveal, Hairline, Plus, Reveal, RevealText } from "@/components/Reveal";
-import { projects } from "@/lib/data";
-import { projectCategory, projectCovers, projectDisciplines } from "@/lib/editorial";
+import { getContent } from "@/lib/content";
+import { projects as allProjects } from "@/lib/data";
+import { getDictionary } from "@/lib/dictionary";
+import { projectCovers, projectDisciplines } from "@/lib/editorial";
+import { localePath, type Lang } from "@/lib/i18n";
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return allProjects.map((project) => ({ slug: project.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const project = projects.find((p) => p.slug === params.slug);
+export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
+  const project = getContent(params.lang).projects.find((p) => p.slug === params.slug);
   if (!project) return {};
+  const path = `/projects/${project.slug}`;
 
   return {
     title: project.name,
     description: project.summary,
-    alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: { title: project.name, description: project.summary },
+    alternates: {
+      canonical: localePath(params.lang, path),
+      languages: { fr: path, en: localePath("en", path), "x-default": path },
+    },
+    openGraph: { title: project.name, description: project.summary, url: localePath(params.lang, path) },
   };
 }
 
@@ -53,7 +60,10 @@ function Block({ index, title, children }: { index: string; title: string; child
   );
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
+export default function ProjectPage({ params }: { params: { lang: Lang; slug: string } }) {
+  const { lang } = params;
+  const t = getDictionary(lang).project;
+  const { projects, projectCategory } = getContent(lang);
   const index = projects.findIndex((p) => p.slug === params.slug);
   const project = projects[index];
   if (!project) notFound();
@@ -68,16 +78,16 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <Header base="/" />
+      <Header lang={lang} />
       <main id="main-content" className="pt-[var(--header-h)]">
         <Container className="pt-12 sm:pt-20">
           <div className="flex items-center gap-4">
-            <Link href="/#work" className="label whitespace-nowrap transition-colors hover:text-foreground">
-              ← Projets
+            <Link href={localePath(lang, "/#work")} className="label whitespace-nowrap transition-colors hover:text-foreground">
+              {t.back}
             </Link>
             <Hairline immediate className="flex-1" />
             <span className="label whitespace-nowrap">
-              Étude de cas <span className="text-foreground">{number}</span> / {String(projects.length).padStart(2, "0")}
+              {t.caseStudy} <span className="text-foreground">{number}</span> / {String(projects.length).padStart(2, "0")}
             </span>
           </div>
 
@@ -106,25 +116,29 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <Reveal immediate delay={0.5}>
             <dl className="mt-16 grid gap-y-8 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4">
               <div>
-                <dt className="label">Rôle</dt>
+                <dt className="label">{t.role}</dt>
                 <dd className="mt-3 pr-6 text-sm text-foreground">{project.role}</dd>
               </div>
               <div>
-                <dt className="label">Disciplines</dt>
+                <dt className="label">{t.disciplines}</dt>
                 <dd className="mt-3 text-sm text-foreground">{projectDisciplines(project).join(" / ") || "—"}</dd>
               </div>
               <div>
-                <dt className="label">Stack</dt>
+                <dt className="label">{t.stack}</dt>
                 <dd className="mt-3">
-                  <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-foreground">
-                    {project.stack.map((s) => (
-                      <li key={s}>{s}</li>
-                    ))}
-                  </ul>
+                  {project.stack.length > 0 ? (
+                    <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-foreground">
+                      {project.stack.map((s) => (
+                        <li key={s}>{s}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span className="text-sm text-foreground">—</span>
+                  )}
                 </dd>
               </div>
               <div>
-                <dt className="label">{project.links?.length ? "Liens" : "Statut"}</dt>
+                <dt className="label">{project.links?.length ? t.links : t.status}</dt>
                 <dd className="mt-3 flex flex-col gap-2">
                   {project.links?.length ? (
                     project.links.map((link) => (
@@ -140,7 +154,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                     ))
                   ) : (
                     <span className="text-sm text-foreground">
-                      {project.conceptual ? "Concept / architecture" : "Livré"}
+                      {project.conceptual ? t.conceptStatus : t.delivered}
                     </span>
                   )}
                 </dd>
@@ -151,7 +165,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
         <Container className="mt-16 sm:mt-24">
           {hasGallery ? (
-            <ProjectGallery project={project} />
+            <ProjectGallery project={project} visualLabel={t.visual} />
           ) : (
             <ClipReveal className="relative flex aspect-[16/9] items-center justify-center overflow-hidden bg-surface">
               {cover?.images[0] ? (
@@ -169,20 +183,20 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <section className="grid gap-12 border-t py-16 sm:py-24 lg:grid-cols-2 lg:gap-8">
             <Reveal>
               <p className="label">
-                <span className="text-foreground">{nextIndex()}</span> / Le problème
+                <span className="text-foreground">{nextIndex()}</span> / {t.problem}
               </p>
               <p className="mt-6 text-xl leading-relaxed text-foreground/90 sm:text-2xl">{project.problem}</p>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="label">
-                <span className="text-foreground">{nextIndex()}</span> / La solution
+                <span className="text-foreground">{nextIndex()}</span> / {t.solution}
               </p>
               <p className="mt-6 text-xl leading-relaxed text-foreground/90 sm:text-2xl">{project.solution}</p>
             </Reveal>
           </section>
 
           {project.architecture && (
-            <Block index={nextIndex()} title="Architecture">
+            <Block index={nextIndex()} title={t.architecture}>
               <Reveal as="p" className="text-lg leading-relaxed text-muted">
                 {project.architecture}
               </Reveal>
@@ -190,17 +204,17 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           )}
 
           {project.challenges && project.challenges.length > 0 && (
-            <Block index={nextIndex()} title="Défis techniques">
+            <Block index={nextIndex()} title={t.challenges}>
               <NumberedList items={project.challenges} />
             </Block>
           )}
 
-          <Block index={nextIndex()} title="Points forts">
+          <Block index={nextIndex()} title={t.highlights}>
             <NumberedList items={project.highlights} />
           </Block>
 
           {project.results && project.results.length > 0 && (
-            <Block index={nextIndex()} title="Résultats">
+            <Block index={nextIndex()} title={t.results}>
               <NumberedList items={project.results} />
             </Block>
           )}
@@ -208,19 +222,19 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           {project.lessons && (
             <section className="border-t py-20 sm:py-32">
               <p className="label flex items-center gap-2">
-                Leçon apprise <Plus />
+                {t.lesson} <Plus />
               </p>
               <Reveal as="p" className="mt-8 max-w-5xl font-serif text-3xl italic leading-snug text-foreground sm:text-5xl">
-                « {project.lessons} »
+                {t.quote(project.lessons)}
               </Reveal>
             </section>
           )}
         </Container>
 
-        <Link href={`/projects/${next.slug}`} data-cursor="Suivant" className="group block border-t">
+        <Link href={localePath(lang, `/projects/${next.slug}`)} data-cursor={t.nextCursor} className="group block border-t">
           <Container className="py-16 sm:py-24">
             <p className="label flex justify-between">
-              <span>Projet suivant</span>
+              <span>{t.next}</span>
               <span>{String(((index + 1) % projects.length) + 1).padStart(2, "0")}</span>
             </p>
             <p className="display mt-6 text-display-lg transition-transform duration-700 ease-editorial group-hover:translate-x-4">
@@ -230,16 +244,16 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         </Link>
 
         <Container className="flex flex-wrap items-center justify-between gap-6 border-t py-12">
-          <p className="display text-display-sm">Un projet similaire en tête ?</p>
+          <p className="display text-display-sm">{t.similar}</p>
           <Link
-            href="/#contact"
+            href={localePath(lang, "/#contact")}
             className="inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
           >
-            Me contacter →
+            {t.contact}
           </Link>
         </Container>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

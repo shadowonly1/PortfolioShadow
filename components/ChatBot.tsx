@@ -5,7 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, Sparkles, X } from "lucide-react";
 import Image from "next/image";
 import { profile } from "@/lib/data";
-import { faq, findFaqAnswer } from "@/lib/chatbotFaq";
+import { buildFaq, findFaqAnswer } from "@/lib/chatbotFaq";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 type Message = {
@@ -14,19 +16,15 @@ type Message = {
   text: string;
 };
 
-const GREETING =
-  "Salut 👋 Je suis l'assistant d'Elimane. Pose-moi une question sur son parcours, ses projets ou ses services — ou choisis un sujet ci-dessous.";
-
-const FALLBACK =
-  "Je n'ai pas de réponse toute faite pour ça 🙂 Essaie l'un des sujets ci-dessous, ou écris directement à Elimane via le formulaire de contact.";
-
 let idCounter = 0;
 function nextId() {
   idCounter += 1;
   return `msg-${idCounter}`;
 }
 
-export function ChatBot() {
+export function ChatBot({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).chat;
+  const [faq] = useState(() => buildFaq(lang));
   const prefersReducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -61,9 +59,9 @@ export function ChatBot() {
 
   useEffect(() => {
     if (open && messages.length === 0) {
-      setMessages([{ id: nextId(), role: "bot", text: GREETING }]);
+      setMessages([{ id: nextId(), role: "bot", text: t.greeting }]);
     }
-  }, [open, messages.length]);
+  }, [open, messages.length, t.greeting]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -75,14 +73,14 @@ export function ChatBot() {
 
     const match = matchedId
       ? faq.find((f) => f.id === matchedId)
-      : findFaqAnswer(userText);
+      : findFaqAnswer(faq, lang, userText);
 
     setTimeout(
       () => {
         setIsTyping(false);
         setMessages((prev) => [
           ...prev,
-          { id: nextId(), role: "bot", text: match ? match.answer : FALLBACK },
+          { id: nextId(), role: "bot", text: match ? match.answer : t.fallback },
         ]);
         if (match) setAskedIds((prev) => Array.from(new Set([...prev, match.id])));
       },
@@ -111,7 +109,7 @@ export function ChatBot() {
         type="button"
         tabIndex={pastHero || open ? 0 : -1}
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant"}
+        aria-label={open ? t.close : t.open}
         aria-expanded={open}
         className={`fixed bottom-5 right-5 z-[60] flex h-12 items-center gap-2 rounded-full border border-line/15 bg-background/80 px-4 font-mono text-label uppercase text-foreground backdrop-blur-md transition-[opacity,transform,border-color] duration-500 hover:border-line/40 sm:bottom-7 sm:right-7 ${
           pastHero || open ? "opacity-100" : "pointer-events-none translate-y-4 opacity-0"
@@ -141,7 +139,7 @@ export function ChatBot() {
             >
               <span className="flex items-center gap-2">
                 <MessageCircle size={15} aria-hidden />
-                Question
+                {t.button}
               </span>
             </motion.span>
           )}
@@ -156,7 +154,7 @@ export function ChatBot() {
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: 24, scale: 0.95 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             role="dialog"
-            aria-label="Assistant conversationnel"
+            aria-label={t.dialog}
             className="glass-panel fixed bottom-24 right-5 z-[60] flex h-[30rem] w-[22rem] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-2xl border border-border/70 shadow-2xl shadow-black/40 sm:bottom-28 sm:right-7"
           >
             <div className="flex items-center gap-3 border-b border-border/60 px-4 py-3">
@@ -165,9 +163,9 @@ export function ChatBot() {
               </div>
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold text-foreground">
-                  Assistant de {profile.name}
+                  {t.title(profile.name)}
                 </p>
-                <p className="text-xs text-muted">Réponses automatiques · FAQ</p>
+                <p className="text-xs text-muted">{t.sub}</p>
               </div>
             </div>
 
@@ -224,15 +222,15 @@ export function ChatBot() {
               <input
                 ref={inputRef}
                 type="text"
-                aria-label="Ta question"
+                aria-label={t.input}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Écris ta question…"
+                placeholder={t.placeholder}
                 className="min-w-0 flex-1 rounded-full border border-border bg-background/60 px-4 py-2 text-sm text-foreground outline-none transition-all focus:border-accent-electric focus:shadow-[0_0_0_3px_rgba(94,234,255,0.15)]"
               />
               <button
                 type="submit"
-                aria-label="Envoyer"
+                aria-label={t.send}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent-bright"
               >
                 <Send size={15} aria-hidden />

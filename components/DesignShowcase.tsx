@@ -3,7 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { designWorks, profile } from "@/lib/data";
+import { getContent } from "@/lib/content";
+import { profile } from "@/lib/data";
+import { designSizes } from "@/lib/designSizes";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { Container } from "./Container";
 import { EASE, Reveal } from "./Reveal";
@@ -12,8 +16,20 @@ import { SectionIntro } from "./SectionIntro";
 const INITIAL = 9;
 // Les PNG détourés sont des logos : présentés sur fond, sans recadrage.
 const isLogo = (src: string) => src.toLowerCase().endsWith(".png");
+// Format d'origine de chaque création, plafonné pour les visuels très hauts (roll-up…).
+const MIN_RATIO = 0.6;
+const ratioOf = (src: string) => {
+  const [w, h] = designSizes[src] ?? [4, 5];
+  return Math.max(w / h, MIN_RATIO);
+};
+const isClamped = (src: string) => {
+  const [w, h] = designSizes[src] ?? [4, 5];
+  return w / h < MIN_RATIO;
+};
 
-export function DesignShowcase() {
+export function DesignShowcase({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).design;
+  const { designWorks } = getContent(lang);
   const [expanded, setExpanded] = useState(false);
   const [active, setActive] = useState<number | null>(null);
   const lastTrigger = useRef<HTMLButtonElement | null>(null);
@@ -37,19 +53,18 @@ export function DesignShowcase() {
       document.documentElement.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [active, close]);
+  }, [active, close, designWorks.length]);
 
   return (
     <section id="design" className="section">
       <Container>
         <SectionIntro
           index="07"
-          label="Design graphique"
-          title={["Pixel", "& Identité"]}
+          label={t.label}
+          title={t.title}
           aside={
             <>
-              Logos, affiches et supports de communication — l&apos;autre moitié du métier, celle qui
-              donne un visage aux produits que je construis.{" "}
+              {t.aside}{" "}
               <a href={profile.behance} target="_blank" rel="noopener noreferrer" className="link-underline text-foreground">
                 Behance ↗
               </a>
@@ -62,15 +77,18 @@ export function DesignShowcase() {
             <Reveal as="li" key={work.src} delay={(i % 3) * 0.06} className="mb-3 break-inside-avoid sm:mb-4 lg:mb-6">
               <button
                 type="button"
-                data-cursor="Ouvrir"
+                data-cursor={t.open}
                 onClick={(e) => {
                   lastTrigger.current = e.currentTarget;
                   setActive(i);
                 }}
                 className="group relative block w-full overflow-hidden bg-surface text-left"
-                aria-label={`Agrandir : ${work.alt}`}
+                aria-label={`${t.enlarge} ${work.alt}`}
               >
-                <div className={cn("relative w-full", isLogo(work.src) ? "aspect-square" : "aspect-[4/5]")}>
+                <div
+                  className="relative w-full"
+                  style={{ aspectRatio: ratioOf(work.src) }}
+                >
                   <Image
                     src={work.src}
                     alt={work.alt}
@@ -78,7 +96,7 @@ export function DesignShowcase() {
                     sizes="(min-width: 1024px) 30vw, 50vw"
                     className={cn(
                       "transition-transform duration-1000 ease-editorial group-hover:scale-[1.04]",
-                      isLogo(work.src) ? "object-contain p-8 sm:p-12" : "object-cover"
+                      isLogo(work.src) ? "object-contain p-8 sm:p-12" : isClamped(work.src) ? "object-contain" : "object-cover"
                     )}
                   />
                 </div>
@@ -99,7 +117,7 @@ export function DesignShowcase() {
               aria-expanded={expanded}
               className="group flex items-center gap-3 border px-6 py-3.5 font-mono text-label uppercase text-foreground transition-colors duration-500 hover:border-foreground"
             >
-              {expanded ? "Réduire" : `Voir les ${designWorks.length} créations`}
+              {expanded ? t.collapse : t.seeAll(designWorks.length)}
               <span aria-hidden className={cn("transition-transform duration-500", expanded && "rotate-45")}>
                 +
               </span>
@@ -126,7 +144,7 @@ export function DesignShowcase() {
                 {String(active + 1).padStart(2, "0")} / {String(designWorks.length).padStart(2, "0")}
               </span>
               <button type="button" onClick={close} autoFocus className="text-foreground">
-                Fermer ✕
+                {t.close}
               </button>
             </div>
             <div className="relative mx-4 mb-4 flex-1 sm:mx-12" onClick={(e) => e.stopPropagation()}>
@@ -148,7 +166,7 @@ export function DesignShowcase() {
                 onClick={() => setActive((active - 1 + designWorks.length) % designWorks.length)}
                 className="text-muted transition-colors hover:text-foreground"
               >
-                ← Préc.
+                {t.prev}
               </button>
               <span className="hidden text-foreground sm:inline">{designWorks[active].alt}</span>
               <button
@@ -156,7 +174,7 @@ export function DesignShowcase() {
                 onClick={() => setActive((active + 1) % designWorks.length)}
                 className="text-muted transition-colors hover:text-foreground"
               >
-                Suiv. →
+                {t.next}
               </button>
             </div>
           </motion.div>

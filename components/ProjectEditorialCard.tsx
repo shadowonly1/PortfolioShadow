@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { getContent } from "@/lib/content";
 import type { Project } from "@/lib/data";
-import { projectCategory, projectCovers, projectDisciplines, type ProjectCover } from "@/lib/editorial";
+import { getDictionary } from "@/lib/dictionary";
+import { projectCovers, projectDisciplines, type ProjectCover } from "@/lib/editorial";
+import { localePath, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { ProjectCoverStage } from "./ProjectCoverStage";
 import { ClipReveal, Reveal } from "./Reveal";
@@ -8,12 +11,16 @@ import { ClipReveal, Reveal } from "./Reveal";
 export function ProjectEditorialCard({
   project,
   index,
+  lang,
   className,
 }: {
   project: Project;
   index: number;
+  lang: Lang;
   className?: string;
 }) {
+  const t = getDictionary(lang).work;
+  const { projectCategory } = getContent(lang);
   const cover: ProjectCover = projectCovers[project.slug] ?? {
     frame: "landscape",
     kind: project.images?.length ? "browser" : "type",
@@ -25,8 +32,8 @@ export function ProjectEditorialCard({
   return (
     <article className={cn("group relative", className)}>
       <Link
-        href={`/projects/${project.slug}`}
-        data-cursor="Voir"
+        href={localePath(lang, `/projects/${project.slug}`)}
+        data-cursor={t.view}
         className="block focus-visible:outline-offset-8"
       >
         <div className="mb-4 flex items-center justify-between gap-4 font-mono text-label uppercase">
@@ -34,7 +41,7 @@ export function ProjectEditorialCard({
             {number}
           </span>
           <span className="text-muted">
-            {project.conceptual ? "Concept" : project.featured ? "Projet phare" : projectCategory[project.slug]}
+            {project.conceptual ? t.concept : project.featured ? t.featured : projectCategory[project.slug]}
           </span>
         </div>
 
@@ -44,7 +51,7 @@ export function ProjectEditorialCard({
             cover.frame === "portrait" ? "aspect-[4/5]" : "aspect-[4/3]"
           )}
         >
-          <ProjectCoverStage project={project} cover={cover} />
+          <ProjectCoverStage project={project} cover={cover} lang={lang} />
           <div
             aria-hidden
             className="absolute inset-0 bg-background/0 transition-colors duration-700 ease-editorial group-hover:bg-background/15"
@@ -65,7 +72,7 @@ export function ProjectEditorialCard({
           <div className="mt-5 flex items-center justify-between gap-4 border-t pt-4 font-mono text-label uppercase">
             <span className="text-muted">{disciplines.join(" / ")}</span>
             <span className="flex items-center gap-2 text-foreground">
-              Étude de cas
+              {t.caseStudy}
               <span aria-hidden className="transition-transform duration-700 ease-editorial group-hover:translate-x-1.5">
                 →
               </span>

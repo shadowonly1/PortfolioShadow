@@ -1,20 +1,24 @@
-import { skillGroups } from "@/lib/data";
+import { getContent } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionary";
 import { coreSkills } from "@/lib/editorial";
+import type { Lang } from "@/lib/i18n";
 import { BackgroundType } from "./BackgroundType";
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { SectionIntro } from "./SectionIntro";
 
-export function Skills() {
+export function Skills({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).skills;
+  const { skillGroups } = getContent(lang);
   return (
     <section id="skills" className="section overflow-hidden">
       <BackgroundType word="Stack" className="bottom-10 text-[42vw]" outline drift={120} />
       <Container>
         <SectionIntro
           index="04"
-          label="Stack technique"
-          title={["Stack", "Technique"]}
-          aside="Du langage au pixel : les outils avec lesquels je conçois, construis et mets en production."
+          label={t.label}
+          title={t.title}
+          aside={t.aside}
         />
 
         <div className="mt-16 sm:mt-24">
@@ -52,7 +56,7 @@ export function Skills() {
                 </ul>
                 {group.items.some((item) => !coreSkills.has(item)) && (
                   <p className="label mt-5 flex flex-wrap gap-x-2 gap-y-1">
-                    <span className="text-foreground">Aussi —</span>
+                    <span className="text-foreground">{t.also}</span>
                     {group.items.filter((item) => !coreSkills.has(item)).join(" · ")}
                   </p>
                 )}

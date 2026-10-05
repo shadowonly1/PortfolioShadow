@@ -2,7 +2,10 @@
 
 import { FormEvent, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { getContent } from "@/lib/content";
 import { profile } from "@/lib/data";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { BackgroundType } from "./BackgroundType";
 import { Container } from "./Container";
 import { FloatingInput, FloatingTextarea } from "./FloatingField";
@@ -12,14 +15,15 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 const FORMSUBMIT_EMAIL = "elimaneba3@gmail.com";
 
-const channels = [
-  { label: "Email", value: profile.email, href: `mailto:${profile.email}`, external: false },
-  { label: "LinkedIn", value: "in/elimane-ba", href: profile.linkedin, external: true },
-  { label: "GitHub", value: "shadowonly1", href: profile.github, external: true },
-  { label: "Téléphone", value: profile.phone, href: `tel:${profile.phone.replace(/\s+/g, "")}`, external: false },
-];
-
-export function Contact() {
+export function Contact({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).contact;
+  const { location } = getContent(lang).profile;
+  const channels = [
+    { label: "Email", value: profile.email, href: `mailto:${profile.email}`, external: false },
+    { label: "LinkedIn", value: "in/elimane-ba", href: profile.linkedin, external: true },
+    { label: "GitHub", value: "shadowonly1", href: profile.github, external: true },
+    { label: t.phone, value: profile.phone, href: `tel:${profile.phone.replace(/\s+/g, "")}`, external: false },
+  ];
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -43,7 +47,7 @@ export function Contact() {
 
     if (!name || !email || !message) {
       setStatus("error");
-      setError("Merci de remplir le nom, l'email et le message avant d'envoyer.");
+      setError(t.errRequired);
       return;
     }
 
@@ -54,7 +58,8 @@ export function Contact() {
       payload.append("email", email);
       payload.append("subject", subject || "Nouveau message via le portfolio");
       payload.append("message", message);
-      payload.append("_subject", `Portfolio — message de ${name}`);
+      // Sujet en français pour la boîte de réception, avec la langue du visiteur.
+      payload.append("_subject", `Portfolio (${lang.toUpperCase()}) — message de ${name}`);
       payload.append("_template", "box");
       payload.append("_captcha", "false");
       payload.append("_honey", "");
@@ -71,7 +76,7 @@ export function Contact() {
       form.reset();
     } catch {
       setStatus("error");
-      setError("Une erreur est survenue. Réessaie ou écris directement par email.");
+      setError(t.errSend);
     }
   }
 
@@ -81,14 +86,14 @@ export function Contact() {
       <Container>
         <div className="flex items-center gap-4">
           <span className="label whitespace-nowrap">
-            <span className="text-foreground">09</span> / Contact
+            <span className="text-foreground">09</span> / {t.label}
           </span>
           <Hairline className="flex-1" />
           <Plus />
         </div>
 
         <RevealText
-          lines={["Construisons", <span key="s">ensemble<span className="text-accent">.</span></span>]}
+          lines={[t.title[0], <span key="s">{t.title[1]}<span className="text-accent">.</span></span>]}
           className="display mt-12 text-display-xl sm:mt-16"
         />
 
@@ -98,14 +103,14 @@ export function Contact() {
               <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 motion-safe:animate-pulse-glow" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
-            Disponible pour vos projets — {profile.location}
+            {t.available} — {location}
           </p>
           <a
             href={`mailto:${profile.email}`}
-            data-cursor="Écrire"
+            data-cursor={t.write}
             className="group inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
           >
-            Me contacter
+            {t.cta}
             <span aria-hidden className="transition-transform duration-500 ease-editorial group-hover:translate-x-1">
               →
             </span>
@@ -137,7 +142,7 @@ export function Contact() {
           </ul>
 
           <Reveal delay={0.1} className="lg:col-span-5 lg:col-start-8">
-            <p className="label mb-4 text-foreground">Ou écris-moi ici</p>
+            <p className="label mb-4 text-foreground">{t.orWrite}</p>
             <form onSubmit={handleSubmit} noValidate className="relative flex flex-col gap-6">
               <AnimatePresence>
                 {status === "success" && (
@@ -150,31 +155,31 @@ export function Contact() {
                     className="absolute inset-0 z-10 flex flex-col items-start justify-center gap-4 bg-background"
                   >
                     <p className="display text-display-sm">
-                      Message envoyé<span className="text-accent">.</span>
+                      {t.sent}<span className="text-accent">.</span>
                     </p>
-                    <p className="text-sm text-muted">Merci — je reviens vers toi rapidement.</p>
+                    <p className="text-sm text-muted">{t.thanks}</p>
                     <button
                       type="button"
                       onClick={() => setStatus("idle")}
                       className="link-underline pb-1 font-mono text-label uppercase text-foreground"
                     >
-                      Envoyer un autre message
+                      {t.another}
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>
 
               <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
-                <label htmlFor="_honey">Ne pas remplir</label>
+                <label htmlFor="_honey">{t.honey}</label>
                 <input id="_honey" name="_honey" type="text" tabIndex={-1} autoComplete="off" />
               </div>
 
               <div className="grid gap-6 sm:grid-cols-2">
-                <FloatingInput id="name" name="name" label="Nom" type="text" autoComplete="name" required />
-                <FloatingInput id="email" name="email" label="Email" type="email" autoComplete="email" required />
+                <FloatingInput id="name" name="name" label={t.name} type="text" autoComplete="name" required />
+                <FloatingInput id="email" name="email" label={t.email} type="email" autoComplete="email" required />
               </div>
-              <FloatingInput id="subject" name="subject" label="Sujet" type="text" autoComplete="off" />
-              <FloatingTextarea id="message" name="message" label="Message" rows={4} required />
+              <FloatingInput id="subject" name="subject" label={t.subject} type="text" autoComplete="off" />
+              <FloatingTextarea id="message" name="message" label={t.message} rows={4} required />
 
               {status === "error" && error && (
                 <p role="alert" className="text-sm text-destructive">
@@ -187,7 +192,7 @@ export function Contact() {
                 disabled={status === "submitting"}
                 className="group mt-2 flex items-center justify-between border-b border-foreground pb-3 font-display text-3xl uppercase text-foreground transition-colors duration-500 hover:border-accent hover:text-accent-soft disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {status === "submitting" ? "Envoi…" : "Envoyer le message"}
+                {status === "submitting" ? t.sending : t.send}
                 <span aria-hidden className="transition-transform duration-500 ease-editorial group-hover:translate-x-2">
                   →
                 </span>

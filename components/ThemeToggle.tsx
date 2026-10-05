@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type Theme = "dark" | "light";
 
 /** Bascule mode sombre / clair. Le choix est mémorisé (localStorage). */
-export function ThemeToggle({ className }: { className?: string }) {
+export function ThemeToggle({ lang, className }: { lang: Lang; className?: string }) {
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
@@ -25,7 +27,8 @@ export function ThemeToggle({ className }: { className?: string }) {
     }
   };
 
-  const label = theme === "dark" ? "Passer en mode clair" : "Passer en mode sombre";
+  const t = getDictionary(lang).theme;
+  const label = theme === "dark" ? t.toLight : t.toDark;
 
   return (
     <button

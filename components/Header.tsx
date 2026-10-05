@@ -4,22 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { profile } from "@/lib/data";
+import { getDictionary } from "@/lib/dictionary";
+import { localePath, type Lang } from "@/lib/i18n";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { cn } from "@/lib/utils";
 import { EASE, Plus } from "./Reveal";
+import { LangSwitch } from "./LangSwitch";
 import { ThemeToggle } from "./ThemeToggle";
 
-const links = [
-  { id: "work", label: "Projets" },
-  { id: "about", label: "À propos" },
-  { id: "experience", label: "Parcours" },
-  { id: "contact", label: "Contact" },
-];
+const sectionIds = ["work", "about", "experience", "contact"] as const;
 
 /**
- * @param base "" sur l'accueil (ancres locales), "/" sur les sous-pages.
+ * @param home true sur l'accueil (ancres locales), false sur les sous-pages.
  */
-export function Header({ base = "" }: { base?: "" | "/" }) {
+export function Header({ lang, home = false }: { lang: Lang; home?: boolean }) {
+  const t = getDictionary(lang);
+  const links = sectionIds.map((id) => ({ id, label: t.nav[id] }));
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const prefersReduced = useReducedMotion();
@@ -49,7 +49,7 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
     };
   }, [open]);
 
-  const href = (id: string) => `${base}#${id}`;
+  const href = (id: string) => (home ? `#${id}` : localePath(lang, `/#${id}`));
 
   return (
     <>
@@ -57,12 +57,12 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
       >
-        Aller au contenu principal
+        {t.skip}
       </a>
 
       <header
         // Sur l'accueil, au-dessus du hero (toujours sombre), le menu reste en version sombre.
-        data-theme={base === "" && !scrolled && !open ? "dark" : undefined}
+        data-theme={home && !scrolled && !open ? "dark" : undefined}
         className={cn(
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-editorial",
           scrolled || open
@@ -72,15 +72,15 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
       >
         <div className="section-padding mx-auto flex h-[var(--header-h)] max-w-content items-center justify-between gap-6">
           <Link
-            href={base || "#top"}
+            href={home ? "#top" : localePath(lang, "/")}
             className="group relative z-[70] flex flex-col leading-none"
             onClick={() => setOpen(false)}
           >
             <span className="font-display text-2xl tracking-wide text-foreground">{profile.name}</span>
-            <span className="label mt-1 text-[11px]">Développeur</span>
+            <span className="label mt-1 text-[11px]">{t.header.role}</span>
           </Link>
 
-          <nav aria-label="Navigation principale" className="hidden md:block">
+          <nav aria-label={t.header.mainNav} className="hidden md:block">
             <ul className="flex items-center gap-10">
               {links.map((link, i) => (
                 <li key={link.id}>
@@ -98,8 +98,9 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-4 md:gap-0">
-          <ThemeToggle className="md:ml-10" />
+          <div className="flex items-center gap-3 md:ml-10">
+          <LangSwitch lang={lang} />
+          <ThemeToggle lang={lang} />
           <button
             ref={toggleRef}
             type="button"
@@ -108,7 +109,7 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
             aria-controls="mobile-menu"
             className="relative z-[70] flex items-center gap-3 font-mono text-label uppercase text-foreground md:hidden"
           >
-            <span>{open ? "Fermer" : "Menu"}</span>
+            <span>{open ? t.header.close : t.header.menu}</span>
             <span aria-hidden className="relative block h-3 w-5">
               <span
                 className={cn(
@@ -134,14 +135,14 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Menu"
+            aria-label={t.header.menu}
             className="fixed inset-0 z-[60] flex flex-col bg-background md:hidden"
             initial={prefersReduced ? { opacity: 0 } : { clipPath: "inset(0% 0% 100% 0%)" }}
             animate={prefersReduced ? { opacity: 1 } : { clipPath: "inset(0% 0% 0% 0%)" }}
             exit={prefersReduced ? { opacity: 0 } : { clipPath: "inset(0% 0% 100% 0%)" }}
             transition={{ duration: 0.8, ease: EASE }}
           >
-            <nav aria-label="Navigation mobile" className="section-padding flex flex-1 flex-col justify-center pt-[var(--header-h)]">
+            <nav aria-label={t.header.mobileNav} className="section-padding flex flex-1 flex-col justify-center pt-[var(--header-h)]">
               <ul className="border-t">
                 {links.map((link, i) => (
                   <li key={link.id} className="overflow-hidden border-b">
@@ -174,7 +175,7 @@ export function Header({ base = "" }: { base?: "" | "/" }) {
                 </a>
               </div>
               <span className="label flex items-center gap-2 text-foreground">
-                Disponible <Plus />
+                {t.header.available} <Plus />
               </span>
             </motion.div>
           </motion.div>

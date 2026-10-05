@@ -1,4 +1,7 @@
+import { getContent } from "@/lib/content";
 import { profile } from "@/lib/data";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { Container } from "./Container";
 
 const socials = [
@@ -9,17 +12,19 @@ const socials = [
   { label: "X", href: profile.twitter },
 ];
 
-export function Footer() {
+export function Footer({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).footer;
+  const { location } = getContent(lang).profile;
   return (
     <footer className="relative overflow-hidden border-t pt-12">
       <Container>
         <div className="grid gap-8 font-mono text-label uppercase text-muted sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-1">
             <span className="text-foreground">{profile.name}</span>
-            <span>Développeur Full-Stack</span>
+            <span>{t.role}</span>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-foreground">{profile.location}</span>
+            <span className="text-foreground">{location}</span>
             <span>14.69° N / 17.44° W</span>
           </div>
           <ul className="flex flex-wrap gap-x-5 gap-y-1 lg:col-span-2 lg:justify-end">
@@ -45,7 +50,7 @@ export function Footer() {
         <span>© {new Date().getFullYear()} {profile.name}</span>
         <span className="text-muted/50">{profile.alias}</span>
         <a href="#main-content" className="text-foreground">
-          Haut de page ↑
+          {t.top}
         </a>
       </Container>
     </footer>

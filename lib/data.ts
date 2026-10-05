@@ -316,6 +316,45 @@ export const projects: Project[] = [
     deviceType: "browser",
   },
   {
+    slug: "fanyris",
+    name: "FANYRIS Expertise-Conseil",
+    role: "Conception & développement web",
+    summary: "Site vitrine d'un cabinet d'expertise comptable et de conseil, avec espace client.",
+    problem:
+      "Présenter le cabinet, ses expertises et ses offres de recrutement en ligne, et donner aux clients un point d'accès dédié.",
+    solution:
+      "Un site organisé autour du cabinet, de ses expertises (expertise comptable & fiscalité, conseil en gestion, social & secrétariat juridique), du recrutement et des actualités, avec une carte de visite numérique (vCard) et un espace client.",
+    stack: [],
+    highlights: [
+      "Présentation des trois pôles d'expertise du cabinet",
+      "Espace client et carte de visite numérique (vCard)",
+      "Rubriques recrutement et actualités",
+    ],
+    image: "/images/fanyris-1.jpg",
+    imageAlt: "Page d'accueil du site FANYRIS Expertise-Conseil",
+    images: ["/images/fanyris-1.jpg", "/images/fanyris-2.jpg"],
+    deviceType: "browser",
+  },
+  {
+    slug: "ergec",
+    name: "E.R.GE.C",
+    role: "Conception & développement web",
+    summary: "Site vitrine d'une entreprise de génie civil, présentant ses services et ses réalisations.",
+    problem: "Présenter l'entreprise, ses services et ses chantiers réalisés à ses clients et partenaires.",
+    solution:
+      "Un site articulé autour de la présentation de l'entreprise, de ses services, de ses réalisations et d'un contact direct, avec une page d'accueil centrée sur le terrain : « Réaliser les projets conformément à la commande de nos clients ».",
+    stack: [],
+    highlights: [
+      "Mise en avant des chantiers et des réalisations",
+      "Pages services et contact direct",
+      "Page d'accueil illustrée par des photos de terrain",
+    ],
+    image: "/images/ergec-1.jpg",
+    imageAlt: "Page d'accueil du site E.R.GE.C",
+    images: ["/images/ergec-1.jpg"],
+    deviceType: "browser",
+  },
+  {
     slug: "helping-yourself",
     name: "Helping Yourself (HYS)",
     role: "Conception & architecture — travail conceptuel",
@@ -353,7 +392,12 @@ export const designWorks: DesignWork[] = [
   { src: "/images/logo/d002469b093c36baae1db36c29de46fd.jpg", alt: "Identité visuelle — déclinaisons de marque" },
   { src: "/images/logo/JUMMAH.jpg", alt: "Visuel de communication — Jummah" },
   { src: "/images/logo/391b2e91f6d224fce04482ef2b3b3ac4.jpg", alt: "Identité visuelle — déclinaisons sac, mug, casquette" },
+  { src: "/images/logo/kretivm.jpg", alt: "Logo Kre'Tiv'M — « On tourne tu brilles ! »" },
+  { src: "/images/logo/fapp.jpg", alt: "Carte de visite — FAPP Fallou American Auto Parts" },
+  { src: "/images/logo/soin-de-soi.jpg", alt: "Logo Soin de Soi" },
   { src: "/images/logo/LOGO_EVA-01-removebg-preview.png", alt: "Logo Eva Fragrances" },
+  { src: "/images/logo/aprosi-hub-minier.jpg", alt: "Fond de scène — Atelier de relance du Hub minier régional, APROSI" },
+  { src: "/images/logo/aprosi-banniere.jpg", alt: "Bannière APROSI — « Nous construisons l'avenir »" },
   { src: "/images/logo/Panneau 1 pizza.jpg", alt: "Panneau publicitaire — Pizza" },
   { src: "/images/logo/d406ec1b0024dc3ed473af235a9143dd.jpg", alt: "Mockup packaging — sacs AKG" },
   { src: "/images/logo/bonne Annee 2026.jpg", alt: "Visuel de vœux — Nouvel An 2026" },
@@ -384,7 +428,8 @@ export const education = [
   },
 ];
 
-export const deliveredProjects = projects.filter((p) => !p.conceptual);
+/** Chiffres clés (fournis par Elimane) : tous ses projets livrés ne sont pas présentés ici. */
+export const stats = { years: "6+", deliveredProjects: 11 };
 
 export const certifications = [
   {

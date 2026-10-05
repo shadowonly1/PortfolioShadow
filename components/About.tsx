@@ -1,31 +1,41 @@
 import Image from "next/image";
-import { about, certifications, deliveredProjects, profile, skillGroups } from "@/lib/data";
+import { getContent } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { Container } from "./Container";
 import { ClipReveal, Hairline, Plus, Reveal, RevealText } from "./Reveal";
 
-const techCount = skillGroups.reduce((total, group) => total + group.items.length, 0);
-
-const stats = [
-  { value: "6+", label: "Ans d'expérience" },
-  { value: String(deliveredProjects.length).padStart(2, "0"), label: "Projets livrés" },
-  { value: `${techCount}+`, label: "Technologies" },
-  { value: String(certifications.length).padStart(2, "0"), label: "Certification Adobe" },
+const cvLinks = [
+  { lang: "fr", href: "/cv/CV_Elimane_BA_FR.pdf", label: "CV — Français ↓" },
+  { lang: "en", href: "/cv/CV_Elimane_BA_EN.pdf", label: "CV — English ↓" },
 ];
 
-export function About() {
+export function About({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).about;
+  const { about, certifications, profile, skillGroups, stats: figures } = getContent(lang);
+  const techCount = skillGroups.reduce((total, group) => total + group.items.length, 0);
+  const stats = [
+    { value: figures.years, label: t.stats.years },
+    { value: String(figures.deliveredProjects).padStart(2, "0"), label: t.stats.delivered },
+    { value: `${techCount}+`, label: t.stats.tech },
+    { value: String(certifications.length).padStart(2, "0"), label: t.stats.cert },
+  ];
+  // Le CV dans la langue de la page en premier.
+  const cvs = [...cvLinks].sort((a) => (a.lang === lang ? -1 : 1));
+
   return (
     <section id="about" className="section">
       <Container>
         <div className="flex items-center gap-4">
           <span className="label whitespace-nowrap">
-            <span className="text-foreground">01</span> / À propos
+            <span className="text-foreground">01</span> / {t.label}
           </span>
           <Hairline className="flex-1" />
           <Plus />
         </div>
 
         <RevealText
-          lines={["Je construis des produits numériques,", <span key="l2" className="text-muted">de l&apos;idée à la production.</span>]}
+          lines={[t.headline[0], <span key="l2" className="text-muted">{t.headline[1]}</span>]}
           className="display mt-12 max-w-6xl text-display-md sm:mt-16"
         />
 
@@ -34,7 +44,7 @@ export function About() {
             <ClipReveal className="group relative aspect-[4/5] w-full max-w-sm overflow-hidden bg-surface">
               <Image
                 src="/images/shadow.jpeg"
-                alt={`Portrait de ${profile.name}`}
+                alt={`${t.portraitAlt} ${profile.name}`}
                 fill
                 sizes="(min-width: 1024px) 30vw, (min-width: 640px) 24rem, 100vw"
                 className="object-cover object-top grayscale transition-[filter,transform] duration-1000 ease-editorial group-hover:scale-[1.03] group-hover:grayscale-0"
@@ -47,7 +57,7 @@ export function About() {
           </div>
 
           <div className="max-w-2xl lg:col-span-6 lg:col-start-6">
-            <p className="label mb-6 text-foreground">Profil</p>
+            <p className="label mb-6 text-foreground">{t.profile}</p>
             <div className="flex flex-col gap-6">
               {about.paragraphs.map((p, i) => (
                 <Reveal key={i} delay={i * 0.08} as="p" className="text-lg leading-relaxed text-muted">
@@ -56,12 +66,16 @@ export function About() {
               ))}
             </div>
             <Reveal delay={0.2} className="mt-10 flex flex-wrap gap-x-8 gap-y-4">
-              <a href="/cv/CV_Elimane_BA_FR.pdf" download className="link-underline pb-1 font-mono text-label uppercase text-foreground">
-                CV — Français ↓
-              </a>
-              <a href="/cv/CV_Elimane_BA_EN.pdf" download className="link-underline pb-1 font-mono text-label uppercase text-foreground">
-                CV — English ↓
-              </a>
+              {cvs.map((cv) => (
+                <a
+                  key={cv.href}
+                  href={cv.href}
+                  download
+                  className="link-underline pb-1 font-mono text-label uppercase text-foreground"
+                >
+                  {cv.label}
+                </a>
+              ))}
             </Reveal>
           </div>
 

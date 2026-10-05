@@ -1,4 +1,6 @@
-import { earlierExperiences, experiences } from "@/lib/data";
+import { getContent } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { Container } from "./Container";
 import { Hairline, Plus, Reveal, RevealText } from "./Reveal";
 import { SectionIntro } from "./SectionIntro";
@@ -8,11 +10,13 @@ function startYear(period: string) {
   return period.match(/\d{4}/)?.[0] ?? "—";
 }
 
-export function Experience() {
+export function Experience({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).experience;
+  const { earlierExperiences, experiences } = getContent(lang);
   return (
     <section id="experience" className="section">
       <Container>
-        <SectionIntro index="05" label="Parcours" title={["Parcours"]} />
+        <SectionIntro index="05" label={t.label} title={t.title} />
 
         <ol className="mt-16 sm:mt-24">
           {experiences.map((exp, i) => (
@@ -25,7 +29,7 @@ export function Experience() {
                 />
                 {exp.current && (
                   <p className="label mt-3 flex items-center gap-2 text-foreground">
-                    <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />→ Aujourd&apos;hui
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />→ {t.today}
                   </p>
                 )}
               </div>
@@ -50,7 +54,7 @@ export function Experience() {
 
         <Reveal className="grid gap-6 border-t pt-10 lg:grid-cols-12 lg:gap-8">
           <p className="label flex items-center gap-2 lg:col-span-4">
-            Expériences antérieures <Plus />
+            {t.earlier} <Plus />
           </p>
           <ul className="grid gap-x-8 sm:grid-cols-2 lg:col-span-8">
             {earlierExperiences.map((e) => (

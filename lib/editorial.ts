@@ -2,32 +2,37 @@
 // Les descriptions reprennent les informations déjà présentes dans data.ts et chatbotFaq.ts.
 import type { Project } from "./data";
 
-/** Section « What I build ». */
+/** Section « Ce que je construis » : chaque service est illustré par un vrai projet. */
 export const services = [
   {
     title: "Applications web",
-    description: "Plateformes métier, sites institutionnels et SaaS — Next.js, React, Laravel, API REST.",
+    description: "Plateformes métier, sites institutionnels et SaaS.",
     stack: ["Next.js", "React", "Laravel"],
+    image: "/images/aprosi-site-1.jpg",
   },
   {
     title: "Applications mobiles",
-    description: "Applications iOS & Android en Flutter, de la maquette à la publication sur les stores.",
+    description: "Applications iOS & Android en Flutter, de la maquette aux stores.",
     stack: ["Flutter", "Dart", "Firebase"],
+    image: "/images/orbits (4).jpeg",
   },
   {
     title: "Systèmes backend",
-    description: "API, bases de données, authentification JWT/RBAC, cache Redis et déploiement VPS.",
+    description: "API, bases de données, authentification JWT/RBAC, cache Redis, déploiement VPS.",
     stack: ["Express.js", "PostgreSQL", "Redis"],
+    image: "/images/aprosi (3).png",
   },
   {
     title: "Produits numériques",
     description: "Du cahier des charges à la mise en production, sans dépendre d'une équipe pour chaque étage.",
     stack: ["Architecture", "Conception produit"],
+    image: "/images/scanT (2).png",
   },
   {
     title: "UI / UX & Branding",
-    description: "Identité visuelle, logos, supports de communication — certifié Adobe en design graphique.",
+    description: "Identité visuelle, logos, supports de communication — certifié Adobe.",
     stack: ["Photoshop", "Illustrator", "InDesign"],
+    image: "/images/logo/DESIGN SHADOWONLY.jpg",
   },
 ];
 
@@ -45,6 +50,8 @@ export const projectCategory: Record<string, string> = {
   "aprosi-site-institutionnel": "Site institutionnel",
   "nioro-du-rip": "Plateformes municipales",
   "sunurh-pro": "Solution RH",
+  fanyris: "Cabinet d'expertise comptable",
+  ergec: "Entreprise de génie civil",
   "helping-yourself": "Plateforme multi-services — concept",
 };
 
@@ -56,6 +63,8 @@ export function projectDisciplines(project: Project): string[] {
   if (has("Flutter", "Dart")) out.push("Mobile");
   if (has("Laravel", "PHP", "Express.js", "PostgreSQL", "MySQL", "Prisma", "Redis", "REST API")) out.push("Backend");
   if (project.stack.includes("Architecture")) out.push("Architecture");
+  // Stack non renseignée : un site présenté dans un cadre navigateur relève du web.
+  if (out.length === 0 && project.deviceType === "browser") out.push("Web");
   return out;
 }
 
@@ -75,6 +84,8 @@ export const projectCovers: Record<string, ProjectCover> = {
   "aprosi-site-institutionnel": { frame: "landscape", kind: "browser", images: ["/images/aprosi-site-1.jpg"] },
   "nioro-du-rip": { frame: "portrait", kind: "browser", images: ["/images/nioro-1.png"] },
   "sunurh-pro": { frame: "portrait", kind: "logo", images: ["/images/SunuRH.jpg"] },
+  fanyris: { frame: "landscape", kind: "browser", images: ["/images/fanyris-1.jpg"] },
+  ergec: { frame: "portrait", kind: "browser", images: ["/images/ergec-1.jpg"] },
   "helping-yourself": { frame: "landscape", kind: "type", images: [] },
 };
 

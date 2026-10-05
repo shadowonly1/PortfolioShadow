@@ -1,12 +1,15 @@
 import Image from "next/image";
 import type { Project } from "@/lib/data";
+import { getDictionary } from "@/lib/dictionary";
 import type { ProjectCover } from "@/lib/editorial";
+import type { Lang } from "@/lib/i18n";
 
 /**
  * Scène commune à toutes les couvertures de projet : fond sombre, grille fine,
  * halo indigo discret. Seul le cadre change (téléphones, navigateur, logo, typo).
  */
-export function ProjectCoverStage({ project, cover }: { project: Project; cover: ProjectCover }) {
+export function ProjectCoverStage({ project, cover, lang }: { project: Project; cover: ProjectCover; lang: Lang }) {
+  const screen = getDictionary(lang).project.screen;
   return (
     <div className="absolute inset-0 overflow-hidden bg-surface">
       <div
@@ -25,7 +28,7 @@ export function ProjectCoverStage({ project, cover }: { project: Project; cover:
       />
 
       <div className="absolute inset-0 flex items-center justify-center p-6 transition-transform duration-1000 ease-editorial group-hover:scale-[1.03] sm:p-10">
-        {cover.kind === "phones" && <Phones project={project} images={cover.images} />}
+        {cover.kind === "phones" && <Phones project={project} images={cover.images} screen={screen} />}
         {cover.kind === "browser" && <Browser project={project} src={cover.images[0]} />}
         {cover.kind === "logo" && (
           <div className="relative aspect-square w-3/5 max-w-xs overflow-hidden rounded-2xl border border-line/10 shadow-2xl shadow-black/60">
@@ -38,7 +41,7 @@ export function ProjectCoverStage({ project, cover }: { project: Project; cover:
   );
 }
 
-function Phones({ project, images }: { project: Project; images: string[] }) {
+function Phones({ project, images, screen }: { project: Project; images: string[]; screen: string }) {
   return (
     <div className="flex h-full items-center justify-center gap-4 sm:gap-6">
       {images.slice(0, 2).map((src, i) => (
@@ -51,7 +54,7 @@ function Phones({ project, images }: { project: Project; images: string[] }) {
           <div className="relative h-full w-full overflow-hidden rounded-[1.3rem]">
             <Image
               src={src}
-              alt={i === 0 ? project.imageAlt : `${project.name} — écran ${i + 1}`}
+              alt={i === 0 ? project.imageAlt : `${project.name} — ${screen} ${i + 1}`}
               fill
               sizes="(min-width: 1024px) 14vw, 40vw"
               className="object-cover object-top"

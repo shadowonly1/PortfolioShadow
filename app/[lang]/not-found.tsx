@@ -1,11 +1,21 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/Container";
 import { Header } from "@/components/Header";
+import { getDictionary } from "@/lib/dictionary";
+import { localePath, type Lang } from "@/lib/i18n";
 
+// not-found ne reçoit pas les paramètres de route : la langue se déduit de l'adresse.
 export default function NotFound() {
+  const pathname = usePathname() || "/";
+  const lang: Lang = pathname === "/en" || pathname.startsWith("/en/") ? "en" : "fr";
+  const t = getDictionary(lang).notFound;
+
   return (
     <>
-      <Header base="/" />
+      <Header lang={lang} />
       <main id="main-content" className="relative flex min-h-[100svh] items-center overflow-hidden">
         <p
           aria-hidden
@@ -14,20 +24,19 @@ export default function NotFound() {
           404
         </p>
         <Container className="relative">
-          <p className="label">Erreur 404 / Page introuvable</p>
+          <p className="label">{t.label}</p>
           <h1 className="display mt-6 text-display-lg">
-            Perdu dans
+            {t.title[0]}
             <br />
-            la grille<span className="text-accent">.</span>
+            {t.title[1]}
+            <span className="text-accent">.</span>
           </h1>
-          <p className="mt-6 max-w-md text-base text-muted">
-            La page que tu cherches a été déplacée, supprimée, ou n&apos;a jamais existé.
-          </p>
+          <p className="mt-6 max-w-md text-base text-muted">{t.text}</p>
           <Link
-            href="/"
+            href={localePath(lang, "/")}
             className="mt-10 inline-flex items-center gap-3 bg-foreground px-7 py-4 font-mono text-label uppercase text-background transition-colors duration-500 hover:bg-accent hover:text-white"
           >
-            ← Retour à l&apos;accueil
+            {t.back}
           </Link>
         </Container>
       </main>

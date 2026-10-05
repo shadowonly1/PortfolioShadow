@@ -2,7 +2,9 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { statement } from "@/lib/editorial";
+import { getContent } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { Container } from "./Container";
 import { Plus } from "./Reveal";
@@ -11,7 +13,9 @@ import { Plus } from "./Reveal";
  * Statement typographique : chaque mot s'allume au fil du scroll,
  * pour que la phrase se lise au rythme de la lecture.
  */
-export function Statement() {
+export function Statement({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).statement;
+  const { statement } = getContent(lang);
   const ref = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "end 75%"] });
@@ -21,10 +25,10 @@ export function Statement() {
   const full = `${statement.first.join(" ")} ${statement.second.join(" ")}`;
 
   return (
-    <section aria-label="Manifeste" className="section overflow-hidden">
+    <section aria-label={t.label} className="section overflow-hidden">
       <Container>
         <div className="flex items-center justify-between font-mono text-label uppercase text-muted">
-          <span>Manifeste</span>
+          <span>{t.label}</span>
           <Plus />
         </div>
         <div ref={ref} className="mt-12 sm:mt-16">

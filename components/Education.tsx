@@ -1,18 +1,21 @@
-import { certifications, education } from "@/lib/data";
+import { getContent } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionary";
+import type { Lang } from "@/lib/i18n";
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { SectionIntro } from "./SectionIntro";
 
-const entries = [
-  ...education.map((e) => ({ ...e, kind: "Diplôme" })),
-  ...certifications.map((c) => ({ ...c, kind: "Certification" })),
-];
-
-export function Education() {
+export function Education({ lang }: { lang: Lang }) {
+  const t = getDictionary(lang).education;
+  const { certifications, education } = getContent(lang);
+  const entries = [
+    ...education.map((e) => ({ ...e, kind: t.degree })),
+    ...certifications.map((c) => ({ ...c, kind: t.certification })),
+  ];
   return (
     <section id="certifications" className="section">
       <Container>
-        <SectionIntro index="08" label="Formation" title={["Formation", "& Certifications"]} />
+        <SectionIntro index="08" label={t.label} title={t.title} />
 
         <ol className="mt-16 border-t sm:mt-24">
           {entries.map((entry, i) => (
