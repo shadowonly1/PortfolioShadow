@@ -512,7 +512,7 @@ export const education = [
 ];
 
 /** Chiffres clés (fournis par Elimane) : tous ses projets livrés ne sont pas présentés ici. */
-export const stats = { years: "6+", deliveredProjects: 11 };
+export const stats = { years: "6+", deliveredProjects: 13 };
 
 export const certifications = [
   {
