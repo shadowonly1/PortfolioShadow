@@ -196,7 +196,7 @@ export const projects: Project[] = [
   {
     slug: "kasly",
     name: "Kasly",
-    role: "Conception & développement full-stack",
+    role: "Développeur backend",
     summary: "Logiciel de caisse (POS) pour boutique : encaissement, stock, ventes et rapports. En production depuis octobre 2026.",
     problem:
       "Une boutique a besoin d'encaisser vite, de suivre son stock en temps réel et de savoir ce qu'elle vend, sans qu'une erreur réseau ou un double clic ne crée de vente en double.",

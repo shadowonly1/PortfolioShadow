@@ -123,7 +123,7 @@ export const projectsEn: Record<string, ProjectText> = {
     imageAlt: "ChezVous app screens: map of listings, property page and Property Passport",
   },
   kasly: {
-    role: "Full-stack design & development",
+    role: "Backend Developer",
     summary: "Point-of-sale (POS) software for a shop: checkout, stock, sales and reports. In production since October 2026.",
     problem:
       "A shop needs to check out quickly, track its stock in real time and know what it sells — without a network error or a double click ever creating a duplicate sale.",
