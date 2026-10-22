@@ -19,9 +19,10 @@ export function ProjectGallery({ project, visualLabel }: { project: Project; vis
               {screens.map((src, i) => (
                 <li
                   key={src}
-                  className="relative aspect-[37/80] w-full max-w-[15rem] overflow-hidden rounded-[1.6rem] border border-line/15 bg-black p-1.5 shadow-2xl shadow-black/40"
+                  style={{ aspectRatio: project.screenAspect ?? "37 / 80" }}
+                  className="relative w-full max-w-[15rem] overflow-hidden rounded-[1.6rem] border border-line/15 bg-black p-1.5 shadow-2xl shadow-black/40"
                 >
-                  <div className="relative h-full w-full overflow-hidden rounded-[1.25rem]">
+                  <div className="relative h-full w-full overflow-hidden bg-white rounded-[1.25rem]">
                     <Image
                       src={src}
                       alt={i === 0 ? project.imageAlt : `${project.name} — ${visualLabel} ${i + 1}`}

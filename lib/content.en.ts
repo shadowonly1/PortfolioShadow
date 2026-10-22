@@ -92,6 +92,65 @@ export const projectsEn: Record<string, ProjectText> = {
       "Driver app — Google Play",
     ],
   },
+  chezvous: {
+    role: "Full-stack design & development",
+    summary:
+      "A trusted real-estate platform for Senegal, launching with residential rentals in Dakar: web, mobile and back office.",
+    problem:
+      "Senegalese property portals are flooded with outdated or dubious listings: places already rented, unrealistic prices, unverified advertisers. Guiding principle: 500 genuinely available, reliable properties beat 20,000 stale listings.",
+    solution:
+      "A complete platform: a public website and professional area in Next.js, a Flutter app for Android and iOS, a Laravel API and an admin back office. Its signature feature, the “Property Passport”, gives every property a unique reference and a history of dated checks (advertiser identity, location, photos, documents, availability). Map search, automatically computed listing freshness, moderation, favorites, messaging and viewing requests.",
+    architecture:
+      "Monorepo: a Laravel REST API (modular monolith, Sanctum, Horizon queues), PostgreSQL with PostGIS for geographic search, Redis; a Next.js, React and Tailwind CSS website with a Leaflet map; a Flutter app with flutter_map. Permissions enforced server-side by Policies (7 roles, from visitor to super admin), business rules in configuration rather than hard-coded, CI on every push, encrypted backups and a pre-deployment configuration check.",
+    challenges: [
+      "Separating the physical property from its listings so a property is never duplicated",
+      "Computing each listing's freshness from availability confirmations, with configurable thresholds",
+      "A single source of business rules for web and mobile, through the same API",
+      "Fast geographic map search with PostGIS",
+    ],
+    results: [
+      "Web, mobile app, API and back office in a single repository",
+      "Property Passport, map of listings, publishing, moderation and account verification",
+      "Interface designed in Figma, in light and dark mode, with an accessibility review",
+    ],
+    lessons:
+      "On a trust platform, data quality matters more than volume: the whole model was built around verification and freshness, not the number of listings.",
+    highlights: [
+      "Property Passport: dated checks and history for every property",
+      "Map search with price pins and listing freshness",
+      "Web, Android, iOS and back office on a single API",
+    ],
+    imageAlt: "ChezVous app screens: map of listings, property page and Property Passport",
+  },
+  kasly: {
+    role: "Full-stack design & development",
+    summary: "Point-of-sale (POS) software for a shop: checkout, stock, sales and reports. In production since October 2026.",
+    problem:
+      "A shop needs to check out quickly, track its stock in real time and know what it sells — without a network error or a double click ever creating a duplicate sale.",
+    solution:
+      "A complete point-of-sale app: checkout, product and category catalog, stock movements (in, out, adjustment, sale, return), sales history, dashboard and reports, user management and shop settings. Payments by cash, Wave, Orange Money, card or mixed.",
+    architecture:
+      "Next.js (App Router), React, TypeScript and Tailwind CSS for both the interface and the APIs; NextAuth (username, bcrypt password, JWT sessions); PostgreSQL on Supabase through Prisma; Zod validation; hosted on Vercel. Tables live in a private schema with two restricted PostgreSQL roles and row-level security (RLS), with no access for Supabase's public API.",
+    challenges: [
+      "Sales in serializable transactions: one checkout reference creates exactly one sale, even when retried",
+      "Three roles (admin, manager, cashier) whose changes apply from the very next request",
+      "Database isolation inside a shared Supabase project, with non-superuser PostgreSQL roles",
+    ],
+    results: [
+      "In production at kasly.odacestudio.com since October 17, 2026",
+      "Integration tests on a temporary PostgreSQL database and an end-to-end test in production",
+      "Brand identity designed alongside: logo, color palette and app icon",
+    ],
+    lessons:
+      "On a point-of-sale system, the reliability of a sale matters more than anything else: guaranteeing that a checkout is never recorded twice shaped the whole data layer.",
+    highlights: [
+      "Duplicate-free checkout thanks to serializable transactions",
+      "Stock tracked through movements, reports and dashboard",
+      "Admin, manager and cashier roles",
+    ],
+    imageAlt: "Kasly dashboard: today's sales, stock status and recent sales",
+    linkLabels: ["Open the app"],
+  },
   "scan-tickets": {
     summary:
       "A SaaS for managing and validating meal tickets with QR codes, designed to eliminate fraud and paper tracking.",
@@ -274,6 +333,7 @@ export const designAltEn: Record<string, string> = {
   "/images/logo/JUMMAH.jpg": "Communication visual — Jummah",
   "/images/logo/391b2e91f6d224fce04482ef2b3b3ac4.jpg": "Visual identity — bag, mug and cap applications",
   "/images/logo/LOGO_EVA-01-removebg-preview.png": "Eva Fragrances logo",
+  "/images/kasly-brand.jpg": "Kasly visual identity — logo, color palette and app icon",
   "/images/logo/kretivm.jpg": "Kre'Tiv'M logo — “On tourne tu brilles !”",
   "/images/logo/fapp.jpg": "Business card — FAPP Fallou American Auto Parts",
   "/images/logo/soin-de-soi.jpg": "Soin de Soi logo",
@@ -342,6 +402,8 @@ export const statementEn = {
 
 export const projectCategoryEn: Record<string, string> = {
   orbitsx: "Ride-hailing platform",
+  chezvous: "Real-estate platform",
+  kasly: "Point-of-sale software",
   "scan-tickets": "QR code ticketing SaaS",
   "aprosi-materiaux": "Internal business platform",
   "aprosi-site-institutionnel": "Institutional website",

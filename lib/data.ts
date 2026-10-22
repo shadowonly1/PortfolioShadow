@@ -97,6 +97,8 @@ export type Project = {
   images?: string[];
   /** Captures d'écran d'application (format téléphone), présentées en rangée de téléphones. */
   screens?: string[];
+  /** Format des captures d'écran (largeur / hauteur), pour que le cadre du téléphone les montre en entier. */
+  screenAspect?: string;
   links?: { label: string; href: string }[];
   featured?: boolean;
   /** Projet resté au stade de conception : exclu du compteur « projets livrés ». */
@@ -151,6 +153,80 @@ export const projects: Project[] = [
       { label: "App chauffeur — Google Play", href: "https://play.google.com/store/apps/details?id=com.orbitsx.driver" },
     ],
     featured: true,
+  },
+  {
+    slug: "chezvous",
+    name: "ChezVous",
+    role: "Conception & développement full-stack",
+    summary:
+      "Plateforme immobilière de confiance pour le Sénégal, lancée sur la location résidentielle à Dakar : web, mobile et back-office.",
+    problem:
+      "Les portails immobiliers sénégalais sont saturés d'annonces obsolètes ou douteuses : biens déjà loués, prix fantaisistes, annonceurs non vérifiés. Principe directeur : mieux vaut 500 biens réellement disponibles et fiables que 20 000 annonces obsolètes.",
+    solution:
+      "Une plateforme complète : site public et espace professionnel en Next.js, application Flutter Android et iOS, API Laravel et back-office d'administration. Fonction signature, le « Passeport du Bien » : chaque bien a une référence unique et un historique de vérifications datées (identité de l'annonceur, localisation, photos, documents, disponibilité). Recherche sur carte, fraîcheur des annonces calculée automatiquement, modération, favoris, messagerie et demandes de visite.",
+    architecture:
+      "Monorepo : API REST Laravel (monolithe modulaire, Sanctum, files Horizon), PostgreSQL avec PostGIS pour la recherche géographique, Redis ; web Next.js, React et Tailwind CSS avec carte Leaflet ; application Flutter avec flutter_map. Droits vérifiés côté serveur par des Policies (7 rôles, du visiteur au super admin), règles commerciales en configuration plutôt qu'en dur, CI sur chaque push, sauvegardes chiffrées et contrôle de configuration avant déploiement.",
+    challenges: [
+      "Séparer le bien physique de ses annonces pour qu'un même bien ne soit jamais dupliqué",
+      "Calculer la fraîcheur de chaque annonce à partir des confirmations de disponibilité, avec des seuils configurables",
+      "Une seule source de règles métier pour le web et le mobile, via la même API",
+      "Recherche géographique rapide sur carte avec PostGIS",
+    ],
+    results: [
+      "Web, application mobile, API et back-office réunis dans un même dépôt",
+      "Passeport du Bien, carte des offres, publication, modération et vérification des comptes",
+      "Interface conçue sur Figma, en mode clair et sombre, avec revue d'accessibilité",
+    ],
+    lessons:
+      "Sur une plateforme de confiance, la donnée vaut plus que le volume : tout le modèle a été pensé autour de la vérification et de la fraîcheur, pas du nombre d'annonces.",
+    stack: ["Laravel", "PHP", "PostgreSQL", "PostGIS", "Redis", "Next.js", "React", "Tailwind CSS", "Flutter", "Dart", "Leaflet"],
+    highlights: [
+      "Passeport du Bien : vérifications datées et historique pour chaque bien",
+      "Recherche sur carte avec épingles de prix et fraîcheur des annonces",
+      "Web, Android, iOS et back-office sur une seule API",
+    ],
+    image: "/images/chezvous-1.jpg",
+    imageAlt: "Écrans de l'application ChezVous : carte des offres, fiche d'un bien et Passeport du Bien",
+    screens: ["/images/chezvous-1.jpg", "/images/chezvous-2.jpg", "/images/chezvous-3.jpg", "/images/chezvous-4.jpg"],
+    screenAspect: "9 / 16",
+    images: ["/images/chezvous-home.jpg"],
+    deviceType: "phone",
+    featured: true,
+  },
+  {
+    slug: "kasly",
+    name: "Kasly",
+    role: "Conception & développement full-stack",
+    summary: "Logiciel de caisse (POS) pour boutique : encaissement, stock, ventes et rapports. En production depuis octobre 2026.",
+    problem:
+      "Une boutique a besoin d'encaisser vite, de suivre son stock en temps réel et de savoir ce qu'elle vend, sans qu'une erreur réseau ou un double clic ne crée de vente en double.",
+    solution:
+      "Une application de caisse complète : encaissement, catalogue de produits et catégories, mouvements de stock (entrée, sortie, ajustement, vente, retour), historique des ventes, tableau de bord et rapports, gestion des utilisateurs et des réglages de la boutique. Paiements en espèces, Wave, Orange Money, carte ou mixte.",
+    architecture:
+      "Next.js (App Router), React, TypeScript et Tailwind CSS pour l'interface et les API ; NextAuth (identifiant, mot de passe bcrypt, sessions JWT) ; PostgreSQL sur Supabase via Prisma ; validation Zod ; hébergement Vercel. Les tables vivent dans un schéma privé avec deux rôles PostgreSQL limités et la sécurité au niveau des lignes (RLS), sans accès pour l'API publique de Supabase.",
+    challenges: [
+      "Ventes en transactions sérialisables : une même référence d'encaissement ne crée qu'une seule vente, même en cas de nouvel essai",
+      "Trois rôles (administrateur, gérant, caissier) dont les changements s'appliquent dès la requête suivante",
+      "Isolation de la base dans un projet Supabase partagé, avec des rôles PostgreSQL sans privilège superutilisateur",
+    ],
+    results: [
+      "En production sur kasly.odacestudio.com depuis le 17 octobre 2026",
+      "Tests d'intégration sur une base PostgreSQL temporaire et test de bout en bout en production",
+      "Identité visuelle de la marque conçue en parallèle : logo, palette et icône d'app",
+    ],
+    lessons:
+      "Sur une caisse, la fiabilité d'une vente compte plus que tout le reste : garantir qu'un encaissement ne soit jamais enregistré deux fois a structuré toute la couche de données.",
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "NextAuth", "PostgreSQL", "Supabase", "Prisma", "Zod", "Vercel"],
+    highlights: [
+      "Encaissement sans doublon grâce aux transactions sérialisables",
+      "Stock suivi par mouvements, rapports et tableau de bord",
+      "Rôles administrateur, gérant et caissier",
+    ],
+    image: "/images/kasly-dashboard.jpg",
+    imageAlt: "Tableau de bord de Kasly : ventes du jour, état du stock et ventes récentes",
+    images: ["/images/kasly-dashboard.jpg", "/images/kasly-brand.jpg"],
+    deviceType: "browser",
+    links: [{ label: "Voir l'application", href: "https://kasly.odacestudio.com" }],
   },
   {
     slug: "scan-tickets",
@@ -398,6 +474,7 @@ export const designWorks: DesignWork[] = [
   { src: "/images/logo/d002469b093c36baae1db36c29de46fd.jpg", alt: "Identité visuelle — déclinaisons de marque" },
   { src: "/images/logo/JUMMAH.jpg", alt: "Visuel de communication — Jummah" },
   { src: "/images/logo/391b2e91f6d224fce04482ef2b3b3ac4.jpg", alt: "Identité visuelle — déclinaisons sac, mug, casquette" },
+  { src: "/images/kasly-brand.jpg", alt: "Identité visuelle Kasly — logo, palette et icône d'app" },
   { src: "/images/logo/kretivm.jpg", alt: "Logo Kre'Tiv'M — « On tourne tu brilles ! »" },
   { src: "/images/logo/fapp.jpg", alt: "Carte de visite — FAPP Fallou American Auto Parts" },
   { src: "/images/logo/soin-de-soi.jpg", alt: "Logo Soin de Soi" },

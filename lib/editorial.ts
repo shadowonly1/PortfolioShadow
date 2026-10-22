@@ -45,6 +45,8 @@ export const statement = {
 /** Catégorie courte affichée sur les cartes projet, dérivée du résumé existant. */
 export const projectCategory: Record<string, string> = {
   orbitsx: "Plateforme VTC",
+  chezvous: "Plateforme immobilière",
+  kasly: "Logiciel de caisse",
   "scan-tickets": "SaaS de tickets QR Code",
   "aprosi-materiaux": "Plateforme métier interne",
   "aprosi-site-institutionnel": "Site institutionnel",
@@ -79,6 +81,8 @@ export type ProjectCover = {
 /** Couvertures de la grille « Projets » : même scène pour tous, seuls les cadres changent. */
 export const projectCovers: Record<string, ProjectCover> = {
   orbitsx: { frame: "portrait", kind: "phones", images: ["/images/orbits-app-1.jpg", "/images/orbits-app-3.jpg"] },
+  chezvous: { frame: "landscape", kind: "phones", images: ["/images/chezvous-1.jpg", "/images/chezvous-3.jpg"] },
+  kasly: { frame: "landscape", kind: "browser", images: ["/images/kasly-dashboard.jpg"] },
   "scan-tickets": { frame: "landscape", kind: "browser", images: ["/images/scanT (2).png"] },
   "aprosi-materiaux": { frame: "landscape", kind: "browser", images: ["/images/aprosi (1).png"] },
   "aprosi-site-institutionnel": { frame: "landscape", kind: "browser", images: ["/images/aprosi-site-1.jpg"] },

@@ -1,6 +1,7 @@
 // Dimensions réelles des créations (générées depuis les fichiers) : chaque vignette
 // garde son format d'origine, sans recadrage.
 export const designSizes: Record<string, [number, number]> = {
+  "/images/kasly-brand.jpg": [1600, 800],
   "/images/logo/DESIGN SHADOWONLY.jpg": [1634, 2000],
   "/images/logo/3f1cd391042f41bb0f95600a57bcd616.jpg": [1200, 1200],
   "/images/logo/ramadan design.jpg": [2000, 2000],

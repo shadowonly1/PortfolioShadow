@@ -47,11 +47,12 @@ function Phones({ project, images, screen }: { project: Project; images: string[
       {images.slice(0, 2).map((src, i) => (
         <div
           key={src}
-          className={`relative aspect-[9/19] h-[82%] overflow-hidden rounded-[1.6rem] border border-line/15 bg-black p-1 shadow-2xl shadow-black/60 ${
+          style={{ aspectRatio: project.screenAspect ?? "9 / 19" }}
+          className={`relative h-[82%] overflow-hidden rounded-[1.6rem] border border-line/15 bg-black p-1 shadow-2xl shadow-black/60 ${
             i === 1 ? "translate-y-6" : "-translate-y-2"
           }`}
         >
-          <div className="relative h-full w-full overflow-hidden rounded-[1.3rem]">
+          <div className="relative h-full w-full overflow-hidden bg-white rounded-[1.3rem]">
             <Image
               src={src}
               alt={i === 0 ? project.imageAlt : `${project.name} — ${screen} ${i + 1}`}
