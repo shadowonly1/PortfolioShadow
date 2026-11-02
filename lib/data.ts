@@ -229,6 +229,50 @@ export const projects: Project[] = [
     links: [{ label: "Voir l'application", href: "https://kasly.odacestudio.com" }],
   },
   {
+    slug: "aprosi-tickets",
+    name: "APROSI Tickets",
+    role: "Conception & développement full-stack",
+    summary:
+      "Tickets-restaurant numériques de l'APROSI : un QR code par agent, 25 tickets par mois, scannés par les restaurants partenaires. Deux apps mobiles, un back-office et une API.",
+    problem:
+      "Les tickets-restaurant devaient servir trois publics à la fois : un accès simple aux repas pour les agents, une validation fiable et un paiement rapide pour les restaurants, et une vision claire de la consommation et des coûts pour l'administration. Le système en place (SenPass) ne reliait pas les tickets à la paie ni au règlement des restaurants, et ne tenait pas les coupures de réseau aux heures de pointe.",
+    solution:
+      "Une application agent (pass du mois, QR code personnel, commande du plat du jour, transfert de tickets entre collègues, historique, notifications), une application restaurant (scan en mode rafale et hors-ligne, plats du jour, commandes, ventes) et un back-office web pour l'administration : validation des inscriptions, suivi de la consommation en temps réel, export de paie par entreprise, règlement des restaurants et journal d'audit.",
+    architecture:
+      "Applications mobiles en Flutter (iOS et Android, une seule base de code), back-office web en Next.js, API Laravel, base MySQL, cache Redis et tâches planifiées (génération mensuelle des tickets, rappels). Notifications push via Apple et Firebase. Hébergement sur un VPS administré par l'APROSI avec conteneurs Docker, HTTPS et sauvegardes automatiques.",
+    challenges: [
+      "Scan en mode rafale pour les files d'attente, et mode hors-ligne qui synchronise les scans au retour du réseau",
+      "Valider et débiter un ticket en une seconde, avec un refus explicite s'il est déjà utilisé ou expiré",
+      "Relier les tickets consommés à la paie des agents et au règlement des restaurants, sans ressaisie",
+      "Sécurité : comptes validés par l'administration, blocage après 5 échecs, limitation de débit, droit à l'effacement",
+    ],
+    results: [
+      "Applications agent et restaurant, back-office et serveur déployés en production",
+      "84 tests automatisés (66 côté serveur, 18 côté mobile) et tests de charge avant la mise en production",
+      "Proposé à la direction pour remplacer SenPass, avec 13 fonctions supplémentaires",
+    ],
+    lessons:
+      "Un outil interne se juge sur le terrain : le vrai défi n'était pas le QR code, mais une file d'attente à midi avec un réseau qui coupe. Le mode rafale et le mode hors-ligne ont été pensés pour ce moment-là.",
+    stack: ["Flutter", "Dart", "Laravel", "PHP", "Next.js", "MySQL", "Redis", "Firebase", "Docker"],
+    highlights: [
+      "QR code personnel et 25 tickets générés automatiquement chaque mois",
+      "Scan en rafale et hors-ligne côté restaurant",
+      "Export de paie et règlement des restaurants côté administration",
+    ],
+    image: "/images/aprosi-tickets-2.jpg",
+    imageAlt: "Écrans de l'application APROSI Tickets : accueil avec le pass du mois et QR code personnel",
+    screens: [
+      "/images/aprosi-tickets-1.jpg",
+      "/images/aprosi-tickets-2.jpg",
+      "/images/aprosi-tickets-3.jpg",
+      "/images/aprosi-tickets-4.jpg",
+    ],
+    screenAspect: "1206 / 2622",
+    images: ["/images/aprosi-tickets-admin-1.jpg", "/images/aprosi-tickets-admin-2.jpg"],
+    deviceType: "phone",
+    featured: true,
+  },
+  {
     slug: "scan-tickets",
     name: "Scan Tickets",
     role: "Lead Full-Stack Developer",

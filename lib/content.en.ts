@@ -151,6 +151,36 @@ export const projectsEn: Record<string, ProjectText> = {
     imageAlt: "Kasly dashboard: today's sales, stock status and recent sales",
     linkLabels: ["Open the app"],
   },
+  "aprosi-tickets": {
+    role: "Full-stack design & development",
+    summary:
+      "APROSI's digital meal vouchers: one QR code per employee, 25 tickets a month, scanned by partner restaurants. Two mobile apps, a back office and an API.",
+    problem:
+      "Meal vouchers had to serve three audiences at once: simple access to meals for employees, reliable validation and fast payment for restaurants, and a clear view of consumption and costs for the administration. The existing system (SenPass) didn't link vouchers to payroll or restaurant payments, and couldn't cope with network outages at peak hours.",
+    solution:
+      "An employee app (monthly pass, personal QR code, ordering the dish of the day, transferring tickets to colleagues, history, notifications), a restaurant app (burst and offline scanning, dishes of the day, orders, sales) and a web back office for the administration: account approval, real-time consumption tracking, payroll export per company, restaurant payments and an audit log.",
+    architecture:
+      "Mobile apps in Flutter (iOS and Android from one codebase), a Next.js web back office, a Laravel API, a MySQL database, Redis caching and scheduled jobs (monthly ticket generation, reminders). Push notifications through Apple and Firebase. Hosted on a VPS managed by APROSI with Docker containers, HTTPS and automatic backups.",
+    challenges: [
+      "Burst scanning for queues, and an offline mode that syncs scans when the network returns",
+      "Validating and debiting a ticket in one second, with a clear refusal when it's already used or expired",
+      "Linking consumed tickets to employee payroll and restaurant payments, with no re-entry",
+      "Security: accounts approved by the administration, lockout after 5 failures, rate limiting, right to erasure",
+    ],
+    results: [
+      "Employee and restaurant apps, back office and server deployed in production",
+      "84 automated tests (66 server-side, 18 mobile) and load tests before going live",
+      "Proposed to management to replace SenPass, with 13 additional features",
+    ],
+    lessons:
+      "An internal tool is judged in the field: the real challenge wasn't the QR code, but a lunchtime queue with a network that drops. Burst and offline modes were designed for that exact moment.",
+    highlights: [
+      "Personal QR code and 25 tickets generated automatically every month",
+      "Burst and offline scanning for restaurants",
+      "Payroll export and restaurant payments for the administration",
+    ],
+    imageAlt: "APROSI Tickets app screens: home with the monthly pass and personal QR code",
+  },
   "scan-tickets": {
     summary:
       "A SaaS for managing and validating meal tickets with QR codes, designed to eliminate fraud and paper tracking.",
@@ -404,6 +434,7 @@ export const projectCategoryEn: Record<string, string> = {
   orbitsx: "Ride-hailing platform",
   chezvous: "Real-estate platform",
   kasly: "Point-of-sale software",
+  "aprosi-tickets": "Digital meal vouchers",
   "scan-tickets": "QR code ticketing SaaS",
   "aprosi-materiaux": "Internal business platform",
   "aprosi-site-institutionnel": "Institutional website",
