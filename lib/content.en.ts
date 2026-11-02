@@ -168,7 +168,7 @@ export const projectsEn: Record<string, ProjectText> = {
       "Security: accounts approved by the administration, lockout after 5 failures, rate limiting, right to erasure",
     ],
     results: [
-      "Employee and restaurant apps, back office and server deployed in production",
+      "Employee and restaurant apps, back office and server deployed in production; app published on the App Store",
       "84 automated tests (66 server-side, 18 mobile) and load tests before going live",
       "Proposed to management to replace SenPass, with 13 additional features",
     ],
@@ -180,37 +180,7 @@ export const projectsEn: Record<string, ProjectText> = {
       "Payroll export and restaurant payments for the administration",
     ],
     imageAlt: "APROSI Tickets app screens: home with the monthly pass and personal QR code",
-  },
-  "scan-tickets": {
-    summary:
-      "A SaaS for managing and validating meal tickets with QR codes, designed to eliminate fraud and paper tracking.",
-    problem:
-      "Traditional paper systems make meal-ticket tracking difficult and invite errors and fraud: no traceability, no detection of double use, no real-time visibility on consumption.",
-    solution:
-      "A digital platform to generate, manage and instantly validate tickets, each with a unique QR code. A dedicated scanner validates every ticket in real time (available / already used / expired), with a complete admin dashboard to manage tickets, users and statistics.",
-    architecture:
-      "A Next.js frontend (TypeScript, Tailwind CSS, Framer Motion) consuming a Laravel/PHP REST API with JWT authentication and a MySQL database. Unique QR codes generated when each ticket is created, a dedicated scanner for instant validation, role management (Administrator, Control agent, User) with full traceability of actions.",
-    challenges: [
-      "Real-time validation handling to avoid any conflict during simultaneous scans",
-      "Securing QR codes against duplication and forgery",
-      "Optimizing scanner performance for near-instant validation",
-      "Designing clear role management between administrators, control agents and users",
-    ],
-    results: [
-      "Less fraud thanks to automatic detection of double use",
-      "Ticket validation much faster than manual checks",
-      "Full traceability: every scan and every action is logged",
-      "Admin dashboard giving real-time visibility on consumption",
-    ],
-    lessons:
-      "On a real-time validation system, reliability comes before everything else — the real challenge wasn't scanning a QR code, but guaranteeing that the same ticket can never be validated twice, even with near-simultaneous scans.",
-    highlights: [
-      "A unique QR code generated automatically for each ticket",
-      "Scanner with animated visual feedback (valid / already used / expired)",
-      "Admin dashboard with statistics and activity charts",
-      "Fine-grained roles: Administrator, Control agent, User",
-    ],
-    imageAlt: "Scan Tickets mobile app and back office",
+    linkLabels: ["App Store"],
   },
   "aprosi-materiaux": {
     name: "Materials Management Platform — APROSI",
@@ -435,7 +405,6 @@ export const projectCategoryEn: Record<string, string> = {
   chezvous: "Real-estate platform",
   kasly: "Point-of-sale software",
   "aprosi-tickets": "Digital meal vouchers",
-  "scan-tickets": "QR code ticketing SaaS",
   "aprosi-materiaux": "Internal business platform",
   "aprosi-site-institutionnel": "Institutional website",
   "nioro-du-rip": "Municipal platforms",

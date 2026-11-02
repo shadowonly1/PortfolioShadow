@@ -17,7 +17,7 @@ type Tile =
 const tiles: Tile[] = [
   { kind: "project", slug: "aprosi-site-institutionnel", src: "/images/aprosi-site-1.jpg", shape: "wide" },
   { kind: "project", slug: "orbitsx", src: "/images/orbits (2).jpeg", shape: "tall" },
-  { kind: "project", slug: "scan-tickets", src: "/images/scanT (2).png", shape: "wide" },
+  { kind: "project", slug: "aprosi-tickets", src: "/images/aprosi-tickets-admin-1.jpg", shape: "wide" },
   { kind: "design", src: "/images/logo/3f1cd391042f41bb0f95600a57bcd616.jpg", shape: "tall" },
   { kind: "project", slug: "nioro-du-rip", src: "/images/nioro-1.png", shape: "wide" },
   { kind: "project", slug: "orbitsx", src: "/images/orbits-app-2.jpg", shape: "tall" },
