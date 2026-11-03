@@ -422,3 +422,29 @@ export const processStepsEn = [
   { title: "Deploy", subtitle: "Production", description: "Deployment, documentation and handover." },
   { title: "Iterate", subtitle: "Continuous improvement", description: "Follow-up after delivery: fixes, improvements, metrics." },
 ];
+
+export const shortNamesEn: Record<string, string> = {
+  "aprosi-materiaux": "APROSI Materials",
+  "aprosi-site-institutionnel": "APROSI Website",
+  "nioro-du-rip": "Nioro du Rip City Hall",
+  fanyris: "FANYRIS",
+  "helping-yourself": "Helping Yourself",
+};
+
+export const keyFactsEn: Record<string, { value: string; label: string }[]> = {
+  orbitsx: [
+    { value: "2", label: "published apps" },
+    { value: "NYC", label: "market" },
+    { value: "Stripe", label: "payments" },
+  ],
+  "aprosi-tickets": [
+    { value: "84", label: "automated tests" },
+    { value: "3", label: "applications" },
+    { value: "+13", label: "features vs SenPass" },
+  ],
+  chezvous: [
+    { value: "3", label: "platforms" },
+    { value: "7", label: "roles" },
+    { value: "PostGIS", label: "map search" },
+  ],
+};

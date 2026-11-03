@@ -5,8 +5,8 @@ import type { ProjectCover } from "@/lib/editorial";
 import type { Lang } from "@/lib/i18n";
 
 /**
- * Scène commune à toutes les couvertures de projet : fond sombre, grille fine,
- * halo indigo discret. Seul le cadre change (téléphones, navigateur, logo, typo).
+ * Scène commune à toutes les couvertures de projet : fond lisse et lumière douce,
+ * comme une photo produit. Seul le cadre change (téléphones, navigateur, logo, typo).
  */
 export function ProjectCoverStage({ project, cover, lang }: { project: Project; cover: ProjectCover; lang: Lang }) {
   const screen = getDictionary(lang).project.screen;
@@ -14,19 +14,12 @@ export function ProjectCoverStage({ project, cover, lang }: { project: Project; 
     <div className="absolute inset-0 overflow-hidden bg-surface">
       <div
         aria-hidden
-        className="absolute inset-0 opacity-70"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(rgb(var(--line) / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--line) / 0.05) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
+          background:
+            "radial-gradient(ellipse 70% 60% at 50% 35%, rgb(var(--line) / 0.06), transparent 70%), linear-gradient(180deg, transparent 60%, rgb(var(--line) / 0.04))",
         }}
       />
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 60%, rgb(var(--accent-soft) / 0.14), transparent 70%)" }}
-      />
-
       <div className="absolute inset-0 flex items-center justify-center p-6 transition-transform duration-1000 ease-editorial group-hover:scale-[1.03] sm:p-10">
         {cover.kind === "phones" && <Phones project={project} images={cover.images} screen={screen} />}
         {cover.kind === "browser" && <Browser project={project} src={cover.images[0]} />}

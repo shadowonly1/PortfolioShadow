@@ -37,7 +37,6 @@ export function ProjectGallery({ project, visualLabel }: { project: Project; vis
           </ClipReveal>
           <figcaption className="label mt-3 flex justify-between">
             <span>{project.name}</span>
-            <span>App</span>
           </figcaption>
         </figure>
       )}
@@ -62,7 +61,6 @@ export function ProjectGallery({ project, visualLabel }: { project: Project; vis
             </ClipReveal>
             <figcaption className="label mt-3 flex justify-between">
               <span>{project.name}</span>
-              <span>Fig. {String(i + 1).padStart(2, "0")}</span>
             </figcaption>
           </figure>
         );

@@ -111,7 +111,7 @@ export function ChatBot({ lang }: { lang: Lang }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? t.close : t.open}
         aria-expanded={open}
-        className={`fixed bottom-5 right-5 z-[60] flex h-12 items-center gap-2 rounded-full border border-line/15 bg-background/80 px-4 font-mono text-label uppercase text-foreground backdrop-blur-md transition-[opacity,transform,border-color] duration-500 hover:border-line/40 sm:bottom-7 sm:right-7 ${
+        className={`fixed bottom-4 right-4 z-[60] flex h-11 min-w-11 items-center justify-center gap-2 rounded-full sm:bottom-7 sm:right-7 sm:h-12 border border-line/15 bg-background/80 px-3.5 font-mono text-label uppercase text-foreground backdrop-blur-md sm:px-4 transition-[opacity,transform,border-color] duration-500 hover:border-line/40 sm:bottom-7 sm:right-7 ${
           pastHero || open ? "opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
         whileTap={{ scale: 0.92 }}
@@ -139,7 +139,7 @@ export function ChatBot({ lang }: { lang: Lang }) {
             >
               <span className="flex items-center gap-2">
                 <MessageCircle size={15} aria-hidden />
-                {t.button}
+                <span className="hidden sm:inline">{t.button}</span>
               </span>
             </motion.span>
           )}

@@ -3,7 +3,7 @@ import { getContent } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionary";
 import type { Lang } from "@/lib/i18n";
 import { Container } from "./Container";
-import { ClipReveal, Hairline, Plus, Reveal, RevealText } from "./Reveal";
+import { ClipReveal, Hairline, Plus, Reveal } from "./Reveal";
 
 const cvLinks = [
   { lang: "fr", href: "/cv/CV_Elimane_BA_FR.pdf", label: "CV — Français ↓" },
@@ -34,26 +34,18 @@ export function About({ lang }: { lang: Lang }) {
           <Plus />
         </div>
 
-        <RevealText
-          lines={[t.headline[0], <span key="l2" className="text-muted">{t.headline[1]}</span>]}
-          className="display mt-12 max-w-6xl text-display-md sm:mt-16"
-        />
-
-        <div className="mt-16 grid gap-12 sm:mt-24 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-12 grid gap-12 sm:mt-16 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
-            <ClipReveal className="group relative aspect-[4/5] w-full max-w-sm overflow-hidden bg-surface">
+            <ClipReveal className="group relative aspect-[2/3] w-full max-w-sm overflow-hidden bg-surface">
               <Image
-                src="/images/shadow.jpeg"
+                src="/images/portrait-about.jpg"
                 alt={`${t.portraitAlt} ${profile.name}`}
                 fill
                 sizes="(min-width: 1024px) 30vw, (min-width: 640px) 24rem, 100vw"
-                className="object-cover object-top grayscale transition-[filter,transform] duration-1000 ease-editorial group-hover:scale-[1.03] group-hover:grayscale-0"
+                className="object-cover object-top transition-transform duration-1000 ease-editorial group-hover:scale-[1.03]"
               />
             </ClipReveal>
-            <p className="label mt-4 flex justify-between">
-              <span>{profile.alias}</span>
-              <span>Fig. 01</span>
-            </p>
+            <p className="mt-3 text-sm text-muted">{profile.alias}</p>
           </div>
 
           <div className="max-w-2xl lg:col-span-6 lg:col-start-6">
@@ -81,7 +73,7 @@ export function About({ lang }: { lang: Lang }) {
 
         </div>
 
-        <dl className="mt-20 grid grid-cols-2 border-t sm:mt-28 lg:grid-cols-4">
+        <dl className="mt-16 grid grid-cols-2 border-t sm:mt-20 lg:grid-cols-4">
           {stats.map((stat, i) => (
             <Reveal
               key={stat.label}
@@ -89,7 +81,7 @@ export function About({ lang }: { lang: Lang }) {
               className="flex flex-col gap-2 border-b py-8 pr-4 odd:border-r odd:pl-0 even:pl-6 lg:border-b-0 lg:border-r lg:pl-6 lg:first:pl-0 lg:last:border-r-0"
             >
               <dt className="label order-2">{stat.label}</dt>
-              <dd className="order-1 font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85] text-foreground">
+              <dd className="order-1 font-display text-[clamp(3rem,6vw,5rem)] leading-[0.85] text-foreground">
                 {stat.value}
               </dd>
             </Reveal>

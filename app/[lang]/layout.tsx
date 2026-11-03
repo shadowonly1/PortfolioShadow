@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
-import { Bebas_Neue, Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, Inter } from "next/font/google";
 import { ConsoleEasterEgg } from "@/components/ConsoleEasterEgg";
 import { CustomCursor } from "@/components/CustomCursor";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
@@ -22,21 +22,6 @@ const display = Bebas_Neue({
   variable: "--font-display",
   display: "swap",
   weight: "400",
-});
-
-const serif = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-  weight: "400",
-  style: ["italic"],
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-  weight: ["400", "500"],
 });
 
 // Seules les langues connues existent ; toute autre valeur donne une 404.
@@ -135,7 +120,7 @@ export default function RootLayout({
       lang={lang}
       data-theme="light"
       suppressHydrationWarning
-      className={`${inter.variable} ${display.variable} ${serif.variable} ${mono.variable}`}
+      className={`${inter.variable} ${display.variable}`}
     >
       <head>
         {/* Applique le thème mémorisé avant l'affichage (évite un flash de couleur). */}

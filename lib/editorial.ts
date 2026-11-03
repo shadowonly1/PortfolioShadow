@@ -112,3 +112,34 @@ export const coreSkills = new Set([
   "Adobe Photoshop",
   "Adobe Illustrator",
 ]);
+
+/** Les trois projets mis en avant en grand format ; les autres sont listés en compact. */
+export const majorProjects = ["orbitsx", "aprosi-tickets", "chezvous"];
+
+/** Noms courts pour les titres (les noms complets restent dans les pages projet). */
+export const shortNames: Record<string, string> = {
+  "aprosi-materiaux": "APROSI Matériaux",
+  "aprosi-site-institutionnel": "Site APROSI",
+  "nioro-du-rip": "Mairie de Nioro du Rip",
+  fanyris: "FANYRIS",
+  "helping-yourself": "Helping Yourself",
+};
+
+/** Chiffres clés affichés en tête des projets majeurs (tirés de leurs résultats). */
+export const keyFacts: Record<string, { value: string; label: string }[]> = {
+  orbitsx: [
+    { value: "2", label: "apps publiées" },
+    { value: "NYC", label: "marché" },
+    { value: "Stripe", label: "paiements" },
+  ],
+  "aprosi-tickets": [
+    { value: "84", label: "tests automatisés" },
+    { value: "3", label: "applications" },
+    { value: "+13", label: "fonctions vs SenPass" },
+  ],
+  chezvous: [
+    { value: "3", label: "plateformes" },
+    { value: "7", label: "rôles" },
+    { value: "PostGIS", label: "recherche carte" },
+  ],
+};

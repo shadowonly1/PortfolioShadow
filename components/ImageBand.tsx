@@ -73,8 +73,8 @@ export function ImageBand({ lang }: { lang: Lang }) {
                       className="object-cover object-top"
                     />
                   </div>
-                  <figcaption className="label mt-3 max-w-[19rem] truncate">
-                    <span className="text-foreground">{String(i + 1).padStart(2, "0")}</span> — {label}
+                  <figcaption className="mt-3 line-clamp-2 max-w-[14rem] text-sm text-muted sm:max-w-[19rem]">
+                    {label}
                   </figcaption>
                 </figure>
               </li>

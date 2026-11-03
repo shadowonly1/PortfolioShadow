@@ -33,8 +33,9 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)", "Impact", "sans-serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        // Système à deux polices : Bebas Neue (titres) + Inter (tout le reste).
+        serif: ["var(--font-inter)", "system-ui", "sans-serif"],
+        mono: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
         // Échelle display : fluide entre mobile et 1920px.
@@ -42,7 +43,7 @@ const config: Config = {
         "display-lg": ["clamp(3.5rem, 11vw, 11rem)", { lineHeight: "0.85", letterSpacing: "-0.01em" }],
         "display-md": ["clamp(2.75rem, 7vw, 6.5rem)", { lineHeight: "0.88", letterSpacing: "-0.005em" }],
         "display-sm": ["clamp(2rem, 4vw, 3.5rem)", { lineHeight: "0.92" }],
-        label: ["0.75rem", { lineHeight: "1.1rem", letterSpacing: "0.12em" }],
+        label: ["0.75rem", { lineHeight: "1.1rem", letterSpacing: "0.08em" }],
       },
       maxWidth: {
         content: "90rem",

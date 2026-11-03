@@ -39,14 +39,9 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
       </Container>
 
-      <p
-        aria-hidden
-        className="mt-10 select-none whitespace-nowrap text-center font-display text-[23vw] uppercase leading-[0.75] text-foreground/[0.06]"
-      >
-        {profile.name}
-      </p>
 
-      <Container className="flex flex-wrap items-center justify-between gap-2 border-t pb-24 pt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+
+      <Container className="mt-10 flex flex-wrap items-center justify-between gap-2 border-t pb-24 pt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
         <span>© {new Date().getFullYear()} {profile.name}</span>
         <span className="text-muted/50">{profile.alias}</span>
         <a href="#main-content" className="text-foreground">

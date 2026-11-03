@@ -2,7 +2,6 @@ import { About } from "@/components/About";
 import { ChatBot } from "@/components/ChatBot";
 import { Contact } from "@/components/Contact";
 import { DesignShowcase } from "@/components/DesignShowcase";
-import { Education } from "@/components/Education";
 import { Experience } from "@/components/Experience";
 import { Expertise } from "@/components/Expertise";
 import { Footer } from "@/components/Footer";
@@ -14,7 +13,7 @@ import { Skills } from "@/components/Skills";
 import { Statement } from "@/components/Statement";
 import type { Lang } from "@/lib/i18n";
 
-// Récit : identité → projets → expertise → stack → parcours → design → formation → contact.
+// Récit : identité → projets → expertise → stack → parcours → design → contact.
 export default function Home({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   return (
@@ -31,7 +30,6 @@ export default function Home({ params }: { params: { lang: Lang } }) {
           <Skills lang={lang} />
           <Experience lang={lang} />
           <DesignShowcase lang={lang} />
-          <Education lang={lang} />
           <Statement lang={lang} />
           <Contact lang={lang} />
         </div>

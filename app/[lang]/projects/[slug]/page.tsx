@@ -63,7 +63,7 @@ function Block({ index, title, children }: { index: string; title: string; child
 export default function ProjectPage({ params }: { params: { lang: Lang; slug: string } }) {
   const { lang } = params;
   const t = getDictionary(lang).project;
-  const { projects, projectCategory } = getContent(lang);
+  const { projects, projectCategory, shortNames, keyFacts } = getContent(lang);
   const index = projects.findIndex((p) => p.slug === params.slug);
   const project = projects[index];
   if (!project) notFound();
@@ -71,7 +71,10 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
   const number = String(index + 1).padStart(2, "0");
   const next = projects[(index + 1) % projects.length];
   const cover = projectCovers[project.slug];
-  const hasGallery = Boolean(project.images && project.images.length > 0);
+  const hasGallery = Boolean(project.images?.length || project.screens?.length);
+  const title = shortNames[project.slug] ?? project.name;
+  const facts = keyFacts[project.slug] ?? [];
+  const outcome = project.results?.[0];
 
   let section = 0;
   const nextIndex = () => String(++section).padStart(2, "0");
@@ -91,25 +94,39 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
             </span>
           </div>
 
-          <div className="mt-12 grid gap-6 sm:mt-16 lg:grid-cols-12">
-            <RevealText
-              as="p"
-              immediate
-              lines={[number]}
-              className="font-display text-[clamp(4rem,10vw,9rem)] leading-[0.8] text-outline lg:col-span-2"
-            />
-            <div className="lg:col-span-10">
+          <div className="mt-12 sm:mt-16">
+            <div>
               <RevealText
                 as="h1"
                 immediate
                 delay={0.1}
-                lines={[project.name]}
-                className="display text-[clamp(3rem,8vw,8.5rem)] leading-[0.86]"
+                lines={[title]}
+                className="display text-[clamp(3rem,8vw,7.5rem)] leading-[0.86]"
               />
               <Reveal immediate delay={0.4} className="mt-6 max-w-2xl">
-                <p className="font-serif text-2xl italic text-foreground sm:text-3xl">{projectCategory[project.slug]}</p>
+                <p className="text-xl font-medium text-foreground sm:text-2xl">{projectCategory[project.slug]}</p>
                 <p className="mt-4 text-lg leading-relaxed text-muted">{project.summary}</p>
               </Reveal>
+              {(outcome || facts.length > 0) && (
+                <Reveal immediate delay={0.5} className="mt-10 grid gap-8 border-t pt-8 lg:grid-cols-12">
+                  {outcome && (
+                    <div className="lg:col-span-6">
+                      <p className="label">{t.outcome}</p>
+                      <p className="mt-3 text-2xl font-medium leading-snug text-foreground">{outcome}</p>
+                    </div>
+                  )}
+                  {facts.length > 0 && (
+                    <dl className="grid grid-cols-3 gap-4 lg:col-span-5 lg:col-start-8">
+                      {facts.map((f) => (
+                        <div key={f.label}>
+                          <dd className="font-display text-5xl leading-none text-foreground">{f.value}</dd>
+                          <dt className="mt-2 text-xs leading-snug text-muted">{f.label}</dt>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </Reveal>
+              )}
             </div>
           </div>
 
@@ -195,20 +212,6 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
             </Reveal>
           </section>
 
-          {project.architecture && (
-            <Block index={nextIndex()} title={t.architecture}>
-              <Reveal as="p" className="text-lg leading-relaxed text-muted">
-                {project.architecture}
-              </Reveal>
-            </Block>
-          )}
-
-          {project.challenges && project.challenges.length > 0 && (
-            <Block index={nextIndex()} title={t.challenges}>
-              <NumberedList items={project.challenges} />
-            </Block>
-          )}
-
           <Block index={nextIndex()} title={t.highlights}>
             <NumberedList items={project.highlights} />
           </Block>
@@ -219,12 +222,39 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
             </Block>
           )}
 
+          {(project.architecture || (project.challenges && project.challenges.length > 0)) && (
+            <details className="group/details border-t py-10 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-xl font-medium text-foreground">
+                {t.technical}
+                <span aria-hidden className="text-2xl text-muted transition-transform duration-300 group-open/details:rotate-45">
+                  +
+                </span>
+              </summary>
+              <div className="mt-2">
+                {project.architecture && (
+                  <Block index={nextIndex()} title={t.architecture}>
+                    <Reveal as="p" className="text-lg leading-relaxed text-muted">
+                      {project.architecture}
+                    </Reveal>
+                  </Block>
+                )}
+
+                {project.challenges && project.challenges.length > 0 && (
+                  <Block index={nextIndex()} title={t.challenges}>
+                    <NumberedList items={project.challenges} />
+                  </Block>
+                )}
+
+              </div>
+            </details>
+          )}
+
           {project.lessons && (
             <section className="border-t py-20 sm:py-32">
               <p className="label flex items-center gap-2">
                 {t.lesson} <Plus />
               </p>
-              <Reveal as="p" className="mt-8 max-w-5xl font-serif text-3xl italic leading-snug text-foreground sm:text-5xl">
+              <Reveal as="p" className="mt-8 max-w-4xl text-2xl font-medium leading-snug text-foreground sm:text-4xl">
                 {t.quote(project.lessons)}
               </Reveal>
             </section>

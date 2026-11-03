@@ -25,6 +25,20 @@
     --header-h: 4.5rem;
   }
 
+  /* Aplat de marque (section Contact) : jaune ShadowOnly, texte quasi noir. */
+  [data-theme="brand"] {
+    --background: 232 194 0; /* #E8C200 */
+    --surface: 220 182 0;
+    --surface-raised: 244 210 40;
+    --foreground: 12 13 18;
+    --muted: 58 52 20;
+    --line: 0 0 0;
+    --accent: 12 13 18;
+    --accent-soft: 12 13 18;
+    --accent-ink: 232 194 0;
+    color-scheme: light;
+  }
+
   /* Mode clair : fond presque blanc et cartes nettement plus foncées pour que les
      visuels se détachent ; le jaune est un peu approfondi, le pétrole garde un
      contraste AA pour les petits textes. */

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { getContent } from "@/lib/content";
-import { profile } from "@/lib/data";
+import { designWorks as designWorksFr, profile } from "@/lib/data";
 import { designSizes } from "@/lib/designSizes";
 import { getDictionary } from "@/lib/dictionary";
 import type { Lang } from "@/lib/i18n";
@@ -27,13 +27,31 @@ const isClamped = (src: string) => {
   return w / h < MIN_RATIO;
 };
 
+type Category = "identity" | "logo" | "print";
+const FILTERS = ["all", "identity", "logo", "print"] as const;
+
+/** Catégorie déduite de la description française de chaque création. */
+const categoryBySrc = new Map<string, Category>(
+  designWorksFr.map((w) => {
+    const alt = w.alt.toLowerCase();
+    const cat: Category = alt.startsWith("logo")
+      ? "logo"
+      : alt.includes("identité") || alt.includes("mockup")
+        ? "identity"
+        : "print";
+    return [w.src, cat];
+  })
+);
+
 export function DesignShowcase({ lang }: { lang: Lang }) {
   const t = getDictionary(lang).design;
-  const { designWorks } = getContent(lang);
+  const { designWorks: allWorks } = getContent(lang);
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
+  const designWorks = filter === "all" ? allWorks : allWorks.filter((w) => categoryBySrc.get(w.src) === filter);
   const [expanded, setExpanded] = useState(false);
   const [active, setActive] = useState<number | null>(null);
   const lastTrigger = useRef<HTMLButtonElement | null>(null);
-  const visible = expanded ? designWorks : designWorks.slice(0, INITIAL);
+  const visible = expanded || filter !== "all" ? designWorks : designWorks.slice(0, INITIAL);
 
   const close = useCallback(() => {
     setActive(null);
@@ -59,7 +77,7 @@ export function DesignShowcase({ lang }: { lang: Lang }) {
     <section id="design" className="section">
       <Container>
         <SectionIntro
-          index="06"
+          index="05"
           label={t.label}
           title={t.title}
           aside={
@@ -72,7 +90,32 @@ export function DesignShowcase({ lang }: { lang: Lang }) {
           }
         />
 
-        <ul className="mt-16 columns-2 gap-3 sm:mt-24 sm:gap-4 lg:columns-3 lg:gap-6">
+        <div role="tablist" aria-label={t.label} className="mt-14 flex flex-wrap gap-2 sm:mt-20">
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              type="button"
+              role="tab"
+              aria-selected={filter === f}
+              onClick={() => setFilter(f)}
+              className={cn(
+                "rounded-full border px-4 py-2 text-sm transition-colors duration-300",
+                filter === f
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-line/15 text-muted hover:border-line/40 hover:text-foreground"
+              )}
+            >
+              {t.filters[f]}
+              {f !== "all" && (
+                <span className="ml-1.5 opacity-60">
+                  {allWorks.filter((w) => categoryBySrc.get(w.src) === f).length}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <ul className="mt-8 columns-2 gap-3 sm:gap-4 lg:columns-3 lg:gap-6">
           {visible.map((work, i) => (
             <Reveal as="li" key={work.src} delay={(i % 3) * 0.06} className="mb-3 break-inside-avoid sm:mb-4 lg:mb-6">
               <button
@@ -109,7 +152,7 @@ export function DesignShowcase({ lang }: { lang: Lang }) {
           ))}
         </ul>
 
-        {designWorks.length > INITIAL && (
+        {filter === "all" && designWorks.length > INITIAL && (
           <div className="mt-10 flex justify-center">
             <button
               type="button"

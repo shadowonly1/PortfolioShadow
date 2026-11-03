@@ -6,7 +6,6 @@ import { getContent } from "@/lib/content";
 import { profile } from "@/lib/data";
 import { getDictionary } from "@/lib/dictionary";
 import type { Lang } from "@/lib/i18n";
-import { BackgroundType } from "./BackgroundType";
 import { Container } from "./Container";
 import { FloatingInput, FloatingTextarea } from "./FloatingField";
 import { EASE, Hairline, Plus, Reveal, RevealText } from "./Reveal";
@@ -81,12 +80,11 @@ export function Contact({ lang }: { lang: Lang }) {
   }
 
   return (
-    <section id="contact" data-theme="dark" className="section overflow-hidden bg-surface pb-16 text-foreground sm:pb-20">
-      <BackgroundType word="Contact" className="top-20 text-[36vw]" outline drift={100} />
+    <section id="contact" data-theme="brand" className="section overflow-hidden bg-background pb-16 text-foreground sm:pb-20">
       <Container>
         <div className="flex items-center gap-4">
           <span className="label whitespace-nowrap">
-            <span className="text-foreground">08</span> / {t.label}
+            <span className="text-foreground">06</span> / {t.label}
           </span>
           <Hairline className="flex-1" />
           <Plus />

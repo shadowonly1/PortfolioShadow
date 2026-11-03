@@ -20,40 +20,29 @@ export function Expertise({ lang }: { lang: Lang }) {
       <Container>
         <SectionIntro index="03" label={t.label} title={t.title} aside={t.aside} />
 
-        <ol className="mt-16 border-t sm:mt-24">
+        <ul className="mt-14 grid gap-4 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
-            <Reveal as="li" key={service.title} delay={i * 0.05} className="group relative border-b">
-              <span
-                aria-hidden
-                className="absolute inset-x-0 bottom-[-1px] h-px origin-left scale-x-0 bg-accent transition-transform duration-700 ease-editorial group-hover:scale-x-100"
-              />
-              <div className="grid grid-cols-12 items-center gap-x-4 gap-y-6 py-8 sm:py-10">
-                <span className="col-span-2 self-start pt-3 font-mono text-label text-muted transition-colors duration-500 group-hover:text-accent sm:col-span-1">
-                  0{i + 1}
-                </span>
-                <div className="col-span-10 sm:col-span-6">
-                  <h3 className="display text-display-md transition-transform duration-700 ease-editorial group-hover:translate-x-3">
-                    {service.title}
-                  </h3>
-                  <p className="mt-4 max-w-md text-base leading-relaxed text-muted">{service.description}</p>
-                  <p className="mt-3 font-mono text-label uppercase text-accent-soft">{service.stack.join(" · ")}</p>
-                </div>
-                <ClipReveal
-                  className="relative col-span-10 col-start-3 aspect-[16/10] overflow-hidden bg-background sm:col-span-5 sm:col-start-auto lg:col-span-4 lg:col-start-9"
-                  delay={0.1}
-                >
-                  <Image
-                    src={service.image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 40vw, 80vw"
-                    className="object-cover object-top transition-transform duration-1000 ease-editorial group-hover:scale-[1.04]"
-                  />
-                </ClipReveal>
+            <li
+              key={service.title}
+              className={`group flex flex-col overflow-hidden rounded-2xl border border-line/10 bg-background ${i === 0 ? "lg:col-span-2" : ""}`}
+            >
+              <ClipReveal className={`relative w-full overflow-hidden ${i === 0 ? "aspect-[16/9] lg:aspect-[2.4/1]" : "aspect-[16/9]"}`}>
+                <Image
+                  src={service.image}
+                  alt=""
+                  fill
+                  sizes={i === 0 ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"}
+                  className="object-cover object-top transition-transform duration-1000 ease-editorial group-hover:scale-[1.03]"
+                />
+              </ClipReveal>
+              <div className="flex flex-1 flex-col p-6 sm:p-7">
+                <h3 className="text-2xl font-semibold text-foreground">{service.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{service.description}</p>
+                <p className="mt-auto pt-5 text-xs text-accent-soft">{service.stack.join(" · ")}</p>
               </div>
-            </Reveal>
+            </li>
           ))}
-        </ol>
+        </ul>
 
         {/* Méthode : version compacte, sur une ligne */}
         <div className="mt-20 sm:mt-28">
@@ -65,11 +54,9 @@ export function Expertise({ lang }: { lang: Lang }) {
           <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
             {processSteps.map((step, i) => (
               <Reveal as="li" key={step.step} delay={(i % 6) * 0.06} className="group">
-                <span className="block font-display text-6xl leading-none text-outline transition-colors duration-700 group-hover:text-accent">
-                  {step.step}
-                </span>
-                <h3 className="display mt-4 text-3xl">{step.title}</h3>
-                <p className="label mt-1 text-accent-soft">{step.subtitle}</p>
+                <span className="block text-sm font-medium text-accent">{step.step}</span>
+                <h3 className="mt-2 text-lg font-semibold text-foreground">{step.title}</h3>
+                <p className="mt-0.5 text-xs text-accent-soft">{step.subtitle}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{step.description}</p>
               </Reveal>
             ))}

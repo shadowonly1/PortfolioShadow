@@ -94,7 +94,9 @@ export function Reveal({
   const prefersReduced = useReducedMotion();
   const Tag = as === "li" ? motion.li : as === "p" ? motion.p : motion.div;
 
-  if (prefersReduced) {
+  // Direction : on n'anime que les titres (RevealText) et les grands visuels (ClipReveal).
+  // Le contenu courant s'affiche immédiatement ; seule l'entrée du hero (immediate) bouge.
+  if (prefersReduced || !immediate) {
     const Static = as;
     return <Static className={className}>{children}</Static>;
   }
@@ -124,7 +126,7 @@ export function Hairline({
   immediate?: boolean;
 }) {
   const prefersReduced = useReducedMotion();
-  if (prefersReduced) {
+  if (prefersReduced || !immediate) {
     return <span aria-hidden className={cn("block h-px w-full bg-line/10", className)} />;
   }
   return (

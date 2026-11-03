@@ -27,9 +27,11 @@ import {
   projectsEn,
   servicesEn,
   skillGroupsEn,
+  keyFactsEn,
+  shortNamesEn,
   statementEn,
 } from "./content.en";
-import { projectCategory, services, statement } from "./editorial";
+import { keyFacts, projectCategory, services, shortNames, statement } from "./editorial";
 import type { Lang } from "./i18n";
 import { processSteps } from "./process";
 
@@ -48,6 +50,8 @@ const fr = {
   statement,
   projectCategory,
   processSteps,
+  shortNames,
+  keyFacts,
 };
 
 export type Content = typeof fr;
@@ -83,6 +87,8 @@ const en: Content = {
   statement: statementEn,
   projectCategory: projectCategoryEn,
   processSteps: processSteps.map((s, i) => ({ ...s, ...processStepsEn[i] })),
+  shortNames: shortNamesEn,
+  keyFacts: keyFactsEn,
 };
 
 export function getContent(lang: Lang): Content {
