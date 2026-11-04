@@ -107,9 +107,9 @@
     @apply font-mono text-label uppercase text-muted;
   }
 
-  /* Titre display condensé */
+  /* Titre display */
   .display {
-    @apply font-display uppercase text-foreground;
+    @apply font-display font-semibold text-foreground;
   }
 
   .section {

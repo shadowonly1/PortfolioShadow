@@ -63,7 +63,7 @@ export function SelectedWork({ lang }: { lang: Lang }) {
                       <dl className="mt-8 grid grid-cols-3 gap-4 border-t pt-6">
                         {facts.map((f) => (
                           <div key={f.label}>
-                            <dd className="font-display text-4xl leading-none text-foreground">{f.value}</dd>
+                            <dd className="font-display text-2xl font-semibold leading-tight tracking-tight text-foreground">{f.value}</dd>
                             <dt className="mt-2 text-xs leading-snug text-muted">{f.label}</dt>
                           </div>
                         ))}

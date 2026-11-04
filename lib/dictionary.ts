@@ -45,7 +45,7 @@ const fr = {
   band: { label: "En images" },
   work: {
     label: "Projets",
-    title: ["Projets", "Sélectionnés"],
+    title: ["Projets", "sélectionnés"],
     other: "Autres réalisations",
     aside: (n: string) =>
       `Trois produits livrés de bout en bout, de l'architecture à la production. ${n} projets livrés au total.`,
@@ -61,7 +61,7 @@ const fr = {
   },
   skills: {
     label: "Stack technique",
-    title: ["Stack", "Technique"],
+    title: ["Stack", "technique"],
     aside: "Du langage au pixel : les outils avec lesquels je conçois, construis et mets en production.",
     also: "Aussi —",
   },
@@ -215,7 +215,7 @@ const en: Dictionary = {
   band: { label: "In pictures" },
   work: {
     label: "Work",
-    title: ["Selected", "Work"],
+    title: ["Selected", "work"],
     other: "More work",
     aside: (n: string) =>
       `Three products delivered end to end, from architecture to production. ${n} projects delivered in total.`,
@@ -231,7 +231,7 @@ const en: Dictionary = {
   },
   skills: {
     label: "Tech stack",
-    title: ["Tech", "Stack"],
+    title: ["Tech", "stack"],
     aside: "From language to pixel: the tools I use to design, build and ship to production.",
     also: "Also —",
   },

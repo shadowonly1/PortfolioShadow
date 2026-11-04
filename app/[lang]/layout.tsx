@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
-import { Bebas_Neue, Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { ConsoleEasterEgg } from "@/components/ConsoleEasterEgg";
 import { CustomCursor } from "@/components/CustomCursor";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
@@ -11,17 +11,11 @@ import { isLang, locales, localePath, type Lang } from "@/lib/i18n";
 import { siteUrl } from "@/lib/siteUrl";
 import "../globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const display = Bebas_Neue({
+const poppins = Poppins({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-display",
+  variable: "--font-sans",
   display: "swap",
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
 });
 
 // Seules les langues connues existent ; toute autre valeur donne une 404.
@@ -120,7 +114,7 @@ export default function RootLayout({
       lang={lang}
       data-theme="light"
       suppressHydrationWarning
-      className={`${inter.variable} ${display.variable}`}
+      className={poppins.variable}
     >
       <head>
         {/* Applique le thème mémorisé avant l'affichage (évite un flash de couleur). */}

@@ -33,7 +33,7 @@ export function Statement({ lang }: { lang: Lang }) {
         </div>
         <div ref={ref} className="mt-8 sm:mt-10">
           <p className="sr-only">{full}</p>
-          <p aria-hidden className="display text-[clamp(2.5rem,7vw,7.5rem)] leading-[0.88]">
+          <p aria-hidden className="display text-[clamp(1.875rem,4.5vw,4.5rem)] leading-[1.12] tracking-[-0.025em]">
             {lines.map((line, li) => (
               <span key={li} className={li === statement.first.length ? "mt-[0.35em] block" : "block"}>
                 {line.split(" ").map((word, wi) => {

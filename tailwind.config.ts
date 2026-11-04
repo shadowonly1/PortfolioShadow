@@ -31,18 +31,18 @@ const config: Config = {
         DEFAULT: "rgb(var(--line) / 0.10)",
       },
       fontFamily: {
-        display: ["var(--font-display)", "Impact", "sans-serif"],
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        // Système à deux polices : Bebas Neue (titres) + Inter (tout le reste).
-        serif: ["var(--font-inter)", "system-ui", "sans-serif"],
-        mono: ["var(--font-inter)", "system-ui", "sans-serif"],
+        // Une seule police sur tout le site : Poppins.
+        display: ["var(--font-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       fontSize: {
         // Échelle display : fluide entre mobile et 1920px.
-        "display-xl": ["clamp(4.5rem, 17vw, 17rem)", { lineHeight: "0.82", letterSpacing: "-0.01em" }],
-        "display-lg": ["clamp(3.5rem, 11vw, 11rem)", { lineHeight: "0.85", letterSpacing: "-0.01em" }],
-        "display-md": ["clamp(2.75rem, 7vw, 6.5rem)", { lineHeight: "0.88", letterSpacing: "-0.005em" }],
-        "display-sm": ["clamp(2rem, 4vw, 3.5rem)", { lineHeight: "0.92" }],
+        "display-xl": ["clamp(2.75rem, 9vw, 9rem)", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
+        "display-lg": ["clamp(2.5rem, 6.5vw, 6.5rem)", { lineHeight: "1.08", letterSpacing: "-0.03em" }],
+        "display-md": ["clamp(2rem, 4.2vw, 4rem)", { lineHeight: "1.1", letterSpacing: "-0.025em" }],
+        "display-sm": ["clamp(1.5rem, 2.8vw, 2.5rem)", { lineHeight: "1.15", letterSpacing: "-0.02em" }],
         label: ["0.75rem", { lineHeight: "1.1rem", letterSpacing: "0.08em" }],
       },
       maxWidth: {

@@ -81,7 +81,7 @@ export function About({ lang }: { lang: Lang }) {
               className="flex flex-col gap-2 border-b py-8 pr-4 odd:border-r odd:pl-0 even:pl-6 lg:border-b-0 lg:border-r lg:pl-6 lg:first:pl-0 lg:last:border-r-0"
             >
               <dt className="label order-2">{stat.label}</dt>
-              <dd className="order-1 font-display text-[clamp(3rem,6vw,5rem)] leading-[0.85] text-foreground">
+              <dd className="order-1 font-display text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-none tracking-tight text-foreground">
                 {stat.value}
               </dd>
             </Reveal>

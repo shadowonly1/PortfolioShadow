@@ -19,7 +19,7 @@ export default function NotFound() {
       <main id="main-content" className="relative flex min-h-[100svh] items-center overflow-hidden">
         <p
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[48vw] leading-none text-outline"
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[34vw] font-bold leading-none text-outline"
         >
           404
         </p>

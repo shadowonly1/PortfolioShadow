@@ -76,7 +76,7 @@ export function Header({ lang, home = false }: { lang: Lang; home?: boolean }) {
             className="group relative z-[70] flex flex-col leading-none"
             onClick={() => setOpen(false)}
           >
-            <span className="font-display text-2xl tracking-wide text-foreground">{profile.name}</span>
+            <span className="font-display text-lg font-semibold tracking-tight text-foreground">{profile.name}</span>
             <span className="label mt-1 text-[11px]">{t.header.role}</span>
           </Link>
 
@@ -154,7 +154,7 @@ export function Header({ lang, home = false }: { lang: Lang; home?: boolean }) {
                       animate={{ y: "0%" }}
                       transition={{ duration: 0.9, ease: EASE, delay: 0.25 + i * 0.07 }}
                     >
-                      <span className="display text-[clamp(3.5rem,18vw,6rem)] leading-[0.9]">{link.label}</span>
+                      <span className="display text-[clamp(2.5rem,12vw,4rem)] leading-[1.1] tracking-[-0.03em]">{link.label}</span>
                       <span className="label">0{i + 1}</span>
                     </motion.a>
                   </li>

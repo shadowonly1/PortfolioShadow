@@ -101,7 +101,7 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
                 immediate
                 delay={0.1}
                 lines={[title]}
-                className="display text-[clamp(3rem,8vw,7.5rem)] leading-[0.86]"
+                className="display text-[clamp(2.5rem,6vw,5.5rem)] leading-[1.06] tracking-[-0.03em]"
               />
               <Reveal immediate delay={0.4} className="mt-6 max-w-2xl">
                 <p className="text-xl font-medium text-foreground sm:text-2xl">{projectCategory[project.slug]}</p>
@@ -119,7 +119,7 @@ export default function ProjectPage({ params }: { params: { lang: Lang; slug: st
                     <dl className="grid grid-cols-3 gap-4 lg:col-span-5 lg:col-start-8">
                       {facts.map((f) => (
                         <div key={f.label}>
-                          <dd className="font-display text-5xl leading-none text-foreground">{f.value}</dd>
+                          <dd className="font-display text-3xl font-semibold leading-tight tracking-tight text-foreground">{f.value}</dd>
                           <dt className="mt-2 text-xs leading-snug text-muted">{f.label}</dt>
                         </div>
                       ))}

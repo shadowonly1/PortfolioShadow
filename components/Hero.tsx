@@ -36,7 +36,7 @@ export function Hero({ lang }: { lang: Lang }) {
         {/* Colonne gauche : identité */}
         <div className="flex flex-col justify-end lg:col-span-5 lg:pb-6">
           <Reveal immediate delay={0.4} as="div">
-            <h1 className="display text-[clamp(3.5rem,9vw,7.5rem)] leading-[0.86]">
+            <h1 className="display text-[clamp(2.75rem,6.5vw,5.5rem)] leading-[1.05] tracking-[-0.03em]">
               {profile.name}
               <span className="sr-only"> — {t.h1}</span>
             </h1>

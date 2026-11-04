@@ -125,7 +125,7 @@ export function Contact({ lang }: { lang: Lang }) {
                   className="group grid grid-cols-12 items-baseline gap-3 py-6"
                 >
                   <span className="label col-span-3 sm:col-span-2">{c.label}</span>
-                  <span className="col-span-8 break-all font-display text-[clamp(1.75rem,4vw,3rem)] uppercase leading-none transition-transform duration-700 ease-editorial group-hover:translate-x-2 sm:col-span-9">
+                  <span className="col-span-8 break-all font-display text-[clamp(1.25rem,2.6vw,2rem)] font-semibold leading-tight tracking-tight transition-transform duration-700 ease-editorial group-hover:translate-x-2 sm:col-span-9">
                     {c.value}
                   </span>
                   <span
@@ -188,7 +188,7 @@ export function Contact({ lang }: { lang: Lang }) {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="group mt-2 flex items-center justify-between border-b border-foreground pb-3 font-display text-3xl uppercase text-foreground transition-colors duration-500 hover:border-accent hover:text-accent-soft disabled:cursor-not-allowed disabled:opacity-50"
+                className="group mt-2 flex items-center justify-between border-b border-foreground pb-3 font-display text-2xl font-semibold text-foreground transition-colors duration-500 hover:border-accent hover:text-accent-soft disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {status === "submitting" ? t.sending : t.send}
                 <span aria-hidden className="transition-transform duration-500 ease-editorial group-hover:translate-x-2">

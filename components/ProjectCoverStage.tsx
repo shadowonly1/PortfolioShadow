@@ -85,7 +85,7 @@ function TypeCover({ project }: { project: Project }) {
   return (
     <div className="flex h-full w-full flex-col justify-between">
       <span className="label">{project.role}</span>
-      <p aria-hidden className="display text-[clamp(3rem,8vw,8rem)] leading-[0.82] text-foreground/90">
+      <p aria-hidden className="display text-[clamp(2rem,4.5vw,4.5rem)] leading-[1.05] tracking-[-0.03em] text-foreground/90">
         {project.name.split(" (")[0]}
       </p>
       <span className="label text-accent-soft">{project.stack.join(" · ")}</span>
